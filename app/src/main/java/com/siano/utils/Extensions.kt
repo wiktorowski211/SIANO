@@ -1,13 +1,11 @@
-package com.siano
+package com.siano.utils
 
-import com.siano.utils.*
 import io.reactivex.*
 import org.funktionale.either.Either
 import org.funktionale.either.flatMap
 import org.funktionale.option.Option
 import org.funktionale.option.getOrElse
 import org.funktionale.tries.Try
-import java.io.IOException
 
 // RxEither
 
@@ -154,24 +152,6 @@ fun <L, R, TR> Single<Either<L, R>>.flatMapRight(function: (R) -> Single<TR>): S
             { function(it).map { Either.right(it) } })
     }
 
-fun <T, R> Single<Option<T>>.flatMapDefined(function: (T) -> Single<R>): Single<Option<R>> =
-    this.flatMap { it.fold({ Single.just(Option.None) }, { function(it).map { Option.Some(it) } }) }
-
-fun <T, R> Single<Option<T>>.flatMapDefinedWithOption(function: (T) -> Single<Option<R>>): Single<Option<R>> =
-    this.flatMap { it.fold({ Single.just(Option.None) }, { function(it) }) }
-
-fun <T, R> Observable<Option<T>>.flatMapDefined(function: (T) -> Observable<R>): Observable<Option<R>> =
-    this.flatMap { it.fold({ Observable.just(Option.None) }, { function(it).map { Option.Some(it) } }) }
-
-fun <T, R> Observable<Option<T>>.flatMapDefinedWithOption(function: (T) -> Observable<Option<R>>): Observable<Option<R>> =
-    this.flatMap { it.fold({ Observable.just(Option.None) }, { function(it) }) }
-
-fun <T, R> Flowable<Option<T>>.flatMapDefined(function: (T) -> Flowable<R>): Flowable<Option<R>> =
-    this.flatMap { it.fold({ Flowable.just(Option.None) }, { function(it).map { Option.Some(it) } }) }
-
-fun <T, R> Flowable<Option<T>>.flatMapDefinedWithOption(function: (T) -> Flowable<Option<R>>): Flowable<Option<R>> =
-    this.flatMap { it.fold({ Flowable.just(Option.None) }, { function(it) }) }
-
 // flatMapSingle
 
 fun <L, R, TL> Observable<Either<L, R>>.flatMapSingleLeftWithEither(
@@ -290,18 +270,8 @@ fun <L, R, TL> Flowable<Either<L, R>>.mapLeftWithEither(function: (L) -> Either<
 fun <L, R, TR> Flowable<Either<L, R>>.mapRightWithEither(function: (R) -> Either<L, TR>): Flowable<Either<L, TR>> =
     this.map { it.right().flatMap(function) }
 
-fun <T, R> Observable<Option<T>>.mapDefinedWithOption(function: (T) -> Option<R>): Observable<Option<R>> =
-    this.map { it.flatMap(function) }
-
-fun <T, R> Single<Option<T>>.mapDefinedWithOption(function: (T) -> Option<R>): Single<Option<R>> =
-    this.map { it.flatMap(function) }
-
 fun <L, R, TR> Observable<Either<L, R>>.mapRightOr(function: (R) -> TR, defaultValue: TR): Observable<TR> =
     this.map { it.fold({ defaultValue }, { function(it) }) }
-
-fun <T, R> Flowable<Option<T>>.mapDefinedWithOption(function: (T) -> Option<R>): Flowable<Option<R>> =
-    this.map { it.flatMap(function) }
-
 
 // toOption
 
@@ -324,13 +294,6 @@ fun <L, R> Flowable<Either<L, R>>.onlyLeft(): Flowable<L> =
 
 fun <L, R> Flowable<Either<L, R>>.onlyRight(): Flowable<R> =
     this.concatMap { it.fold({ Flowable.empty<R>() }, { Flowable.just(it) }) }
-
-fun <T> Flowable<Option<T>>.onlyDefined(): Flowable<T> =
-    this.concatMap { it.fold({ Flowable.empty<T>() }, { Flowable.just(it) }) }
-
-// Option
-fun <T> Observable<Option<T>>.onlyDefined(): Observable<T> =
-    this.concatMap { it.fold({ Observable.empty<T>() }, { Observable.just(it) }) }
 
 // map
 
@@ -363,11 +326,6 @@ fun <T> Single<Option<T>>.mapOr(value: T): Single<T> = this.map { it.getOrElse {
 fun <T> Observable<Option<T>>.mapOr(value: T): Observable<T> = this.map { it.getOrElse { value } }
 
 fun <T> Flowable<Option<T>>.mapOr(value: T): Flowable<T> = this.map { it.getOrElse { value } }
-
-
-fun <T, R> Observable<Option<T>>.mapDefined(function: (T) -> R): Observable<Option<R>> = map { it.map(function) }
-fun <T, R> Flowable<Option<T>>.mapDefined(function: (T) -> R): Flowable<Option<R>> = map { it.map(function) }
-fun <T, R> Single<Option<T>>.mapDefined(function: (T) -> R): Single<Option<R>> = map { it.map(function) }
 
 fun <T> Observable<Option<T>>.getOrElse(default: () -> T): Observable<T> = map { it.getOrElse(default) }
 fun <T> Flowable<Option<T>>.getOrElse(default: () -> T): Flowable<T> = map { it.getOrElse(default) }
