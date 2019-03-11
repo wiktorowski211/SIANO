@@ -11,14 +11,14 @@ import com.siano.base.BaseViewHolderManager
 import com.siano.dagger.annotations.DaggerAnnotation
 import com.siano.dagger.module.BaseActivityModule
 import com.siano.layoutmanager.MyLinearLayoutManager
-import com.siano.utils.ErrorMessages
+import com.siano.utils.ErrorHandler
 import com.siano.view.BaseActivity
 import com.siano.view.login.LoginActivity
 import com.jacekmarchwicki.universaladapter.ViewHolderManager
-import com.jacekmarchwicki.universaladapter.rx.RxUniversalAdapter
+import com.siano.utils.Rx2UniversalAdapter
 import dagger.Binds
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
-import rx.subscriptions.CompositeSubscription
 import javax.inject.Inject
 
 class RepositoriesActivity : BaseActivity() {
@@ -30,9 +30,9 @@ class RepositoriesActivity : BaseActivity() {
     @Inject lateinit var tokenPreferences: TokenPreferences
     @Inject lateinit var presenter: RepositoriesPresenter
 
-    private val subscription = CompositeSubscription()
+    private val subscription = CompositeDisposable()
 
-    private val adapter = RxUniversalAdapter(listOf<ViewHolderManager>(
+    private val adapter = Rx2UniversalAdapter(listOf<ViewHolderManager>(
             BaseViewHolderManager(R.layout.item_repository, ::RepositoryViewHolder, RepositoryAdapterItem::class.java)
     ))
 
@@ -40,8 +40,8 @@ class RepositoriesActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (tokenPreferences.getToken() == null) {
-            finishAffinity()
+        if (tokenPreferences.getToken().isEmpty()) {
+            finish()
             startActivity(LoginActivity.newInstance(this))
         }
 
@@ -51,7 +51,7 @@ class RepositoriesActivity : BaseActivity() {
                 presenter.itemsObservable
                         .subscribe(adapter),
                 presenter.errorObservable
-                        .subscribe(ErrorMessages.show(repository_main_view))
+                        .subscribe(ErrorHandler.show(repository_main_view))
         )
     }
 
@@ -62,7 +62,7 @@ class RepositoriesActivity : BaseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        subscription.unsubscribe()
+        subscription.clear()
     }
 
     @dagger.Module(includes = [(BaseActivityModule::class)])

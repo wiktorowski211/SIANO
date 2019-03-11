@@ -5,7 +5,6 @@ import com.siano.TokenPreferences
 import com.siano.api.ApiService
 import com.siano.api.Constants
 import com.siano.api.interceptors.HttpLoggingInterceptor
-import com.appunite.rx.android.MyAndroidSchedulers
 import com.appunite.rx.dagger.NetworkScheduler
 import com.appunite.rx.dagger.UiScheduler
 import com.google.gson.FieldNamingPolicy
@@ -13,12 +12,13 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import rx.schedulers.Schedulers
 import java.io.File
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
@@ -67,7 +67,7 @@ class NetworkModule {
         return Retrofit.Builder()
                 .baseUrl(Constants.HOST_URL)
                 .client(client)
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
     }
@@ -84,5 +84,5 @@ class NetworkModule {
     @Provides
     @Singleton
     @UiScheduler
-    fun provideUiScheduler() = MyAndroidSchedulers.mainThread()
+    fun provideUiScheduler() = AndroidSchedulers.mainThread()
 }

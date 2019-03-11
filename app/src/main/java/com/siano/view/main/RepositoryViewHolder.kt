@@ -11,7 +11,7 @@ class RepositoryViewHolder(itemView: View) : ViewHolderManager.BaseViewHolder<Re
         itemView.repo_description.text = item.repository.description
 
         itemView.repo_body.setOnClickListener {
-            item.itemClickObserver.onNext(Any())
+            item.itemClickObserver.onNext(Unit)
         }
     }
 }

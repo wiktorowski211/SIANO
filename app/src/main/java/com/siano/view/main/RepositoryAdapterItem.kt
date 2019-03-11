@@ -3,10 +3,11 @@ package com.siano.view.main
 import com.siano.api.model.Repository
 import com.jacekmarchwicki.universaladapter.BaseAdapterItem
 import com.jacekmarchwicki.universaladapter.BaseAdapterItem.NO_ID
-import rx.Observer
+import io.reactivex.Observer
 
 data class RepositoryAdapterItem(val repository: Repository,
-                                 val itemClickObserver: Observer<Any>) : BaseAdapterItem {
+                                 val itemClickObserver: Observer<Unit>
+) : BaseAdapterItem {
 
     override fun same(item: BaseAdapterItem): Boolean = this == item
 

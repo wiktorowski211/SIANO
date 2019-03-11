@@ -9,7 +9,7 @@ import javax.inject.Singleton
 class TokenPreferences @Inject constructor(context: Context) {
 
     companion object {
-        const val PREFERENCES_ID = "github_prefs"
+        const val PREFERENCES_ID = "auth_prefs"
         const val TOKEN = "token"
     }
 
@@ -17,9 +17,9 @@ class TokenPreferences @Inject constructor(context: Context) {
 
     fun edit(): Editor = Editor(sharedPreferences)
 
-    fun getToken(): String? = sharedPreferences.getString(TOKEN, null)
+    fun getToken(): String = sharedPreferences.getString(TOKEN, null).orEmpty()
 
-    inner class Editor(private val sharedPreferences: SharedPreferences) {
+    inner class Editor(sharedPreferences: SharedPreferences) {
         private val editor: SharedPreferences.Editor = sharedPreferences.edit()
 
         fun setToken(token: String) = editor.putString(TOKEN, token).apply()

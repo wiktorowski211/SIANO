@@ -1,15 +1,15 @@
 package com.siano.api
 
 import com.siano.api.model.Repository
+import io.reactivex.Single
 import okhttp3.ResponseBody
 import retrofit2.http.GET
-import rx.Observable
 
 interface ApiService {
 
     @GET("/authorizations")
-    fun authorizeUser(): Observable<ResponseBody>
+    fun authorizeUser(): Single<ResponseBody>
 
     @GET("/user/repos?affiliation=owner")
-    fun getUserRepositories(): Observable<List<Repository>>
+    fun getUserRepositories(): Single<List<Repository>>
 }

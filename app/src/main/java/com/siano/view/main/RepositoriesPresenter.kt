@@ -1,27 +1,31 @@
 package com.siano.view.main
 
-import com.siano.dao.GithubDao
-import com.appunite.rx.ResponseOrError
 import com.appunite.rx.dagger.UiScheduler
+import com.siano.dao.GithubDao
 import com.jacekmarchwicki.universaladapter.BaseAdapterItem
-import rx.Scheduler
-import rx.subjects.PublishSubject
+import com.siano.onlyLeft
+import com.siano.onlyRight
+import com.siano.utils.DefaultError
+import io.reactivex.Observable
+import io.reactivex.Scheduler
+import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
 class RepositoriesPresenter @Inject constructor(
-        githubDao: GithubDao,
-        @UiScheduler uiScheduler: Scheduler) {
-    private val openIssuesForRepository = PublishSubject.create<Any>()
+    githubDao: GithubDao,
+    @UiScheduler uiScheduler: Scheduler
+) {
+    private val openIssuesForRepository = PublishSubject.create<Unit>()
 
-    private val repositoriesObservable = githubDao.getUserRepositoriesObservable()
-            .observeOn(uiScheduler)
-            .replay(1)
-            .refCount()
+    private val repositoriesSingle = githubDao.getUserRepositoriesObservable()
+        .observeOn(uiScheduler)
 
-    val itemsObservable = repositoriesObservable
-            .compose(ResponseOrError.onlySuccess())
-            .map { repositories -> repositories.mapTo(mutableListOf<BaseAdapterItem>()) { RepositoryAdapterItem(it, openIssuesForRepository) } }
+    val itemsObservable: Observable<List<BaseAdapterItem>> = repositoriesSingle
+        .toObservable()
+        .onlyRight()
+        .map { repositories -> repositories.map { RepositoryAdapterItem(it, openIssuesForRepository) } }
 
-    val errorObservable = repositoriesObservable
-            .compose(ResponseOrError.onlyError())
+    val errorObservable: Observable<DefaultError> = repositoriesSingle
+        .toObservable()
+        .onlyLeft()
 }
