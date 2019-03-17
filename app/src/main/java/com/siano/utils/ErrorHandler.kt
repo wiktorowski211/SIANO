@@ -2,9 +2,6 @@ package com.siano.utils
 
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
-import com.siano.mapLeft
-import com.siano.toEither
-import com.siano.toTry
 import io.reactivex.Single
 import org.funktionale.either.Either
 import java.io.IOException

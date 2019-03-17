@@ -3,8 +3,8 @@ package com.siano.view.main
 import com.appunite.rx.dagger.UiScheduler
 import com.siano.dao.GithubDao
 import com.jacekmarchwicki.universaladapter.BaseAdapterItem
-import com.siano.onlyLeft
-import com.siano.onlyRight
+import com.siano.utils.onlyLeft
+import com.siano.utils.onlyRight
 import com.siano.utils.DefaultError
 import io.reactivex.Observable
 import io.reactivex.Scheduler

@@ -4,9 +4,9 @@ import com.siano.TokenPreferences
 import com.siano.dao.AuthoDao
 import com.siano.utils.TokenUtils
 import com.appunite.rx.dagger.UiScheduler
-import com.siano.mapRight
-import com.siano.onlyLeft
-import com.siano.onlyRight
+import com.siano.utils.mapRight
+import com.siano.utils.onlyLeft
+import com.siano.utils.onlyRight
 import com.siano.utils.DefaultError
 import io.reactivex.Observable
 import io.reactivex.Scheduler
