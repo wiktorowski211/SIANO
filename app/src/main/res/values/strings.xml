@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">SIANO</string>
+
+    <!-- Login -->
     <string name="username">Username</string>
     <string name="password">Password</string>
+
+    <!-- Transaction -->
+    <string name="from_whom">From whom</string>
+    <string name="for_what">For what</string>
+    <string name="to_whom">To whom</string>
 </resources>
