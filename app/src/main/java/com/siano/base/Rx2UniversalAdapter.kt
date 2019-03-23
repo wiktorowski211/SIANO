@@ -1,4 +1,4 @@
-package com.siano.utils
+package com.siano.base
 
 import com.jacekmarchwicki.universaladapter.BaseAdapterItem
 import com.jacekmarchwicki.universaladapter.UniversalAdapter

@@ -6,6 +6,17 @@ import org.funktionale.either.flatMap
 import org.funktionale.option.Option
 import org.funktionale.option.getOrElse
 import org.funktionale.tries.Try
+import org.reactivestreams.Subscriber
+
+// Single
+
+fun <T> Subscriber<T>.executeFromSingle(onNextValue: T): Single<Unit> = Single.fromCallable {
+    this.onNext(onNextValue)
+}
+
+fun <T> Observer<T>.executeFromSingle(onNextValue: T): Single<Unit> = Single.fromCallable {
+    this.onNext(onNextValue)
+}
 
 // RxEither
 
