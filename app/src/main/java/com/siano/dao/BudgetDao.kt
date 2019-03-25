@@ -2,6 +2,7 @@ package com.siano.dao
 
 import com.appunite.rx.dagger.NetworkScheduler
 import com.siano.api.ApiService
+import com.siano.api.model.Budget
 import com.siano.api.model.BudgetUser
 import com.siano.utils.DefaultError
 import com.siano.utils.handleEitherRestErrors
@@ -16,6 +17,18 @@ class BudgetDao @Inject constructor(
     private val apiService: ApiService,
     @NetworkScheduler private val networkScheduler: Scheduler
 ) {
+    fun getBudgetsSingle(): Single<Either<DefaultError, List<Budget>>> =
+        Single.just(
+            listOf(
+                Budget(1, "Wyjazd", "#ffffff", 1),
+                Budget(2, "Kupony", "#999999", 2),
+                Budget(3, "Zajazd", "#555555", 2),
+                Budget(4, "Grill", "#333333", 1),
+                Budget(5, "Prezenty", "#321331", 3)
+            )
+        )
+            .subscribeOn(networkScheduler)
+            .handleEitherRestErrors()
 
     fun getBudgetUsersSingle(): Single<Either<DefaultError, List<BudgetUser>>> =
         Single.just(
