@@ -23,16 +23,22 @@
                 android:name=".view.splash.SplashActivity"
                 android:theme="@style/SplashTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
+        <activity
+                android:name=".view.transaction.TransactionActivity"
+                android:windowSoftInputMode="stateVisible|adjustResize"/>
+
         <activity android:name=".view.main.RepositoriesActivity">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
         </activity>
+
         <activity
                 android:name=".view.login.LoginActivity"
                 android:windowSoftInputMode="adjustResize"/>

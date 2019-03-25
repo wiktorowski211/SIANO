@@ -1,17 +1,23 @@
 package com.siano.view.main
 
 import android.view.View
-import com.jacekmarchwicki.universaladapter.ViewHolderManager
+import com.jakewharton.rxbinding3.view.clicks
+import com.siano.base.DefinedViewHolder
+import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.item_repository.view.*
 
-class RepositoryViewHolder(itemView: View) : ViewHolderManager.BaseViewHolder<RepositoryAdapterItem>(itemView) {
+class RepositoryViewHolder(itemView: View) : DefinedViewHolder<RepositoryAdapterItem>(itemView) {
 
-    override fun bind(item: RepositoryAdapterItem) {
+    private val itemClickObservable: Observable<Unit> = itemView.repo_body.clicks()
+
+    override fun bindStatic(item: RepositoryAdapterItem) {
         itemView.repo_name.text = item.repository.name
         itemView.repo_description.text = item.repository.description
-
-        itemView.repo_body.setOnClickListener {
-            item.itemClickObserver.onNext(Unit)
-        }
     }
+
+    override fun bindDisposable(item: RepositoryAdapterItem) = CompositeDisposable(
+        itemClickObservable
+            .switchMapSingle { item.itemClickSingle() }
+            .subscribe())
 }

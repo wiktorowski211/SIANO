@@ -1,10 +1,7 @@
 package com.siano.dagger
 
 import com.siano.App
-import com.siano.dagger.module.ActivityModule
-import com.siano.dagger.module.AndroidModule
-import com.siano.dagger.module.AppModule
-import com.siano.dagger.module.NetworkModule
+import com.siano.dagger.module.*
 import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
