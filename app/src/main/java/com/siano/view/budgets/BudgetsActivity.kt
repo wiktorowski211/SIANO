@@ -1,4 +1,4 @@
-package com.siano.view.main
+package com.siano.view.budgets
 
 import android.app.Activity
 import android.content.Context
@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jacekmarchwicki.universaladapter.ViewHolderManager
+import com.jakewharton.rxbinding3.view.clicks
 import com.siano.R
 import com.siano.TokenPreferences
 import com.siano.base.BaseViewHolderManager
@@ -15,9 +16,9 @@ import com.siano.dagger.module.BaseActivityModule
 import com.siano.layoutmanager.MyLinearLayoutManager
 import com.siano.utils.ErrorHandler
 import com.siano.view.BaseActivity
-import com.siano.view.budgets.BudgetAdapterItem
-import com.siano.view.budgets.BudgetViewHolder
+import com.siano.view.createBudget.CreateBudgetActivity
 import com.siano.view.login.LoginActivity
+import com.siano.view.main.BudgetsPresenter
 import com.siano.view.transaction.TransactionActivity
 import dagger.Binds
 import io.reactivex.disposables.CompositeDisposable
@@ -59,8 +60,10 @@ class BudgetsActivity : BaseActivity() {
                 .subscribe(adapter),
             presenter.errorObservable
                 .subscribe(ErrorHandler.show(budgets_main_view)),
-            presenter.openBudgetObservable().subscribe { startActivity(TransactionActivity.newIntent(this)) }
-        )
+            presenter.openBudgetObservable().subscribe { startActivity(TransactionActivity.newIntent(this)) },
+            budgets_create_budget_button.clicks()
+                .subscribe { startActivity(CreateBudgetActivity.newIntent(this)) }
+            )
     }
 
     private fun setUpRecyclerView() {

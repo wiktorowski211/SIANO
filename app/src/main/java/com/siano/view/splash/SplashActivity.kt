@@ -2,7 +2,7 @@ package com.siano.view.splash
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.siano.view.main.BudgetsActivity
+import com.siano.view.budgets.BudgetsActivity
 
 class SplashActivity : AppCompatActivity() {
 
