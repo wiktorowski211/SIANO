@@ -16,4 +16,7 @@
     <string name="transaction_category">Category</string>
     <string name="transaction_total_amount">Total amount %1$s$</string>
     <string name="transaction_remaining_amount">Remaining amount %1$s$</string>
+
+    <!-- Budgets -->
+    <string name="budgets_title">Budgets</string>
 </resources>

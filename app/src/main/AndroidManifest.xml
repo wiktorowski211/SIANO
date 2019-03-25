@@ -39,6 +39,12 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".view.main.BudgetsActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+            </intent-filter>
+        </activity>
+
         <activity
                 android:name=".view.login.LoginActivity"
                 android:windowSoftInputMode="adjustResize"/>
