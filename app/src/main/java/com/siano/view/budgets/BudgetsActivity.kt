@@ -18,7 +18,6 @@ import com.siano.utils.ErrorHandler
 import com.siano.view.BaseActivity
 import com.siano.view.createBudget.CreateBudgetActivity
 import com.siano.view.login.LoginActivity
-import com.siano.view.main.BudgetsPresenter
 import com.siano.view.transaction.TransactionActivity
 import dagger.Binds
 import io.reactivex.disposables.CompositeDisposable
@@ -40,7 +39,7 @@ class BudgetsActivity : BaseActivity() {
 
     private val adapter = Rx2UniversalAdapter(
         listOf<ViewHolderManager>(
-            BaseViewHolderManager(R.layout.item_budget, ::BudgetViewHolder, BudgetAdapterItem::class.java)
+            BaseViewHolderManager(R.layout.item_budget, ::BudgetsViewHolder, BudgetAdapterItem::class.java)
         )
     )
 
