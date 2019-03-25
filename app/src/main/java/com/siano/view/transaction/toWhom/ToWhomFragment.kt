@@ -1,4 +1,4 @@
-package com.siano.view.transaction.fromWhom
+package com.siano.view.transaction.toWhom
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,13 +17,13 @@ import com.siano.view.transaction.TransactionViewHolder
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposables
 import io.reactivex.disposables.SerialDisposable
-import kotlinx.android.synthetic.main.fragment_from_whom.*
+import kotlinx.android.synthetic.main.fragment_to_whom.*
 import javax.inject.Inject
 
-class FromWhomFragment : BaseFragment() {
+class ToWhomFragment : BaseFragment() {
 
     companion object {
-        fun newInstance(): FromWhomFragment = FromWhomFragment()
+        fun newInstance(): ToWhomFragment = ToWhomFragment()
     }
 
     @Inject
@@ -40,7 +40,7 @@ class FromWhomFragment : BaseFragment() {
     )
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.fragment_from_whom, container, false)
+        inflater.inflate(R.layout.fragment_to_whom, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,11 +49,11 @@ class FromWhomFragment : BaseFragment() {
 
         subscription.set(
             CompositeDisposable(
-                presenter.fromWhomItemsObservable
+                presenter.toWhomItemsObservable
                     .subscribe(adapter),
-                presenter.totalAmount
+                presenter.remainingAmountObservable
                     .subscribe {
-                        from_whom_amount.text = context?.getString(R.string.transaction_total_amount, it.toString())
+                        to_whom_amount.text = context?.getString(R.string.transaction_remaining_amount, it.toString())
                     }
             )
         )
@@ -65,7 +65,7 @@ class FromWhomFragment : BaseFragment() {
     }
 
     private fun setUpRecyclerView() {
-        from_whom_list.layoutManager = MyLinearLayoutManager(this.context!!, LinearLayoutManager.VERTICAL, false)
-        from_whom_list.adapter = adapter
+        to_whom_list.layoutManager = MyLinearLayoutManager(this.context!!, LinearLayoutManager.VERTICAL, false)
+        to_whom_list.adapter = adapter
     }
 }

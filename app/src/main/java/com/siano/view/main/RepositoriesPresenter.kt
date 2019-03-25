@@ -4,11 +4,12 @@ import com.appunite.rx.dagger.UiScheduler
 import com.jacekmarchwicki.universaladapter.BaseAdapterItem
 import com.siano.dao.GithubDao
 import com.siano.utils.DefaultError
-import com.siano.utils.onlyLeft
+import com.siano.utils.mapToLeftOption
 import com.siano.utils.onlyRight
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.subjects.PublishSubject
+import org.funktionale.option.Option
 import javax.inject.Inject
 
 class RepositoriesPresenter @Inject constructor(
@@ -25,9 +26,9 @@ class RepositoriesPresenter @Inject constructor(
         .onlyRight()
         .map { repositories -> repositories.map { RepositoryAdapterItem(it, openIssuesForRepository) } }
 
-    val errorObservable: Observable<DefaultError> = repositoriesSingle
+    val errorObservable: Observable<Option<DefaultError>> = repositoriesSingle
         .toObservable()
-        .onlyLeft()
+        .mapToLeftOption()
 
     fun itemClick(): Observable<Unit> = openIssuesForRepository
 }

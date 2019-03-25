@@ -1,6 +1,8 @@
 package com.siano.utils
 
+import androidx.viewpager.widget.ViewPager
 import io.reactivex.*
+import io.reactivex.disposables.Disposables
 import org.funktionale.either.Either
 import org.funktionale.either.flatMap
 import org.funktionale.option.Option
@@ -371,3 +373,27 @@ fun <T> Single<T>.toTry(): Single<Try<T>> = map { Try.Success(it) as Try<T> }.on
 
 fun <T> Single<Try<T>>.toEither(): Single<Either<Throwable, T>> = map { it.toEither() }
 
+
+// ViewPager
+
+fun ViewPager.pageSelectChanges(): Observable<Int> = Observable.create<Int> { emitter ->
+
+    val listener = object : ViewPager.OnPageChangeListener {
+        override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+        }
+
+        override fun onPageSelected(position: Int) {
+            if (!emitter.isDisposed)
+                emitter.onNext(position)
+        }
+
+        override fun onPageScrollStateChanged(state: Int) {
+
+        }
+    }
+    this.addOnPageChangeListener(listener)
+
+    emitter.setDisposable(Disposables.fromAction {
+        this.removeOnPageChangeListener(listener)
+    })
+}

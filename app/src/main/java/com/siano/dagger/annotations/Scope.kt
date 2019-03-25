@@ -9,4 +9,9 @@ object Scope {
     @Retention(AnnotationRetention.RUNTIME)
     annotation class Activity
 
+    @Scope
+    @MustBeDocumented
+    @Retention(AnnotationRetention.RUNTIME)
+    annotation class Fragment
+
 }

@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jacekmarchwicki.universaladapter.ViewHolderManager
 import com.siano.R
@@ -17,6 +16,7 @@ import com.siano.layoutmanager.MyLinearLayoutManager
 import com.siano.utils.ErrorHandler
 import com.siano.view.BaseActivity
 import com.siano.view.login.LoginActivity
+import com.siano.view.transaction.TransactionActivity
 import dagger.Binds
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
@@ -57,7 +57,7 @@ class RepositoriesActivity : BaseActivity() {
                 .subscribe(adapter),
             presenter.errorObservable
                 .subscribe(ErrorHandler.show(repository_main_view)),
-            presenter.itemClick().subscribe { Toast.makeText(this,"XD",Toast.LENGTH_SHORT).show() }
+            presenter.itemClick().subscribe { startActivity(TransactionActivity.newIntent(this)) }
         )
     }
 

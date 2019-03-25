@@ -4,17 +4,22 @@ import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.Single
 import org.funktionale.either.Either
+import org.funktionale.option.Option
 import java.io.IOException
 
 object ErrorHandler {
     // TODO Error handling
-    fun show(view: View): (DefaultError) -> Unit {
+    fun show(view: View): (Option<DefaultError>) -> Unit {
         return { throwable ->
-            val message = when (throwable) {
-                is NoNetworkError -> "No network connection"
-                else -> "Unknown error"
+            val error = throwable.orNull()
+
+            if (error != null) {
+                val message = when (error) {
+                    is NoNetworkError -> "No network connection"
+                    else -> "Unknown error"
+                }
+                Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
             }
-            Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
         }
     }
 }

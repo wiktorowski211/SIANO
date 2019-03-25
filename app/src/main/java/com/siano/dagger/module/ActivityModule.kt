@@ -3,6 +3,7 @@ package com.siano.dagger.module
 import com.siano.dagger.annotations.Scope
 import com.siano.view.login.LoginActivity
 import com.siano.view.main.RepositoriesActivity
+import com.siano.view.transaction.TransactionActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -17,4 +18,7 @@ abstract class ActivityModule {
     @ContributesAndroidInjector(modules = [(RepositoriesActivity.Module::class)])
     abstract fun provideMainActivity(): RepositoriesActivity
 
+    @Scope.Activity
+    @ContributesAndroidInjector(modules = [TransactionActivity.Module::class, TransactionActivity.FragmentModule::class])
+    abstract fun provideTransactionActivity(): TransactionActivity
 }

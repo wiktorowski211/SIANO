@@ -6,7 +6,14 @@
     <string name="password">Password</string>
 
     <!-- Transaction -->
+    <string name="create_transaction">Create transaction</string>
     <string name="from_whom">From whom</string>
     <string name="for_what">For what</string>
     <string name="to_whom">To whom</string>
+    <string name="menu_next">Next</string>
+    <string name="menu_save">Save</string>
+    <string name="transaction_title">Title</string>
+    <string name="transaction_category">Category</string>
+    <string name="transaction_total_amount">Total amount %1$s$</string>
+    <string name="transaction_remaining_amount">Remaining amount %1$s$</string>
 </resources>
