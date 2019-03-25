@@ -5,9 +5,13 @@ import com.siano.api.ApiService
 import com.siano.api.model.Budget
 import com.siano.api.model.BudgetUser
 import com.siano.utils.DefaultError
+import com.siano.utils.executeFromSingle
 import com.siano.utils.handleEitherRestErrors
+import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
+import io.reactivex.rxkotlin.Observables
+import io.reactivex.subjects.BehaviorSubject
 import org.funktionale.either.Either
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -17,18 +21,39 @@ class BudgetDao @Inject constructor(
     private val apiService: ApiService,
     @NetworkScheduler private val networkScheduler: Scheduler
 ) {
-    fun getBudgetsSingle(): Single<Either<DefaultError, List<Budget>>> =
-        Single.just(
-            listOf(
-                Budget(1, "Wyjazd", "#ffffff", 1),
-                Budget(2, "Kupony", "#999999", 2),
-                Budget(3, "Zajazd", "#555555", 2),
-                Budget(4, "Grill", "#333333", 1),
-                Budget(5, "Prezenty", "#321331", 3)
-            )
+    private val addBudgetSubject: BehaviorSubject<Budget> = BehaviorSubject.createDefault(
+        Budget(1, "Wyjazd", "#ffffff", 1)
+    )
+
+    private val storedItems: Observable<List<Budget>> = Observable.just(
+        listOf(
+            Budget(2, "Kupony", "#999999", 2),
+            Budget(3, "Zajazd", "#555555", 2),
+            Budget(4, "Grill", "#333333", 1),
+            Budget(5, "Prezenty", "#321331", 3)
         )
-            .subscribeOn(networkScheduler)
-            .handleEitherRestErrors()
+    )
+        .replay()
+        .refCount()
+
+    private val addedObservable = addBudgetSubject
+        .scan(listOf<Budget>()) { items, item ->
+            listOf<Budget>()
+                .plus(item)
+                .plus(items.filter { it.name != item.name })
+        }
+        .replay()
+        .refCount()
+
+    fun getBudgetsSingle() = Observables.combineLatest(storedItems, addedObservable) { stored, added ->
+        emptyList<Budget>()
+            .plus(added)
+            .plus(stored)
+    }
+        .subscribeOn(networkScheduler)
+        .handleEitherRestErrors()
+
+    fun addBudgetSingle(budget: Budget): Single<Unit> = addBudgetSubject.executeFromSingle(budget)
 
     fun getBudgetUsersSingle(): Single<Either<DefaultError, List<BudgetUser>>> =
         Single.just(

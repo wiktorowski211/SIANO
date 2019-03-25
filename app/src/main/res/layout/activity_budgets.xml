@@ -19,7 +19,6 @@
                 android:layout_height="?attr/actionBarSize"
                 android:layout_weight="1"
                 android:background="?attr/colorPrimary"
-                app:navigationIcon="?homeAsUpIndicator"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:layout_scrollFlags="enterAlways">
 
@@ -39,5 +38,12 @@
                 android:layout_height="match_parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/budgets_create_budget_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_add"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

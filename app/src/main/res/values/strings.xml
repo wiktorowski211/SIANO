@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">SIANO</string>
+    <string name="menu_next">Next</string>
+    <string name="menu_save">Save</string>
 
     <!-- Login -->
     <string name="username">Username</string>
@@ -10,8 +12,6 @@
     <string name="from_whom">From whom</string>
     <string name="for_what">For what</string>
     <string name="to_whom">To whom</string>
-    <string name="menu_next">Next</string>
-    <string name="menu_save">Save</string>
     <string name="transaction_title">Title</string>
     <string name="transaction_category">Category</string>
     <string name="transaction_total_amount">Total amount %1$s$</string>
@@ -19,4 +19,9 @@
 
     <!-- Budgets -->
     <string name="budgets_title">Budgets</string>
+
+    <!-- Create budget -->
+    <string name="create_budget_title">Create budget</string>
+    <string name="create_budget_name">Name</string>
+    <string name="create_budget_color">Color</string>
 </resources>

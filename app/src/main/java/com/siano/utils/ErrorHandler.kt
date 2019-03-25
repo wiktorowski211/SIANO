@@ -2,6 +2,7 @@ package com.siano.utils
 
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
+import io.reactivex.Observable
 import io.reactivex.Single
 import org.funktionale.either.Either
 import org.funktionale.option.Option
@@ -25,6 +26,11 @@ object ErrorHandler {
 }
 
 fun <T1> Single<T1>.handleEitherRestErrors(): Single<Either<DefaultError, T1>> =
+    toTry()
+        .toEither()
+        .mapLeft { it.toDefaultError() }
+
+fun <T1> Observable<T1>.handleEitherRestErrors(): Observable<Either<DefaultError, T1>> =
     toTry()
         .toEither()
         .mapLeft { it.toDefaultError() }
