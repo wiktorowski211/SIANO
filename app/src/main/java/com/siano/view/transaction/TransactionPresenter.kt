@@ -60,7 +60,8 @@ class TransactionPresenter @Inject constructor(
         .scan(listOf<TransactionShare>()) { items, item ->
             listOf<TransactionShare>()
                 .plus(items.filter { it.user != item.user })
-                .plus(item).filter { it.amount != 0.0 }
+                .plus(item)
+                .filter { it.amount != 0.0 }
         }
         .replay()
         .refCount()
@@ -69,7 +70,8 @@ class TransactionPresenter @Inject constructor(
         .scan(listOf<TransactionShare>()) { items, item ->
             listOf<TransactionShare>()
                 .plus(items.filter { it.user != item.user })
-                .plus(item).filter { it.amount != 0.0 }.map { TransactionShare(-it.amount, it.user) }
+                .plus(TransactionShare(-item.amount, item.user))
+                .filter { it.amount != 0.0 }
         }
         .replay()
         .refCount()
