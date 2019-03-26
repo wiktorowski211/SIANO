@@ -7,7 +7,7 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.item_budget.view.*
 
-class BudgetViewHolder(itemView: View) : DefinedViewHolder<BudgetAdapterItem>(itemView) {
+class BudgetsViewHolder(itemView: View) : DefinedViewHolder<BudgetAdapterItem>(itemView) {
 
     private val itemClickObservable: Observable<Unit> = itemView.budget_body.clicks()
 

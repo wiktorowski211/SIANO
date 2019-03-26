@@ -20,8 +20,12 @@
     <!-- Budgets -->
     <string name="budgets_title">Budgets</string>
 
+    <!-- Budget -->
+    <string name="budget_title">Budget</string>
+
     <!-- Create budget -->
     <string name="create_budget_title">Create budget</string>
     <string name="create_budget_name">Name</string>
     <string name="create_budget_color">Color</string>
+    <string name="delete">Delete</string>
 </resources>

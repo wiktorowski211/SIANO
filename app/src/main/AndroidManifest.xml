@@ -45,6 +45,12 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".view.budget.BudgetActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+            </intent-filter>
+        </activity>
+
         <activity android:name=".view.createBudget.CreateBudgetActivity"
                   android:windowSoftInputMode="stateVisible|adjustResize">
             <intent-filter>

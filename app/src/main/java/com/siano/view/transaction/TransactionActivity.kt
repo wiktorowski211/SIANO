@@ -20,12 +20,14 @@ import com.siano.view.transaction.forWhat.ForWhatFragment
 import com.siano.view.transaction.fromWhom.FromWhomFragment
 import com.siano.view.transaction.toWhom.ToWhomFragment
 import dagger.Binds
+import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposables
 import io.reactivex.disposables.SerialDisposable
 import kotlinx.android.synthetic.main.activity_transaction.*
 import javax.inject.Inject
+import javax.inject.Named
 
 
 class TransactionActivity : BaseActivity() {
@@ -108,7 +110,10 @@ class TransactionActivity : BaseActivity() {
     }
 
     companion object {
-        fun newIntent(context: Context): Intent = Intent(context, TransactionActivity::class.java)
+        private const val EXTRA_BUDGET_ID = "budget_id"
+
+        fun newIntent(context: Context, budgetId: Long) = Intent(context, TransactionActivity::class.java)
+            .putExtra(EXTRA_BUDGET_ID, budgetId)
     }
 
     @dagger.Module(includes = [(BaseActivityModule::class)])
@@ -117,6 +122,17 @@ class TransactionActivity : BaseActivity() {
         @Binds
         @DaggerAnnotation.ForActivity
         abstract fun provideActivity(activity: TransactionActivity): Activity
+
+        @dagger.Module
+        companion object {
+
+            @JvmStatic
+            @Provides
+            @Scope.Activity
+            @Named("budgetId")
+            fun provideBudgetId(activity: TransactionActivity): Long =
+                checkNotNull(activity.intent.getLongExtra(TransactionActivity.EXTRA_BUDGET_ID, 0))
+        }
     }
 
     @dagger.Module
