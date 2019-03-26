@@ -16,9 +16,9 @@ import com.siano.dagger.module.BaseActivityModule
 import com.siano.layoutmanager.MyLinearLayoutManager
 import com.siano.utils.ErrorHandler
 import com.siano.view.BaseActivity
+import com.siano.view.budget.BudgetActivity
 import com.siano.view.createBudget.CreateBudgetActivity
 import com.siano.view.login.LoginActivity
-import com.siano.view.transaction.TransactionActivity
 import dagger.Binds
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_budgets.*
@@ -59,10 +59,11 @@ class BudgetsActivity : BaseActivity() {
                 .subscribe(adapter),
             presenter.errorObservable
                 .subscribe(ErrorHandler.show(budgets_main_view)),
-            presenter.openBudgetObservable().subscribe { startActivity(TransactionActivity.newIntent(this)) },
+            presenter.openBudgetObservable()
+                .subscribe { startActivity(BudgetActivity.newIntent(this, it.id)) },
             budgets_create_budget_button.clicks()
                 .subscribe { startActivity(CreateBudgetActivity.newIntent(this)) }
-            )
+        )
     }
 
     private fun setUpRecyclerView() {

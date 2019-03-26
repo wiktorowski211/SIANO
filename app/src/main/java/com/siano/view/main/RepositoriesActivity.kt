@@ -56,8 +56,7 @@ class RepositoriesActivity : BaseActivity() {
             presenter.itemsObservable
                 .subscribe(adapter),
             presenter.errorObservable
-                .subscribe(ErrorHandler.show(repository_main_view)),
-            presenter.itemClick().subscribe { startActivity(TransactionActivity.newIntent(this)) }
+                .subscribe(ErrorHandler.show(repository_main_view))
         )
     }
 

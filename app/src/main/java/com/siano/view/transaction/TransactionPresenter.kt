@@ -23,11 +23,13 @@ import io.reactivex.subjects.PublishSubject
 import org.funktionale.either.Either
 import org.funktionale.option.Option
 import javax.inject.Inject
+import javax.inject.Named
 
 @Scope.Activity
 class TransactionPresenter @Inject constructor(
     transactionDao: TransactionDao,
     budgetDao: BudgetDao,
+    @Named("budgetId") budgetId: Long,
     @UiScheduler uiScheduler: Scheduler
 ) {
     private val fromWhomSubject = PublishSubject.create<TransactionShare>()
@@ -97,13 +99,11 @@ class TransactionPresenter @Inject constructor(
                 .plus(fromWhom)
                 .plus(toWhom)
 
-            val amount = fromWhom.sumByDouble { it.amount }
-
-            Transaction(amount, forWhat.title, forWhat.category, shares)
+            Transaction(budgetId, forWhat.title, forWhat.category, shares)
         }
         .switchMapSingle {
             it.shares.map { share -> Log.wtf("zxc", "${share.user} ${share.amount}") }
-            transactionDao.createTransaction(it)
+            transactionDao.addTransactionSingle(it)
         }
         .replay()
         .refCount()

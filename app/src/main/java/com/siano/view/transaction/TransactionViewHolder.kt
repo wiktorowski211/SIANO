@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.item_transaction_share.view.*
 
 class TransactionViewHolder(itemView: View) : DefinedViewHolder<TransactionAdapterItem>(itemView) {
 
-    private val itemClickObservable: Observable<Double> =
+    private val amountChangedObservable: Observable<Double> =
         itemView.transaction_share_amount.textChanges().map { it.toString().toDoubleOrNull() ?: 0.0 }
 
     override fun bindStatic(item: TransactionAdapterItem) {
@@ -18,7 +18,7 @@ class TransactionViewHolder(itemView: View) : DefinedViewHolder<TransactionAdapt
     }
 
     override fun bindDisposable(item: TransactionAdapterItem) = CompositeDisposable(
-        itemClickObservable
+        amountChangedObservable
             .switchMapSingle { item.amountChangedSingle(TransactionShare(it, item.share.user)) }
             .subscribe())
 }

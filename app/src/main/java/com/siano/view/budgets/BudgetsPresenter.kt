@@ -19,7 +19,7 @@ class BudgetsPresenter @Inject constructor(
 ) {
     private val openBudgetSubject = PublishSubject.create<Budget>()
 
-    private val budgetsSingle = budgetDao.getBudgetsSingle()
+    private val budgetsSingle = budgetDao.budgetsObservable
         .observeOn(uiScheduler)
 
     val itemsObservable: Observable<List<BaseAdapterItem>> = budgetsSingle
