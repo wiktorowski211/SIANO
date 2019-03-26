@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="progressOverlay">#98000000</color>
+    <color name="colorPrimaryDark">#3f698d</color>
+    <color name="colorPrimaryLight">#3e688c</color>
+    <color name="colorAccent">#0568a6</color>
+    <color name="colorPrimary">#222222</color>
+
+    <color name="colorBackground">#eee9e9</color>
+    <color name="radiusBudgetColor">#EFEFEF</color>
+    <color name="progressOverlay">#126d8c</color>
 </resources>

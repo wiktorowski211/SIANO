@@ -20,11 +20,11 @@ class BudgetDao @Inject constructor(
     fun getBudgetsSingle(): Single<Either<DefaultError, List<Budget>>> =
         Single.just(
             listOf(
-                Budget(1, "Wyjazd", "#ffffff", 1),
-                Budget(2, "Kupony", "#999999", 2),
-                Budget(3, "Zajazd", "#555555", 2),
-                Budget(4, "Grill", "#333333", 1),
-                Budget(5, "Prezenty", "#321331", 3)
+                Budget(1, "Wyjazd", "#eee9e9", 1),
+                Budget(2, "Kupony", "#dcccdc", 2),
+                Budget(3, "Zajazd", "#bdb76b", 2),
+                Budget(4, "Grill", "#00fa9a", 1),
+                Budget(5, "Prezenty", "#3cb371", 3)
             )
         )
             .subscribeOn(networkScheduler)
