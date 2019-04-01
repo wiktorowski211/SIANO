@@ -32,4 +32,11 @@
 
     </LinearLayout>
 
+    <LinearLayout
+            android:id="@+id/budget_color"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="4dp">
+    </LinearLayout>
+
 </androidx.cardview.widget.CardView>
