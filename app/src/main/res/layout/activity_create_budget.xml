@@ -41,20 +41,6 @@
             <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal">
-
-                <EditText
-                        android:id="@+id/create_budget_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/create_budget_name"
-                        android:inputType="text"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:layout_marginTop="15dp">
 
                 <EditText
@@ -65,6 +51,36 @@
                         android:inputType="text"/>
 
             </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal">
+
+                <EditText
+                        android:id="@+id/create_budget_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/create_budget_name"
+                        android:inputType="text" android:text="#777777"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        app:srcCompat="@drawable/colors"
+                        android:id="@+id/color_picker"
+                        android:layout_height="wrap_content" android:cropToPadding="true"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="@string/touch_to_choose" android:id="@+id/under_color_picker_text"/>
+
+            </LinearLayout>
+
 
         </LinearLayout>
 

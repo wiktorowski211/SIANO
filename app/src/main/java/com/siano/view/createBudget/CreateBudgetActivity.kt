@@ -3,7 +3,10 @@ package com.siano.view.createBudget
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Color
 import android.os.Bundle
+import android.view.MotionEvent
 import com.jakewharton.rxbinding3.appcompat.navigationClicks
 import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.widget.textChanges
@@ -23,6 +26,9 @@ class CreateBudgetActivity : BaseActivity() {
         fun newIntent(context: Context) = Intent(context, CreateBudgetActivity::class.java)
     }
 
+
+    private lateinit var bitmap: Bitmap
+
     @Inject
     lateinit var presenter: CreateBudgetPresenter
 
@@ -33,6 +39,26 @@ class CreateBudgetActivity : BaseActivity() {
         setContentView(R.layout.activity_create_budget)
 
         create_budget_activity_toolbar.inflateMenu(R.menu.create_budget_menu)
+
+
+        color_picker.isDrawingCacheEnabled = true
+        color_picker.buildDrawingCache(true)
+
+        color_picker.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_DOWN || event.action == MotionEvent.ACTION_MOVE) {
+                bitmap = color_picker.drawingCache
+                val pixel = bitmap.getPixel(event.x.toInt(), event.y.toInt())
+
+                val hex = "#" + Integer.toHexString(pixel).substring(2)
+
+                create_budget_color.setText(hex)
+                under_color_picker_text.setTextColor(Color.parseColor(hex))
+
+            }
+            true
+        }
+
+
 
         subscription.addAll(
             create_budget_name.textChanges()
@@ -67,3 +93,4 @@ class CreateBudgetActivity : BaseActivity() {
         abstract fun provideActivity(activity: CreateBudgetActivity): Activity
     }
 }
+

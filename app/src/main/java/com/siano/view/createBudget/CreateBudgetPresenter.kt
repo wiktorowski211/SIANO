@@ -16,8 +16,9 @@ class CreateBudgetPresenter @Inject constructor(
     val budgetsDao: BudgetDao,
     @UiScheduler uiScheduler: Scheduler
 ) {
+
     private val budgetNameSubject = BehaviorSubject.createDefault("")
-    private val budgetColorSubject = BehaviorSubject.createDefault("")
+    private val budgetColorSubject = BehaviorSubject.createDefault("#333333")
 
     private val saveBudgetSubject = PublishSubject.create<Unit>()
 

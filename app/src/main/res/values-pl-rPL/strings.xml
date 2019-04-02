@@ -19,4 +19,5 @@
     <string name="create_budget_name">Nazwa</string>
     <string name="create_budget_color">Kolor</string>
     <string name="delete">Usuń</string>
+    <string name="touch_to_choose">Dotknij aby zmienić</string>
 </resources>
