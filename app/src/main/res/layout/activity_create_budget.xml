@@ -61,7 +61,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/create_budget_name"
-                        android:inputType="text" android:text="#777777"/>
+                        android:inputType="text"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,12 +72,17 @@
                     android:orientation="vertical">
 
                 <ImageView
+                        android:id="@+id/color_picker"
+                        android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         app:srcCompat="@drawable/colors"
-                        android:id="@+id/color_picker"
-                        android:layout_height="wrap_content" android:cropToPadding="true"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                          android:text="@string/touch_to_choose" android:id="@+id/under_color_picker_text"/>
+                        android:cropToPadding="true"/>
+
+                <TextView
+                        android:id="@+id/under_color_picker_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/touch_to_choose"/>
 
             </LinearLayout>
 

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import com.jakewharton.rxbinding3.appcompat.navigationClicks
 import com.jakewharton.rxbinding3.view.clicks
@@ -45,17 +46,28 @@ class CreateBudgetActivity : BaseActivity() {
         color_picker.buildDrawingCache(true)
 
         color_picker.setOnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_DOWN || event.action == MotionEvent.ACTION_MOVE) {
-                bitmap = color_picker.drawingCache
-                val pixel = bitmap.getPixel(event.x.toInt(), event.y.toInt())
+            bitmap = color_picker.drawingCache
+            val width = bitmap.width
+            val height = bitmap.height
 
-                val hex = "#" + Integer.toHexString(pixel).substring(2)
+            try {
+                if (event.action == MotionEvent.ACTION_DOWN || event.action == MotionEvent.ACTION_MOVE) {
 
-                create_budget_color.setText(hex)
-                under_color_picker_text.setTextColor(Color.parseColor(hex))
+                    if (event.x in 0..width && event.y in 0..height){
+                        val pixel = bitmap.getPixel(event.x.toInt(), event.y.toInt())
 
+                        val hex = "#" + Integer.toHexString(pixel).substring(2)
+
+                        create_budget_color.setText(hex)
+                        under_color_picker_text.setTextColor(Color.parseColor(hex))
+                    }
+
+                    true
+                } else false
+            } catch (e: Exception) {
+                Log.wtf("zxc", e.message)
+                false
             }
-            true
         }
 
 
