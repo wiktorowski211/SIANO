@@ -27,7 +27,6 @@ class CreateBudgetActivity : BaseActivity() {
         fun newIntent(context: Context) = Intent(context, CreateBudgetActivity::class.java)
     }
 
-
     private lateinit var bitmap: Bitmap
 
     @Inject
@@ -41,7 +40,6 @@ class CreateBudgetActivity : BaseActivity() {
 
         create_budget_activity_toolbar.inflateMenu(R.menu.create_budget_menu)
 
-
         color_picker.isDrawingCacheEnabled = true
         color_picker.buildDrawingCache(true)
 
@@ -53,7 +51,7 @@ class CreateBudgetActivity : BaseActivity() {
             try {
                 if (event.action == MotionEvent.ACTION_DOWN || event.action == MotionEvent.ACTION_MOVE) {
 
-                    if (event.x in 0..width && event.y in 0..height){
+                    if (event.x in 0..width && event.y in 0..height) {
                         val pixel = bitmap.getPixel(event.x.toInt(), event.y.toInt())
 
                         val hex = "#" + Integer.toHexString(pixel).substring(2)
@@ -69,8 +67,6 @@ class CreateBudgetActivity : BaseActivity() {
                 false
             }
         }
-
-
 
         subscription.addAll(
             create_budget_name.textChanges()

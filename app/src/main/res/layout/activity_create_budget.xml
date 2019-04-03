@@ -41,6 +41,19 @@
             <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal">
+
+                <EditText
+                        android:id="@+id/create_budget_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:hint="@string/create_budget_name"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="15dp">
 
                 <EditText
@@ -48,19 +61,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/create_budget_color"
-                        android:inputType="text"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal">
-
-                <EditText
-                        android:id="@+id/create_budget_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/create_budget_name"
                         android:inputType="text"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -85,7 +85,6 @@
                         android:text="@string/touch_to_choose"/>
 
             </LinearLayout>
-
 
         </LinearLayout>
 
