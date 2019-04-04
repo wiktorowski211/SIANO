@@ -29,4 +29,113 @@
     <string name="create_budget_color">Color</string>
     <string name="delete">Delete</string>
     <string name="touch_to_choose">Touch to choose</string>
+
+
+
+    <!-- Categories -->
+    <!-- Business activity -->
+    <string name="business_activity">Business activity</string>
+    <string name="domain_or_hosting">Domain / hosting</string>
+    <string name="bookkeeping">Bookkeeping</string>
+    <string name="advertisement">Advertisement</string>
+
+    <!-- Investments -->
+    <string name="investments">Investments</string>
+    <string name="shares_or_funds">Shares / funds</string>
+
+    <!-- Food and drinks -->
+    <string name="food_and_drinks">Food and drinks</string>
+    <string name="at_home">At home</string>
+    <string name="to_the_city">Out</string>
+    <string name="at_work">At work</string>
+    <string name="fast_food">Fast food</string>
+
+    <!-- Communication -->
+    <string name="communication">Communication</string>
+    <string name="internet">Internet</string>
+    <string name="phone">Phone</string>
+    <string name="television">TV</string>
+
+    <!-- Home -->
+    <string name="home">Home</string>
+    <string name="cooperative_rent">Cooperative rent</string>
+    <string name="energy">Energy</string>
+    <string name="gas">Gas</string>
+    <string name="water">Water</string>
+    <string name="maintenance_of_the_flat">Maintenance of the flat</string>
+    <string name="rent">Rent</string>
+
+    <!-- Clothing -->
+    <string name="clothing">Clothing</string>
+    <string name="shoes">Shoes</string>
+    <string name="clothes">Clothes</string>
+
+    <!-- Bank fees and commissions -->
+    <string name="bank_fees_and_commissions">Bank fees and commissions</string>
+    <string name="charges">Charges</string>
+
+    <!-- Taxes -->
+    <string name="taxes">Taxes</string>
+    <string name="pit">PIT</string>
+    <string name="vat">VAT</string>
+    <string name="zus">ZUS</string>
+    <string name="official_fees">Official fees</string>
+
+    <!-- Travels -->
+    <string name="travels">Travels</string>
+    <string name="attractions">Attractions</string>
+    <string name="travel_food_and_drinks">Food and drinks</string>
+    <string name="transport">Transport</string>
+    <string name="accommodation">Accommodation</string>
+
+    <!-- Hobby -->
+    <string name="hobby">Hobby</string>
+    <string name="hobby_clothing">Clothing</string>
+    <string name="accessories">Accessories</string>
+    <string name="items">Items</string>
+    <string name="tools">Tools</string>
+
+    <!-- Entertainment -->
+    <string name="entertainment">Entertainment</string>
+    <string name="alcohol">Alcohol</string>
+    <string name="drugs">Drugs</string>
+    <string name="games">Games</string>
+    <string name="cinema_or_theater">Cinema / theater</string>
+    <string name="concerts_or_parties">Concerts / parties</string>
+    <string name="books_or_press">Books / press</string>
+    <string name="subscription">Subscription</string>
+
+    <!-- Car -->
+    <string name="car">Car</string>
+    <string name="wash">Wash</string>
+    <string name="fuel">Fuel</string>
+    <string name="parking">Parking</string>
+    <string name="inspections_and_mechanics">Inspections and mechanics</string>
+    <string name="ac_insurance">AC insurance</string>
+    <string name="third_party_liability_insurance">OC insurance</string>
+    <string name="other_consumables">Other consumables</string>
+
+    <!-- Public transport -->
+    <string name="public_transport">Public transport</string>
+    <string name="bus_or_bus">Bus / bus</string>
+    <string name="train">Train</string>
+    <string name="city_bike">City bike</string>
+    <string name="plane">Plane</string>
+    <string name="car_sharing">Car sharing</string>
+    <string name="taxis">Taxi</string>
+
+    <!-- Health and hygiene -->
+    <string name="health_and_hygiene">Health and hygiene</string>
+    <string name="health_accessories">Accessories</string>
+    <string name="dentist">Dentist</string>
+    <string name="hairdresser">Hairdresser</string>
+    <string name="sports_events">Sports events</string>
+    <string name="cosmetics">Cosmetics</string>
+    <string name="medicines">Medicine</string>
+
+    <!-- Other -->
+    <string name="other">Other</string>
+    <string name="charity">Charity</string>
+    <string name="gift">Gift</string>
+    <string name="other_other">Other</string>
 </resources>
