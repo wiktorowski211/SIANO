@@ -1,8 +1,8 @@
 package com.siano.api.model
 
-data class BudgetUser(
+data class Member(
     val id: Long,
     val name: String,
-    val budgetId: Long,
-    val userId: Long?
+    val budget_id: Long,
+    val user_id: Long?
 )
