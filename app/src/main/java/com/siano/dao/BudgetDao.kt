@@ -25,7 +25,7 @@ class BudgetDao @Inject constructor(
 
     private val storedItems: Observable<List<Budget>> = Observable.just(
         listOf(
-            Budget(1, "Wyjazd", "#ffffff", 1),
+            Budget(1, "Wyjazd", "#f213ff", 1),
             Budget(2, "Kupony", "#999999", 2),
             Budget(3, "Zajazd", "#555555", 2),
             Budget(4, "Grill", "#333333", 1),

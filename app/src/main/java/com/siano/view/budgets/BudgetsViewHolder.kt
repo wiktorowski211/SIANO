@@ -1,5 +1,6 @@
 package com.siano.view.budgets
 
+import android.graphics.Color
 import android.view.View
 import com.jakewharton.rxbinding3.view.clicks
 import com.siano.base.DefinedViewHolder
@@ -13,6 +14,7 @@ class BudgetsViewHolder(itemView: View) : DefinedViewHolder<BudgetAdapterItem>(i
 
     override fun bindStatic(item: BudgetAdapterItem) {
         itemView.budget_name.text = item.budget.name
+        itemView.budget_color.setBackgroundColor(Color.parseColor(item.budget.color));
     }
 
     override fun bindDisposable(item: BudgetAdapterItem) = CompositeDisposable(
