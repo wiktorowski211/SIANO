@@ -71,11 +71,11 @@
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                <ImageView
+                <com.siano.base.ColorPicker
                         android:id="@+id/color_picker"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        app:srcCompat="@drawable/colors"
+                        android:src="@drawable/colors"
                         android:cropToPadding="true"/>
 
                 <TextView
