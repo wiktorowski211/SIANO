@@ -1,14 +1,13 @@
 package com.siano.view.transaction
 
-import android.util.Log
 import com.appunite.rx.dagger.UiScheduler
 import com.jacekmarchwicki.universaladapter.BaseAdapterItem
-import com.siano.api.model.BudgetUser
+import com.siano.api.model.Member
 import com.siano.api.model.ForWhat
 import com.siano.api.model.Transaction
 import com.siano.api.model.TransactionShare
 import com.siano.dagger.annotations.Scope
-import com.siano.dao.BudgetDao
+import com.siano.dao.MemberDao
 import com.siano.dao.TransactionDao
 import com.siano.utils.DefaultError
 import com.siano.utils.executeFromSingle
@@ -28,7 +27,7 @@ import javax.inject.Named
 @Scope.Activity
 class TransactionPresenter @Inject constructor(
     transactionDao: TransactionDao,
-    budgetDao: BudgetDao,
+    memberDao: MemberDao,
     @Named("budgetId") budgetId: Long,
     @UiScheduler uiScheduler: Scheduler
 ) {
@@ -40,28 +39,24 @@ class TransactionPresenter @Inject constructor(
     private val saveTransactionSubject = PublishSubject.create<Unit>()
     private val selectedPageChangedSubject = BehaviorSubject.createDefault(0)
 
-    private val contactsObservable: Observable<Either<DefaultError, List<BudgetUser>>> =
-        budgetDao.getBudgetUsersSingle()
+    private val membersObservable: Observable<Either<DefaultError, List<Member>>> =
+        memberDao.getBudgetMembersObservable(budgetId.toString())
             .observeOn(uiScheduler)
-            .toObservable()
             .replay()
             .refCount()
 
-    val fromWhomItemsObservable: Observable<List<BaseAdapterItem>> = contactsObservable
+    val fromWhomItemsObservable: Observable<List<BaseAdapterItem>> = membersObservable
         .onlyRight()
-        .map { contacts -> contacts.map { TransactionShare(0.0, it) } }
-        .map { shares -> shares.map { TransactionAdapterItem(it, fromWhomSubject) } }
+        .map { members -> members.map { TransactionAdapterItem(it, fromWhomSubject) } }
 
-    val toWhomItemsObservable: Observable<List<BaseAdapterItem>> = contactsObservable
+    val toWhomItemsObservable: Observable<List<BaseAdapterItem>> = membersObservable
         .onlyRight()
-        .map { contacts -> contacts.map { TransactionShare(0.0, it) } }
-        .map { shares -> shares.map { TransactionAdapterItem(it, toWhomSubject) } }
-
+        .map { members -> members.map { TransactionAdapterItem(it, toWhomSubject) } }
 
     private val fromWhomSelectedItemsObservable: Observable<List<TransactionShare>> = fromWhomSubject
         .scan(listOf<TransactionShare>()) { items, item ->
             listOf<TransactionShare>()
-                .plus(items.filter { it.user != item.user })
+                .plus(items.filter { it.member_id != item.member_id })
                 .plus(item)
                 .filter { it.amount != 0.0 }
         }
@@ -71,8 +66,8 @@ class TransactionPresenter @Inject constructor(
     private val toWhomSelectedItemsObservable: Observable<List<TransactionShare>> = toWhomSubject
         .scan(listOf<TransactionShare>()) { items, item ->
             listOf<TransactionShare>()
-                .plus(items.filter { it.user != item.user })
-                .plus(TransactionShare(-item.amount, item.user))
+                .plus(items.filter { it.member_id != item.member_id })
+                .plus(TransactionShare(-item.amount, item.member_id))
                 .filter { it.amount != 0.0 }
         }
         .replay()
@@ -89,7 +84,7 @@ class TransactionPresenter @Inject constructor(
             .replay()
             .refCount()
 
-    private val createTransactionResponseObservable = saveTransactionSubject
+    private val createTransactionResponseObservable: Observable<Either<DefaultError, Unit>> = saveTransactionSubject
         .withLatestFrom(
             fromWhomSelectedItemsObservable,
             forWhatObservable,
@@ -101,9 +96,8 @@ class TransactionPresenter @Inject constructor(
 
             Transaction(budgetId, forWhat.title, forWhat.category, shares)
         }
-        .switchMapSingle {
-            it.shares.map { share -> Log.wtf("zxc", "${share.user} ${share.amount}") }
-            transactionDao.addTransactionSingle(it)
+        .switchMap {
+            transactionDao.createTransactionObservable(budgetId.toString(), it).observeOn(uiScheduler)
         }
         .replay()
         .refCount()
