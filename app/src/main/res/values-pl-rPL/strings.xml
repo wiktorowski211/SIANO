@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SIANO</string>
+    <string name="menu_next">Dalej</string>
+    <string name="menu_save">Zapisz</string>
+    <string name="username">Login</string>
+    <string name="password">Hasło</string>
+    <string name="create_transaction">Dodaj płatność</string>
+    <string name="from_whom">Od kogo</string>
+    <string name="for_what">Za co</string>
+    <string name="to_whom">Za kogo</string>
+    <string name="transaction_title">Tytuł</string>
+    <string name="transaction_category">Kategoria</string>
+    <string name="transaction_total_amount">Suma %1$szł</string>
+    <string name="transaction_remaining_amount">Pozostało do rozdzielenia %1$szł</string>
+    <string name="budgets_title">Budżety</string>
+    <string name="budget_title">Budżet</string>
+    <string name="create_budget_title">Dodaj budżet</string>
+    <string name="create_budget_name">Nazwa</string>
+    <string name="create_budget_color">Kolor</string>
+    <string name="delete">Usuń</string>
+    <string name="touch_to_choose">Dotknij aby zmienić</string>
+</resources>
