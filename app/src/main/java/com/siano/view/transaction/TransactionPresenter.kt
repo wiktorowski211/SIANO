@@ -7,7 +7,7 @@ import com.siano.api.model.ForWhat
 import com.siano.api.model.Transaction
 import com.siano.api.model.TransactionShare
 import com.siano.dagger.annotations.Scope
-import com.siano.dao.BudgetDao
+import com.siano.dao.MemberDao
 import com.siano.dao.TransactionDao
 import com.siano.utils.DefaultError
 import com.siano.utils.executeFromSingle
@@ -27,7 +27,7 @@ import javax.inject.Named
 @Scope.Activity
 class TransactionPresenter @Inject constructor(
     transactionDao: TransactionDao,
-    budgetDao: BudgetDao,
+    memberDao: MemberDao,
     @Named("budgetId") budgetId: Long,
     @UiScheduler uiScheduler: Scheduler
 ) {
@@ -39,19 +39,19 @@ class TransactionPresenter @Inject constructor(
     private val saveTransactionSubject = PublishSubject.create<Unit>()
     private val selectedPageChangedSubject = BehaviorSubject.createDefault(0)
 
-    private val contactsObservable: Observable<Either<DefaultError, List<Member>>> =
-        budgetDao.getMembersObservable()
+    private val membersObservable: Observable<Either<DefaultError, List<Member>>> =
+        memberDao.getBudgetMembersObservable(budgetId.toString())
             .observeOn(uiScheduler)
             .replay()
             .refCount()
 
-    val fromWhomItemsObservable: Observable<List<BaseAdapterItem>> = contactsObservable
+    val fromWhomItemsObservable: Observable<List<BaseAdapterItem>> = membersObservable
         .onlyRight()
-        .map { contacts -> contacts.map { TransactionAdapterItem(it, fromWhomSubject) } }
+        .map { members -> members.map { TransactionAdapterItem(it, fromWhomSubject) } }
 
-    val toWhomItemsObservable: Observable<List<BaseAdapterItem>> = contactsObservable
+    val toWhomItemsObservable: Observable<List<BaseAdapterItem>> = membersObservable
         .onlyRight()
-        .map { contacts -> contacts.map { TransactionAdapterItem(it, toWhomSubject) } }
+        .map { members -> members.map { TransactionAdapterItem(it, toWhomSubject) } }
 
     private val fromWhomSelectedItemsObservable: Observable<List<TransactionShare>> = fromWhomSubject
         .scan(listOf<TransactionShare>()) { items, item ->

@@ -6,6 +6,7 @@ import com.siano.api.model.Budget
 import com.siano.api.model.Member
 import com.siano.api.model.Transaction
 import com.siano.dao.BudgetDao
+import com.siano.dao.MemberDao
 import com.siano.dao.TransactionDao
 import com.siano.utils.DefaultError
 import com.siano.utils.executeFromSingle
@@ -24,6 +25,7 @@ import javax.inject.Named
 class BudgetPresenter @Inject constructor(
     budgetDao: BudgetDao,
     transactionDao: TransactionDao,
+    memberDao: MemberDao,
     @Named("budgetId") val budgetId: Long,
     @UiScheduler uiScheduler: Scheduler
 ) {
@@ -43,7 +45,7 @@ class BudgetPresenter @Inject constructor(
             .observeOn(uiScheduler)
 
     private val membersObservable: Observable<Either<DefaultError, List<Member>>> =
-        budgetDao.getMembersObservable()
+        memberDao.getBudgetMembersObservable(budgetId.toString())
             .observeOn(uiScheduler)
             .replay()
             .refCount()
@@ -58,7 +60,7 @@ class BudgetPresenter @Inject constructor(
             it.map { member ->
                 val amount =
                     shares.filter { share -> share.member_id == member.id }.sumByDouble { share -> share.amount }
-                BudgetAdapterItem(member.name, amount)
+                BudgetAdapterItem(member.nickname, amount)
             }
         }
     }

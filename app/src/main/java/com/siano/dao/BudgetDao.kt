@@ -5,7 +5,6 @@ import com.siano.api.ApiService
 import com.siano.api.extractResponse
 import com.siano.api.model.Budget
 import com.siano.api.model.BudgetRequest
-import com.siano.api.model.Member
 import com.siano.utils.*
 import io.reactivex.Observable
 import io.reactivex.Scheduler
@@ -52,17 +51,4 @@ class BudgetDao @Inject constructor(
             .handleEitherRestErrors()
             .toObservable()
             .switchMapRight { refreshBudgetsSubject.executeFromSingle(Unit).toObservable() }
-
-    fun getMembersObservable(): Observable<Either<DefaultError, List<Member>>> =
-        Observable.just(
-            listOf(
-                Member(1, "Marek", 25, 1),
-                Member(2, "Czarek", 25, null),
-                Member(3, "Jarek", 25, 3),
-                Member(4, "Darek", 25, null),
-                Member(5, "Arek", 25, 5)
-            )
-        )
-            .subscribeOn(networkScheduler)
-            .handleEitherRestErrors()
 }

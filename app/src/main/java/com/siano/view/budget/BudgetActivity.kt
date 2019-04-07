@@ -45,7 +45,7 @@ class BudgetActivity : BaseActivity() {
 
     private val adapter = Rx2UniversalAdapter(
         listOf<ViewHolderManager>(
-            BaseViewHolderManager(R.layout.item_budget_contact, ::BudgetViewHolder, BudgetAdapterItem::class.java)
+            BaseViewHolderManager(R.layout.item_budget_member, ::BudgetViewHolder, BudgetAdapterItem::class.java)
         )
     )
 

@@ -3,8 +3,8 @@ package com.siano.dao
 import com.appunite.rx.dagger.NetworkScheduler
 import com.siano.api.ApiService
 import com.siano.api.extractResponse
-import com.siano.api.model.Transaction
-import com.siano.api.model.TransactionRequest
+import com.siano.api.model.Member
+import com.siano.api.model.MemberRequest
 import com.siano.utils.DefaultError
 import com.siano.utils.executeFromSingle
 import com.siano.utils.handleEitherRestErrors
@@ -17,27 +17,27 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TransactionDao @Inject constructor(
+class MemberDao @Inject constructor(
     private val apiService: ApiService,
     @NetworkScheduler private val networkScheduler: Scheduler
 ) {
-    private val refreshTransactionsSubject: BehaviorSubject<Unit> = BehaviorSubject.createDefault(Unit)
+    private val refreshBudgetMembersSubject: BehaviorSubject<Unit> = BehaviorSubject.createDefault(Unit)
 
-    fun getTransactionsObservable(budgetId: String): Observable<Either<DefaultError, List<Transaction>>> =
-        refreshTransactionsSubject
-            .switchMapSingle { apiService.getBudgetTransactions(budgetId).subscribeOn(networkScheduler) }
+    fun getBudgetMembersObservable(budgetId: String): Observable<Either<DefaultError, List<Member>>> =
+        refreshBudgetMembersSubject
+            .switchMapSingle { apiService.getBudgetMembers(budgetId).subscribeOn(networkScheduler) }
             .handleEitherRestErrors()
             .extractResponse()
             .replay()
             .refCount()
 
-    fun createTransactionObservable(
+    fun createBudgetMemberObservable(
         budgetId: String,
-        transaction: Transaction
+        member: Member
     ): Observable<Either<DefaultError, Unit>> =
-        apiService.createBudgetTransaction(budgetId, TransactionRequest(transaction))
+        apiService.createBudgetMember(budgetId, MemberRequest(member))
             .subscribeOn(networkScheduler)
             .handleEitherRestErrors()
             .toObservable()
-            .switchMapRight { refreshTransactionsSubject.executeFromSingle(Unit).toObservable() }
+            .switchMapRight { refreshBudgetMembersSubject.executeFromSingle(Unit).toObservable() }
 }

@@ -14,7 +14,7 @@ class TransactionViewHolder(itemView: View) : DefinedViewHolder<TransactionAdapt
         itemView.transaction_share_amount.textChanges().map { it.toString().toDoubleOrNull() ?: 0.0 }
 
     override fun bindStatic(item: TransactionAdapterItem) {
-        itemView.transaction_share_name.text = item.member.name
+        itemView.transaction_share_name.text = item.member.nickname
     }
 
     override fun bindDisposable(item: TransactionAdapterItem) = CompositeDisposable(

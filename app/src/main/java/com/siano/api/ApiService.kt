@@ -32,9 +32,15 @@ interface ApiService {
     fun getBudgetTransactions(@Path("budget_id") budgetId: String): Single<Response<List<Transaction>>>
 
     @POST("api/budgets/{budget_id}/transactions")
-    fun createTransaction(@Path("budget_id") budgetId: String, @Body request: TransactionRequest): Single<Unit>
+    fun createBudgetTransaction(@Path("budget_id") budgetId: String, @Body request: TransactionRequest): Single<Unit>
 
     // Members
+
+    @GET("api/budgets/{budget_id}/members")
+    fun getBudgetMembers(@Path("budget_id") budgetId: String): Single<Response<List<Member>>>
+
+    @POST("api/budgets/{budget_id}/members")
+    fun createBudgetMember(@Path("budget_id") budgetId: String, @Body request: MemberRequest): Single<Unit>
 
     // Users
 }
