@@ -31,111 +31,190 @@
     <string name="touch_to_choose">Touch to choose</string>
 
 
-
     <!-- Categories -->
-    <!-- Business activity -->
-    <string name="business_activity">Business activity</string>
-    <string name="domain_or_hosting">Domain / hosting</string>
-    <string name="bookkeeping">Bookkeeping</string>
-    <string name="advertisement">Advertisement</string>
+    <string-array name="categories">
+        <item>Company: Domain</item>
+        <item>Company: Bookkeeping</item>
+        <item>Company: Advertisement</item>
 
-    <!-- Investments -->
-    <string name="investments">Investments</string>
-    <string name="shares_or_funds">Shares / funds</string>
+        <item>Investments: Shares</item>
 
-    <!-- Food and drinks -->
-    <string name="food_and_drinks">Food and drinks</string>
-    <string name="at_home">At home</string>
-    <string name="to_the_city">Out</string>
-    <string name="at_work">At work</string>
-    <string name="fast_food">Fast food</string>
+        <item>Food: At home</item>
+        <item>Food: Out</item>
+        <item>Food: At work</item>
+        <item>Food: Fast food</item>
 
-    <!-- Communication -->
-    <string name="communication">Communication</string>
-    <string name="internet">Internet</string>
-    <string name="phone">Phone</string>
-    <string name="television">TV</string>
+        <item>Service: Internet</item>
+        <item>Service: Phone</item>
+        <item>Service: TV</item>
 
-    <!-- Home -->
-    <string name="home">Home</string>
-    <string name="cooperative_rent">Cooperative rent</string>
-    <string name="energy">Energy</string>
-    <string name="gas">Gas</string>
-    <string name="water">Water</string>
-    <string name="maintenance_of_the_flat">Maintenance of the flat</string>
-    <string name="rent">Rent</string>
+        <item>Home: Cooperative rent</item>
+        <item>Home: Energy</item>
+        <item>Home: Gas</item>
+        <item>Home: Water</item>
+        <item>Home: Maintenance of the flat</item>
+        <item>Home: Rent</item>
 
-    <!-- Clothing -->
-    <string name="clothing">Clothing</string>
-    <string name="shoes">Shoes</string>
-    <string name="clothes">Clothes</string>
+        <item>Clothing: Shoes</item>
+        <item>Clothing: Clothes</item>
 
-    <!-- Bank fees and commissions -->
-    <string name="bank_fees_and_commissions">Bank fees and commissions</string>
-    <string name="charges">Charges</string>
+        <item>Bank fees: Charges</item>
 
-    <!-- Taxes -->
-    <string name="taxes">Taxes</string>
-    <string name="pit">PIT</string>
-    <string name="vat">VAT</string>
-    <string name="zus">ZUS</string>
-    <string name="official_fees">Official fees</string>
+        <item>Taxes: PIT</item>
+        <item>Taxes: VAT</item>
+        <item>Taxes: ZUS</item>
+        <item>Taxes: Official fees</item>
 
-    <!-- Travels -->
-    <string name="travels">Travels</string>
-    <string name="attractions">Attractions</string>
-    <string name="travel_food_and_drinks">Food and drinks</string>
-    <string name="transport">Transport</string>
-    <string name="accommodation">Accommodation</string>
+        <item>Travel: Attractions</item>
+        <item>Travel: Food / drinks</item>
+        <item>Travel: Transport</item>
+        <item>Travel: Accommodation</item>
 
-    <!-- Hobby -->
-    <string name="hobby">Hobby</string>
-    <string name="hobby_clothing">Clothing</string>
-    <string name="accessories">Accessories</string>
-    <string name="items">Items</string>
-    <string name="tools">Tools</string>
+        <item>Hobby: Clothing</item>
+        <item>Hobby: Accessories</item>
+        <item>Hobby: Items</item>
+        <item>Hobby: Tools</item>
 
-    <!-- Entertainment -->
-    <string name="entertainment">Entertainment</string>
-    <string name="alcohol">Alcohol</string>
-    <string name="drugs">Drugs</string>
-    <string name="games">Games</string>
-    <string name="cinema_or_theater">Cinema / theater</string>
-    <string name="concerts_or_parties">Concerts / parties</string>
-    <string name="books_or_press">Books / press</string>
-    <string name="subscription">Subscription</string>
+        <item>Entertainment: Alcohol</item>
+        <item>Entertainment: Drugs</item>
+        <item>Entertainment: Games</item>
+        <item>Entertainment: Theater</item>
+        <item>Entertainment: Cinema</item>
+        <item>Entertainment: Concerts</item>
+        <item>Entertainment: Books</item>
+        <item>Entertainment: Subscription</item>
 
-    <!-- Car -->
-    <string name="car">Car</string>
-    <string name="wash">Wash</string>
-    <string name="fuel">Fuel</string>
-    <string name="parking">Parking</string>
-    <string name="inspections_and_mechanics">Inspections and mechanics</string>
-    <string name="ac_insurance">AC insurance</string>
-    <string name="third_party_liability_insurance">OC insurance</string>
-    <string name="other_consumables">Other consumables</string>
+        <item>Car: Wash</item>
+        <item>Car: Fuel</item>
+        <item>Car: Parking</item>
+        <item>Car: Inspections and mechanics</item>
+        <item>Car: AC insurance</item>
+        <item>Car: OC insurance</item>
+        <item>Car: Other consumables</item>
 
-    <!-- Public transport -->
-    <string name="public_transport">Public transport</string>
-    <string name="bus_or_bus">Bus / bus</string>
-    <string name="train">Train</string>
-    <string name="city_bike">City bike</string>
-    <string name="plane">Plane</string>
-    <string name="car_sharing">Car sharing</string>
-    <string name="taxis">Taxi</string>
+        <item>Transport: Bus</item>
+        <item>Transport: Train</item>
+        <item>Transport: City bike</item>
+        <item>Transport: Plane</item>
+        <item>Transport: Car sharing</item>
+        <item>Transport: Taxi</item>
 
-    <!-- Health and hygiene -->
-    <string name="health_and_hygiene">Health and hygiene</string>
-    <string name="health_accessories">Accessories</string>
-    <string name="dentist">Dentist</string>
-    <string name="hairdresser">Hairdresser</string>
-    <string name="sports_events">Sports events</string>
-    <string name="cosmetics">Cosmetics</string>
-    <string name="medicines">Medicine</string>
+        <item>Health: Accessories</item>
+        <item>Health: Dentist</item>
+        <item>Health: Hairdresser</item>
+        <item>Health: Sports events</item>
+        <item>Health: Cosmetics</item>
+        <item>Health: Medicine</item>
 
-    <!-- Other -->
-    <string name="other">Other</string>
-    <string name="charity">Charity</string>
-    <string name="gift">Gift</string>
-    <string name="other_other">Other</string>
+        <item>Other: Charity</item>
+        <item>Other: Gift</item>
+        <item>Other: Other</item>
+    </string-array>
+
+    <!--&lt;!&ndash; Categories &ndash;&gt;-->
+    <!--&lt;!&ndash; Business activity &ndash;&gt;-->
+    <!--<string name="business_activity">Business activity</string>-->
+    <!--<string name="domain_or_hosting">Domain / hosting</string>-->
+    <!--<string name="bookkeeping">Bookkeeping</string>-->
+    <!--<string name="advertisement">Advertisement</string>-->
+
+    <!--&lt;!&ndash; Investments &ndash;&gt;-->
+    <!--<string name="investments">Investments</string>-->
+    <!--<string name="shares_or_funds">Shares / funds</string>-->
+
+    <!--&lt;!&ndash; Food and drinks &ndash;&gt;-->
+    <!--<string name="food_and_drinks">Food and drinks</string>-->
+    <!--<string name="at_home">At home</string>-->
+    <!--<string name="to_the_city">Out</string>-->
+    <!--<string name="at_work">At work</string>-->
+    <!--<string name="fast_food">Fast food</string>-->
+
+    <!--&lt;!&ndash; Communication &ndash;&gt;-->
+    <!--<string name="communication">Communication</string>-->
+    <!--<string name="internet">Internet</string>-->
+    <!--<string name="phone">Phone</string>-->
+    <!--<string name="television">TV</string>-->
+
+    <!--&lt;!&ndash; Home &ndash;&gt;-->
+    <!--<string name="home">Home</string>-->
+    <!--<string name="cooperative_rent">Cooperative rent</string>-->
+    <!--<string name="energy">Energy</string>-->
+    <!--<string name="gas">Gas</string>-->
+    <!--<string name="water">Water</string>-->
+    <!--<string name="maintenance_of_the_flat">Maintenance of the flat</string>-->
+    <!--<string name="rent">Rent</string>-->
+
+    <!--&lt;!&ndash; Clothing &ndash;&gt;-->
+    <!--<string name="clothing">Clothing</string>-->
+    <!--<string name="shoes">Shoes</string>-->
+    <!--<string name="clothes">Clothes</string>-->
+
+    <!--&lt;!&ndash; Bank fees and commissions &ndash;&gt;-->
+    <!--<string name="bank_fees_and_commissions">Bank fees and commissions</string>-->
+    <!--<string name="charges">Charges</string>-->
+
+    <!--&lt;!&ndash; Taxes &ndash;&gt;-->
+    <!--<string name="taxes">Taxes</string>-->
+    <!--<string name="pit">PIT</string>-->
+    <!--<string name="vat">VAT</string>-->
+    <!--<string name="zus">ZUS</string>-->
+    <!--<string name="official_fees">Official fees</string>-->
+
+    <!--&lt;!&ndash; Travels &ndash;&gt;-->
+    <!--<string name="travels">Travels</string>-->
+    <!--<string name="attractions">Attractions</string>-->
+    <!--<string name="travel_food_and_drinks">Food and drinks</string>-->
+    <!--<string name="transport">Transport</string>-->
+    <!--<string name="accommodation">Accommodation</string>-->
+
+    <!--&lt;!&ndash; Hobby &ndash;&gt;-->
+    <!--<string name="hobby">Hobby</string>-->
+    <!--<string name="hobby_clothing">Clothing</string>-->
+    <!--<string name="accessories">Accessories</string>-->
+    <!--<string name="items">Items</string>-->
+    <!--<string name="tools">Tools</string>-->
+
+    <!--&lt;!&ndash; Entertainment &ndash;&gt;-->
+    <!--<string name="entertainment">Entertainment</string>-->
+    <!--<string name="alcohol">Alcohol</string>-->
+    <!--<string name="drugs">Drugs</string>-->
+    <!--<string name="games">Games</string>-->
+    <!--<string name="cinema_or_theater">Cinema / theater</string>-->
+    <!--<string name="concerts_or_parties">Concerts / parties</string>-->
+    <!--<string name="books_or_press">Books / press</string>-->
+    <!--<string name="subscription">Subscription</string>-->
+
+    <!--&lt;!&ndash; Car &ndash;&gt;-->
+    <!--<string name="car">Car</string>-->
+    <!--<string name="wash">Wash</string>-->
+    <!--<string name="fuel">Fuel</string>-->
+    <!--<string name="parking">Parking</string>-->
+    <!--<string name="inspections_and_mechanics">Inspections and mechanics</string>-->
+    <!--<string name="ac_insurance">AC insurance</string>-->
+    <!--<string name="third_party_liability_insurance">OC insurance</string>-->
+    <!--<string name="other_consumables">Other consumables</string>-->
+
+    <!--&lt;!&ndash; Public transport &ndash;&gt;-->
+    <!--<string name="public_transport">Public transport</string>-->
+    <!--<string name="bus_or_bus">Bus / bus</string>-->
+    <!--<string name="train">Train</string>-->
+    <!--<string name="city_bike">City bike</string>-->
+    <!--<string name="plane">Plane</string>-->
+    <!--<string name="car_sharing">Car sharing</string>-->
+    <!--<string name="taxis">Taxi</string>-->
+
+    <!--&lt;!&ndash; Health and hygiene &ndash;&gt;-->
+    <!--<string name="health_and_hygiene">Health and hygiene</string>-->
+    <!--<string name="health_accessories">Accessories</string>-->
+    <!--<string name="dentist">Dentist</string>-->
+    <!--<string name="hairdresser">Hairdresser</string>-->
+    <!--<string name="sports_events">Sports events</string>-->
+    <!--<string name="cosmetics">Cosmetics</string>-->
+    <!--<string name="medicines">Medicine</string>-->
+
+    <!--&lt;!&ndash; Other &ndash;&gt;-->
+    <!--<string name="other">Other</string>-->
+    <!--<string name="charity">Charity</string>-->
+    <!--<string name="gift">Gift</string>-->
+    <!--<string name="other_other">Other</string>-->
 </resources>

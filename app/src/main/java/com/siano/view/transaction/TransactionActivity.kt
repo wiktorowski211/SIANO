@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -26,6 +27,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposables
 import io.reactivex.disposables.SerialDisposable
 import kotlinx.android.synthetic.main.activity_transaction.*
+import kotlinx.android.synthetic.main.fragment_for_what.*
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -40,6 +42,24 @@ class TransactionActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transaction)
+
+        val categoriesArray = resources.getStringArray(R.array.categories)
+
+        var adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, categoriesArray)
+        auto_complete_textview.threshold=0
+        auto_complete_textview.setAdapter(adapter)
+        auto_complete_textview.setOnFocusChangeListener({ view, b ->  if(b) auto_complete_textview.showDropDown()})
+
+
+//        ArrayAdapter.createFromResource(
+//            this,
+//            categoriesArray,
+//            android.R.layout.simple_list_item_1
+//        ).also { adapter ->
+//            auto_complete_textview.threshold = 0
+//            auto_complete_textview!!.setAdapter(adapter)
+//            auto_complete_textview.setOnFocusChangeListener { view, b -> if (b) auto_complete_textview.showDropDown() }
+//        }
 
         transaction_activity_toolbar.inflateMenu(R.menu.transaction_menu)
 
