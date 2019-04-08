@@ -18,6 +18,7 @@ import com.siano.dagger.module.BaseActivityModule
 import com.siano.layoutmanager.MyLinearLayoutManager
 import com.siano.utils.ErrorHandler
 import com.siano.view.BaseActivity
+import com.siano.view.editBudget.EditBudgetActivity
 import com.siano.view.login.LoginActivity
 import com.siano.view.transaction.TransactionActivity
 import dagger.Binds
@@ -45,7 +46,7 @@ class BudgetActivity : BaseActivity() {
 
     private val adapter = Rx2UniversalAdapter(
         listOf<ViewHolderManager>(
-            BaseViewHolderManager(R.layout.item_budget_contact, ::BudgetViewHolder, BudgetAdapterItem::class.java)
+            BaseViewHolderManager(R.layout.item_budget_member, ::BudgetViewHolder, BudgetAdapterItem::class.java)
         )
     )
 
@@ -53,10 +54,10 @@ class BudgetActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_budget)
 
-        if (tokenPreferences.getToken().isEmpty()) {
-            finish()
-            startActivity(LoginActivity.newInstance(this))
-        }
+//        if (tokenPreferences.getToken().isEmpty()) {
+//            finish()
+//            startActivity(LoginActivity.newInstance(this))
+//        }
 
         setUpRecyclerView()
 
@@ -67,8 +68,10 @@ class BudgetActivity : BaseActivity() {
                 .subscribe { budget_activity_toolbar.title = it.name },
             presenter.itemsObservable
                 .subscribe(adapter),
-            presenter.deleteBudgetObservable
+            presenter.deleteSuccessObservable()
                 .subscribe { finish() },
+            presenter.deleteErrorObservable()
+                .subscribe(ErrorHandler.show(budget_main_view)),
             presenter.errorObservable
                 .subscribe(ErrorHandler.show(budget_main_view)),
             budget_create_transaction_button.clicks()
@@ -76,6 +79,8 @@ class BudgetActivity : BaseActivity() {
             budget_activity_toolbar.menu.findItem(R.id.budget_menu_delete).clicks()
                 .switchMapSingle { presenter.deleteBudgetSingle() }
                 .subscribe(),
+            budget_activity_toolbar.menu.findItem(R.id.budget_menu_edit).clicks()
+                .subscribe { startActivity(EditBudgetActivity.newIntent(this, presenter.budgetId)) },
             budget_activity_toolbar.navigationClicks()
                 .subscribe { finish() }
         )

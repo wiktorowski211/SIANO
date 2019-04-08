@@ -1,15 +1,15 @@
 package com.siano.dagger.module
 
-import com.siano.BuildConfig
-import com.siano.TokenPreferences
-import com.siano.api.ApiService
-import com.siano.api.Constants
-import com.siano.api.interceptors.HttpLoggingInterceptor
 import com.appunite.rx.dagger.NetworkScheduler
 import com.appunite.rx.dagger.UiScheduler
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.siano.BuildConfig
+import com.siano.TokenPreferences
+import com.siano.api.ApiService
+import com.siano.api.Constants
+import com.siano.api.interceptors.HttpLoggingInterceptor
 import dagger.Module
 import dagger.Provides
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -32,17 +32,18 @@ class NetworkModule {
     fun provideOkHttpClient(cache: Cache, tokenPreferences: TokenPreferences): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor().setLevel(if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE)
         return OkHttpClient.Builder()
-                .cache(cache)
-                .addInterceptor { chain ->
-                    val builder = chain.request().newBuilder()
-                    builder?.addHeader("Accept", "application/vnd.github.v3+json")
-                    tokenPreferences.getToken()?.let { builder?.addHeader("Authorization", it) }
-                    chain.proceed(builder.build())
-                }
-                .addInterceptor(loggingInterceptor)
-                .readTimeout(15, TimeUnit.SECONDS)
-                .connectTimeout(15, TimeUnit.SECONDS)
-                .build()
+            .cache(cache)
+            .addInterceptor { chain ->
+                val builder = chain.request().newBuilder()
+                builder.addHeader("Content-Type", "application/json")
+                builder.addHeader("Authorization", "SFMyNTY.g3QAAAACZAAEZGF0YXQAAAABbQAAAApzZXNzaW9uX2lkYQVkAAZzaWduZWRuBgBnGsT8aQE.zW1OLE1o31l0-bnMjBoQ1FeoIrJxaaQV36pKVcN0H-E")
+                //tokenPreferences.get()?.let { builder.addHeader("Authorization", it) }
+                chain.proceed(builder.build())
+            }
+            .addInterceptor(loggingInterceptor)
+            .readTimeout(15, TimeUnit.SECONDS)
+            .connectTimeout(15, TimeUnit.SECONDS)
+            .build()
     }
 
     @Provides
@@ -55,22 +56,18 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideGson(): Gson {
-        return GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create()
-    }
+    fun provideGson(): Gson = GsonBuilder()
+        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        .create()
 
     @Provides
     @Singleton
-    fun provideRetrofit(gson: Gson, client: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-                .baseUrl(Constants.HOST_URL)
-                .client(client)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build()
-    }
+    fun provideRetrofit(gson: Gson, client: OkHttpClient): Retrofit = Retrofit.Builder()
+        .baseUrl(Constants.HOST_URL)
+        .client(client)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .build()
 
     @Provides
     @Singleton

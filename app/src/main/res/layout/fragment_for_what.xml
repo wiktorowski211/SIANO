@@ -23,28 +23,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp">
-
-        <!--<EditText-->
-                <!--android:id="@+id/transaction_category"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:hint="@string/transaction_category"-->
-                <!--android:inputType="text"/>-->
-
-        <EditText
-                android:id="@+id/transaction_category"
+        <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/transaction_category"
-                android:inputType="text"/>
+                android:text="@string/transaction_category" />
+
+        <Spinner
+                android:id="@+id/transaction_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/transaction_category"/>
 
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <AutoCompleteTextView
-            android:id="@+id/auto_complete_textview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/transaction_category"
-            android:layout_marginTop="20dp"/>
 </LinearLayout>

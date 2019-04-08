@@ -19,14 +19,14 @@ class BudgetsPresenter @Inject constructor(
 ) {
     private val openBudgetSubject = PublishSubject.create<Budget>()
 
-    private val budgetsSingle = budgetDao.budgetsObservable
+    private val budgetsObservable = budgetDao.getBudgetsObservable()
         .observeOn(uiScheduler)
 
-    val itemsObservable: Observable<List<BaseAdapterItem>> = budgetsSingle
+    val itemsObservable: Observable<List<BaseAdapterItem>> = budgetsObservable
         .onlyRight()
         .map { budgets -> budgets.map { BudgetAdapterItem(it, openBudgetSubject) } }
 
-    val errorObservable: Observable<Option<DefaultError>> = budgetsSingle
+    val errorObservable: Observable<Option<DefaultError>> = budgetsObservable
         .mapToLeftOption()
 
     fun openBudgetObservable(): Observable<Budget> = openBudgetSubject
