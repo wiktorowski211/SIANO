@@ -1,6 +1,7 @@
 package com.siano.dagger.module
 
 import com.siano.dagger.annotations.Scope
+import com.siano.view.addMember.AddMemberActivity
 import com.siano.view.budget.BudgetActivity
 import com.siano.view.budgets.BudgetsActivity
 import com.siano.view.createBudget.CreateBudgetActivity
@@ -41,4 +42,8 @@ abstract class ActivityModule {
     @Scope.Activity
     @ContributesAndroidInjector(modules = [(EditBudgetActivity.Module::class)])
     abstract fun provideEditBudgetActivity(): EditBudgetActivity
+
+    @Scope.Activity
+    @ContributesAndroidInjector(modules = [(AddMemberActivity.Module::class)])
+    abstract fun provideAddMemberActivity(): AddMemberActivity
 }

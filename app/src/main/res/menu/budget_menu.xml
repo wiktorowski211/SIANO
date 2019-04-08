@@ -9,4 +9,8 @@
             android:id="@+id/budget_menu_delete"
             android:title="@string/delete"
             app:showAsAction="never"/>
+    <item
+            android:id="@+id/budget_menu_add_member"
+            android:title="Dodaj użytkownika"
+            app:showAsAction="never"/>
 </menu>

@@ -18,6 +18,7 @@ import com.siano.dagger.module.BaseActivityModule
 import com.siano.layoutmanager.MyLinearLayoutManager
 import com.siano.utils.ErrorHandler
 import com.siano.view.BaseActivity
+import com.siano.view.addMember.AddMemberActivity
 import com.siano.view.editBudget.EditBudgetActivity
 import com.siano.view.login.LoginActivity
 import com.siano.view.transaction.TransactionActivity
@@ -54,10 +55,10 @@ class BudgetActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_budget)
 
-        if (tokenPreferences.getToken().isEmpty()) {
-            finish()
-            startActivity(LoginActivity.newInstance(this))
-        }
+//        if (tokenPreferences.getToken().isEmpty()) {
+  //          finish()
+    //        startActivity(LoginActivity.newInstance(this))
+      //  }
 
         setUpRecyclerView()
 
@@ -81,8 +82,11 @@ class BudgetActivity : BaseActivity() {
                 .subscribe(),
             budget_activity_toolbar.menu.findItem(R.id.budget_menu_edit).clicks()
                 .subscribe { startActivity(EditBudgetActivity.newIntent(this, presenter.budgetId)) },
+            budget_activity_toolbar.menu.findItem(R.id.budget_menu_add_member).clicks()
+                .subscribe { startActivity(AddMemberActivity.newIntent(this, presenter.budgetId)) },
             budget_activity_toolbar.navigationClicks()
                 .subscribe { finish() }
+
         )
     }
 

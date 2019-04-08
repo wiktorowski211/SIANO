@@ -35,8 +35,9 @@ class NetworkModule {
             .cache(cache)
             .addInterceptor { chain ->
                 val builder = chain.request().newBuilder()
-                builder?.addHeader("Content-Type", "application/json")
-                tokenPreferences.getToken()?.let { builder?.addHeader("Authorization", it) }
+                builder.addHeader("Content-Type", "application/json")
+                builder.addHeader("Authorization", "SFMyNTY.g3QAAAACZAAEZGF0YXQAAAABbQAAAApzZXNzaW9uX2lkYQVkAAZzaWduZWRuBgBnGsT8aQE.zW1OLE1o31l0-bnMjBoQ1FeoIrJxaaQV36pKVcN0H-E")
+                //tokenPreferences.get()?.let { builder.addHeader("Authorization", it) }
                 chain.proceed(builder.build())
             }
             .addInterceptor(loggingInterceptor)
