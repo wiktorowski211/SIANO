@@ -1,34 +1,23 @@
 package com.siano.view.landing.login
 
-import com.siano.TokenPreferences
-import com.siano.dao.AuthoDao
 import com.appunite.rx.dagger.UiScheduler
-import com.siano.utils.*
+import com.siano.dao.AuthDao
+import com.siano.utils.DefaultError
+import com.siano.utils.TokenUtils
 import io.reactivex.Observable
 import io.reactivex.Scheduler
-import org.funktionale.either.Either
+import io.reactivex.Single
 import org.funktionale.option.Option
 import javax.inject.Inject
-import javax.inject.Named
 
 class LoginPresenter @Inject constructor(
-    @Named("SignInClickObservable") signInClickObservable: Observable<Pair<String, String>>,
-    @UiScheduler uiScheduler: Scheduler,
-    tokenPreferences: TokenPreferences,
-    authoDao: AuthoDao
+    private val authDao: AuthDao,
+    @UiScheduler uiScheduler: Scheduler
 ) {
+    val successObservable: Observable<Unit> = authDao.loginSuccessObservable().observeOn(uiScheduler)
 
-    private val requestSignInObservable: Observable<Either<DefaultError, Unit>> = signInClickObservable
-        .doOnNext { pair -> tokenPreferences.edit().setToken(TokenUtils.create(pair.first, pair.second)) }
-        .switchMapSingle { authoDao.authorizeUser() }
-        .mapRight { Unit }
-        .observeOn(uiScheduler)
-        .replay()
-        .refCount()
+    val errorObservable: Observable<Option<DefaultError>> = authDao.loginFailedObservable().observeOn(uiScheduler)
 
-    val successObservable: Observable<Unit> = requestSignInObservable
-        .onlyRight()
-
-    val errorObservable: Observable<Option<DefaultError>> = requestSignInObservable
-        .mapToLeftOption()
+    fun loginSingle(username: String, password: String): Single<Unit> =
+        authDao.loginSingle(TokenUtils.create(username, password))
 }

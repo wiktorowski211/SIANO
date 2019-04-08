@@ -9,7 +9,6 @@ import com.jacekmarchwicki.universaladapter.ViewHolderManager
 import com.jakewharton.rxbinding3.appcompat.navigationClicks
 import com.jakewharton.rxbinding3.view.clicks
 import com.siano.R
-import com.siano.TokenPreferences
 import com.siano.base.BaseViewHolderManager
 import com.siano.base.Rx2UniversalAdapter
 import com.siano.dagger.annotations.DaggerAnnotation
@@ -19,7 +18,6 @@ import com.siano.layoutmanager.MyLinearLayoutManager
 import com.siano.utils.ErrorHandler
 import com.siano.view.BaseActivity
 import com.siano.view.editBudget.EditBudgetActivity
-import com.siano.view.landing.login.LoginActivity
 import com.siano.view.transaction.TransactionActivity
 import dagger.Binds
 import dagger.Provides
@@ -38,8 +36,6 @@ class BudgetActivity : BaseActivity() {
     }
 
     @Inject
-    lateinit var tokenPreferences: TokenPreferences
-    @Inject
     lateinit var presenter: BudgetPresenter
 
     private val subscription = CompositeDisposable()
@@ -53,11 +49,6 @@ class BudgetActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_budget)
-
-        if (tokenPreferences.getToken().isEmpty()) {
-            finish()
-            startActivity(LoginActivity.newInstance(this))
-        }
 
         setUpRecyclerView()
 

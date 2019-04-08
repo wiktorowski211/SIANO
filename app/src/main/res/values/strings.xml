@@ -6,6 +6,8 @@
     <string name="edit">Edit</string>
     <string name="name">Name</string>
     <string name="color">Color</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
     <string name="touch_to_choose">Touch to choose</string>
 
     <!-- Login -->

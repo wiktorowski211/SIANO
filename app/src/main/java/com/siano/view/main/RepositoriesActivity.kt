@@ -7,7 +7,6 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jacekmarchwicki.universaladapter.ViewHolderManager
 import com.siano.R
-import com.siano.TokenPreferences
 import com.siano.base.BaseViewHolderManager
 import com.siano.base.Rx2UniversalAdapter
 import com.siano.dagger.annotations.DaggerAnnotation
@@ -28,8 +27,6 @@ class RepositoriesActivity : BaseActivity() {
     }
 
     @Inject
-    lateinit var tokenPreferences: TokenPreferences
-    @Inject
     lateinit var presenter: RepositoriesPresenter
 
     private val subscription = CompositeDisposable()
@@ -43,11 +40,6 @@ class RepositoriesActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        if (tokenPreferences.getToken().isEmpty()) {
-            finish()
-            startActivity(LoginActivity.newInstance(this))
-        }
 
         setUpRecyclerView()
 

@@ -33,8 +33,6 @@ class LoginActivity : BaseActivity() {
 
     @Inject
     lateinit var presenter: LoginPresenter
-    @Inject
-    lateinit var tokenPreferences: TokenPreferences
 
     private val subscription = CompositeDisposable()
 
@@ -51,7 +49,7 @@ class LoginActivity : BaseActivity() {
                 .subscribe { startActivity(RepositoriesActivity.newIntent(this)) },
             presenter.errorObservable
                 .doOnNext(ErrorHandler.show(container))
-                .subscribe { tokenPreferences.edit().clear() }
+                .subscribe { tokenPreferences.clear() }
         )
     }
 

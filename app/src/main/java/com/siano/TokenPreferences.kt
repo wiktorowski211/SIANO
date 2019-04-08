@@ -1,7 +1,6 @@
 package com.siano
 
 import android.content.Context
-import android.content.SharedPreferences
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -9,24 +8,15 @@ import javax.inject.Singleton
 class TokenPreferences @Inject constructor(context: Context) {
 
     companion object {
-        const val PREFERENCES_ID = "auth_prefs"
-        const val TOKEN = "token"
+        const val PREFERENCES_ID = "authorization"
+        const val TOKEN = "auth_token"
     }
 
     private val sharedPreferences = context.getSharedPreferences(PREFERENCES_ID, 0)
 
-    fun edit(): Editor = Editor(sharedPreferences)
+    fun get(): String = sharedPreferences.getString(TOKEN, "").orEmpty()
 
-    fun getToken(): String = sharedPreferences.getString(TOKEN, null).orEmpty()
+    fun set(token: String) = sharedPreferences.edit().putString(TOKEN, token).apply()
 
-    inner class Editor(sharedPreferences: SharedPreferences) {
-        private val editor: SharedPreferences.Editor = sharedPreferences.edit()
-
-        fun setToken(token: String) = editor.putString(TOKEN, token).apply()
-
-        fun clear(): Editor {
-            editor.clear()
-            return this
-        }
-    }
+    fun clear() = sharedPreferences.edit().clear().apply()
 }

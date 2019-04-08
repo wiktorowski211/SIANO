@@ -17,6 +17,7 @@ object ErrorHandler {
 
             if (error != null) {
                 val message = when (error) {
+                    is NotLoggedInError -> "You have to login"
                     is NoNetworkError -> "No network connection"
                     is NotFoundError -> "Not found error"
                     is UnknownServerError -> "Server error ${error.message}"
@@ -44,6 +45,7 @@ fun Throwable.toDefaultError(): DefaultError = when (this) {
     is IOException -> NetworkError(this)
     is HttpException -> when(this.code()){
         404 -> NotFoundError
+        401 -> NotLoggedInError
         else ->UnknownServerError(this.message())
     }
     else -> UnknownClientError("Fatal error ( " + this.javaClass.name + " )")
@@ -58,7 +60,6 @@ object BlockedNetworkError : DefaultError
 object NotYetLoadedError : DefaultError
 object EmptyError : DefaultError
 object NotLoggedInError : DefaultError
-object LoggedOutError : DefaultError
 object SearchQueryEmptyError : DefaultError
 object SearchTooShortQueryError : DefaultError
 object NotFoundError : DefaultError
