@@ -5,7 +5,7 @@ import com.siano.view.budget.BudgetActivity
 import com.siano.view.budgets.BudgetsActivity
 import com.siano.view.createBudget.CreateBudgetActivity
 import com.siano.view.editBudget.EditBudgetActivity
-import com.siano.view.login.LoginActivity
+import com.siano.view.landing.login.LoginActivity
 import com.siano.view.main.RepositoriesActivity
 import com.siano.view.transaction.TransactionActivity
 import dagger.Module

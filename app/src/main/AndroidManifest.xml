@@ -66,7 +66,7 @@
         </activity>
 
         <activity
-                android:name=".view.login.LoginActivity"
+                android:name="com.siano.view.landing.login.LoginActivity"
                 android:windowSoftInputMode="adjustResize"/>
     </application>
 

@@ -19,7 +19,7 @@ import com.siano.layoutmanager.MyLinearLayoutManager
 import com.siano.utils.ErrorHandler
 import com.siano.view.BaseActivity
 import com.siano.view.editBudget.EditBudgetActivity
-import com.siano.view.login.LoginActivity
+import com.siano.view.landing.login.LoginActivity
 import com.siano.view.transaction.TransactionActivity
 import dagger.Binds
 import dagger.Provides

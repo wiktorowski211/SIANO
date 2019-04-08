@@ -18,7 +18,6 @@ import com.siano.utils.ErrorHandler
 import com.siano.view.BaseActivity
 import com.siano.view.budget.BudgetActivity
 import com.siano.view.createBudget.CreateBudgetActivity
-import com.siano.view.login.LoginActivity
 import dagger.Binds
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_budgets.*

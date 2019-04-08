@@ -15,8 +15,7 @@ import com.siano.dagger.module.BaseActivityModule
 import com.siano.layoutmanager.MyLinearLayoutManager
 import com.siano.utils.ErrorHandler
 import com.siano.view.BaseActivity
-import com.siano.view.login.LoginActivity
-import com.siano.view.transaction.TransactionActivity
+import com.siano.view.landing.login.LoginActivity
 import dagger.Binds
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*

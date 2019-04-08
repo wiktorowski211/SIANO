@@ -1,4 +1,4 @@
-package com.siano.view.login
+package com.siano.view.landing.login
 
 import android.app.Activity
 import android.content.Context

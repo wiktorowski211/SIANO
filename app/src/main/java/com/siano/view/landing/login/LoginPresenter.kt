@@ -1,4 +1,4 @@
-package com.siano.view.login
+package com.siano.view.landing.login
 
 import com.siano.TokenPreferences
 import com.siano.dao.AuthoDao
