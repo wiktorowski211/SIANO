@@ -32,6 +32,7 @@ class BudgetPresenter @Inject constructor(
     private val deleteBudgetSubject = PublishSubject.create<Unit>()
 
     private val findBudgetObservable: Observable<Either<DefaultError, Budget>> = budgetDao.getBudgetObservable(budgetId)
+        .observeOn(uiScheduler)
         .replay()
         .refCount()
 

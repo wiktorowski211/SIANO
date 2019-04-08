@@ -23,6 +23,9 @@ interface ApiService {
     @POST("api/budgets")
     fun createBudget(@Body request: BudgetRequest): Single<Unit>
 
+    @PUT("api/budgets/{budget_id}")
+    fun editBudget(@Path("budget_id") budgetId: String, @Body request: BudgetRequest): Single<Unit>
+
     @DELETE("api/budgets/{budget_id}")
     fun deleteBudget(@Path("budget_id") budgetId: String): Single<ResponseBody>
 

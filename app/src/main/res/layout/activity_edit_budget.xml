@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                                      xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                     android:id="@+id/create_budget_activity_content"
+                                                     android:id="@+id/edit_budget_activity_content"
                                                      android:layout_width="match_parent"
                                                      android:layout_height="match_parent">
 
@@ -13,8 +13,8 @@
             android:theme="@style/AppTheme.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
-                android:id="@+id/create_budget_activity_toolbar"
-                app:title="@string/create_budget_title"
+                android:id="@+id/edit_budget_activity_toolbar"
+                app:title="@string/edit_budget_title"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_weight="1"
@@ -27,7 +27,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/create_budget_main_view"
+            android:id="@+id/edit_budget_main_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -44,7 +44,7 @@
                     android:layout_gravity="center_horizontal">
 
                 <EditText
-                        android:id="@+id/create_budget_name"
+                        android:id="@+id/edit_budget_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
@@ -57,7 +57,7 @@
                     android:layout_marginTop="15dp">
 
                 <EditText
-                        android:id="@+id/create_budget_color"
+                        android:id="@+id/edit_budget_color"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/color"

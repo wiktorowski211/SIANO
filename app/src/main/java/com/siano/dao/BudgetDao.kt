@@ -45,6 +45,13 @@ class BudgetDao @Inject constructor(
             .toObservable()
             .switchMapRight { refreshBudgetsSubject.executeFromSingle(Unit).toObservable() }
 
+    fun editBudgetSingle(budget: Budget): Observable<Either<DefaultError, Unit>> =
+        apiService.editBudget(budget.id.toString(), BudgetRequest(budget))
+            .subscribeOn(networkScheduler)
+            .handleEitherRestErrors()
+            .toObservable()
+            .switchMapRight { refreshBudgetsSubject.executeFromSingle(Unit).toObservable() }
+
     fun deleteBudgetSingle(budgetId: Long): Observable<Either<DefaultError, Unit>> =
         apiService.deleteBudget(budgetId.toString())
             .subscribeOn(networkScheduler)
