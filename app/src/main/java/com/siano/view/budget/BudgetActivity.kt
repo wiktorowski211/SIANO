@@ -62,9 +62,9 @@ class BudgetActivity : AuthorizedActivity() {
             presenter.deleteSuccessObservable()
                 .subscribe { finish() },
             presenter.deleteErrorObservable()
-                .subscribe(ErrorHandler.show(budget_main_view)),
+                .subscribe(ErrorHandler.show(budget_main_view, this)),
             presenter.errorObservable
-                .subscribe(ErrorHandler.show(budget_main_view)),
+                .subscribe(ErrorHandler.show(budget_main_view, this)),
             budget_create_transaction_button.clicks()
                 .subscribe { startActivity(TransactionActivity.newIntent(this, presenter.budgetId)) },
             budget_activity_toolbar.menu.findItem(R.id.budget_menu_delete).clicks()

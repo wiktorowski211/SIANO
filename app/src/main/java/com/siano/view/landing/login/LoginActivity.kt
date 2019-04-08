@@ -4,25 +4,19 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import com.google.android.material.textfield.TextInputLayout
 import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.widget.textChanges
 import com.siano.R
 import com.siano.base.BaseActivity
 import com.siano.dagger.annotations.DaggerAnnotation
-import com.siano.dagger.annotations.Scope
 import com.siano.dagger.module.BaseActivityModule
+import com.siano.utils.ErrorHandler
+import com.siano.utils.translate
 import com.siano.view.budgets.BudgetsActivity
 import dagger.Binds
-import dagger.Provides
-import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.activity_landing.*
 import kotlinx.android.synthetic.main.login_activity.*
 import javax.inject.Inject
-import javax.inject.Named
 
 class LoginActivity : BaseActivity() {
 
@@ -41,16 +35,24 @@ class LoginActivity : BaseActivity() {
 
         subscription.addAll(
             username_edit_text.textChanges()
-                .subscribe { username_edit_text.error = null },
+                .switchMapSingle { presenter.usernameSingle(it.toString()) }
+                .subscribe(),
             password_edit_text.textChanges()
-                .subscribe { password_edit_text.error = null },
-            landing_activity_login_button.clicks()
+                .switchMapSingle { presenter.passwordSingle(it.toString()) }
+                .subscribe(),
+            login_activity_button.clicks()
                 .switchMapSingle { presenter.loginSingle() }
-            presenter.successObservable
+                .subscribe(),
+            presenter.loginSuccessObservable()
                 .subscribe {
-                    finish()
-                    startActivity(BudgetsActivity.newIntent(this))
-                }
+                    startActivity(BudgetsActivity.newIntent(this).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
+                },
+            presenter.loginFailedObservable()
+                .subscribe(ErrorHandler.show(login_activity_main_view, this)),
+            presenter.incorrectUsernameObservable()
+                .subscribe { username_edit_text.error = if (it.isDefined()) it.get().translate() else null },
+            presenter.incorrectPasswordObservable()
+                .subscribe { password_edit_text.error = if (it.isDefined()) it.get().translate() else null }
         )
     }
 
@@ -65,38 +67,5 @@ class LoginActivity : BaseActivity() {
         @Binds
         @DaggerAnnotation.ForActivity
         abstract fun provideActivity(activity: LoginActivity): Activity
-
-
-        @dagger.Module
-        companion object {
-
-            @JvmStatic
-            @Provides
-            @Scope.Activity
-            @Named("SignInClickObservable")
-            fun provideUserCredentials(activity: LoginActivity): Observable<Pair<String, String>> =
-                activity.findViewById<Button>(R.id.login_button).clicks()
-                    .map {
-                        Pair(
-                            activity.findViewById<EditText>(R.id.username_edit_text).text.toString(),
-                            activity.findViewById<EditText>(R.id.password_edit_text).text.toString()
-                        )
-                    }
-                    .filter { credentials ->
-                        when {
-                            credentials.first.isEmpty() -> {
-                                activity.findViewById<TextInputLayout>(R.id.username_edit_text).error =
-                                    "Cannot be empty"
-                                false
-                            }
-                            credentials.second.isEmpty() -> {
-                                activity.findViewById<TextInputLayout>(R.id.password_edit_text).error =
-                                    "Cannot be empty"
-                                false
-                            }
-                            else -> true
-                        }
-                    }.share()
-        }
     }
 }

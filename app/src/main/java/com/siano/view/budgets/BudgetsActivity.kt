@@ -49,7 +49,7 @@ class BudgetsActivity : AuthorizedActivity() {
             presenter.itemsObservable
                 .subscribe(adapter),
             presenter.errorObservable
-                .subscribe(ErrorHandler.show(budgets_main_view)),
+                .subscribe(ErrorHandler.show(budgets_main_view, this)),
             presenter.openBudgetObservable()
                 .subscribe { startActivity(BudgetActivity.newIntent(this, it.id)) },
             budgets_create_budget_button.clicks()

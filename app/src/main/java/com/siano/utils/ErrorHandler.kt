@@ -1,7 +1,10 @@
 package com.siano.utils
 
+import android.app.Activity
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
+import com.siano.view.landing.LandingActivity
+import com.siano.view.landing.login.LoginActivity
 import io.reactivex.Observable
 import io.reactivex.Single
 import org.funktionale.either.Either
@@ -10,23 +13,31 @@ import retrofit2.HttpException
 import java.io.IOException
 
 object ErrorHandler {
-    // TODO Error handling
-    fun show(view: View): (Option<DefaultError>) -> Unit {
-        return { throwable ->
-            val error = throwable.orNull()
+    fun show(view: View, activity: Activity): (Option<DefaultError>) -> Unit = { throwable ->
+        val error = throwable.orNull()
 
-            if (error != null) {
-                val message = when (error) {
-                    is NotLoggedInError -> "You have to login"
-                    is NoNetworkError -> "No network connection"
-                    is NotFoundError -> "Not found error"
-                    is UnknownServerError -> "Server error ${error.message}"
-                    else -> "Unknown error"
+        if (error != null) {
+            when {
+                error is NotLoggedInError && activity !is LoginActivity -> {
+                    activity.startActivity(LandingActivity.newInstance(activity))
                 }
-                Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
+                else -> {
+                    val message = error.translate()
+                    Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
+                }
             }
+
         }
     }
+}
+
+fun DefaultError.translate() = when (this) {
+    is EmptyInputError -> "This field cannot be empty"
+    is NotLoggedInError -> "Wrong username or password"
+    is NoNetworkError -> "No network connection"
+    is NotFoundError -> "Not found error"
+    is UnknownServerError -> "Server error ${this.message}"
+    else -> "Unknown error"
 }
 
 fun <T1> Single<T1>.handleEitherRestErrors(): Single<Either<DefaultError, T1>> =
@@ -43,10 +54,10 @@ fun Throwable.toDefaultError(): DefaultError = when (this) {
     is NoNetworkException -> NoNetworkError
     is BlockedNetworkException -> BlockedNetworkError
     is IOException -> NetworkError(this)
-    is HttpException -> when(this.code()){
+    is HttpException -> when (this.code()) {
         404 -> NotFoundError
         401 -> NotLoggedInError
-        else ->UnknownServerError(this.message())
+        else -> UnknownServerError(this.message())
     }
     else -> UnknownClientError("Fatal error ( " + this.javaClass.name + " )")
 }
@@ -59,6 +70,7 @@ object NoNetworkError : DefaultError
 object BlockedNetworkError : DefaultError
 object NotYetLoadedError : DefaultError
 object EmptyError : DefaultError
+object EmptyInputError : DefaultError
 object NotLoggedInError : DefaultError
 object SearchQueryEmptyError : DefaultError
 object SearchTooShortQueryError : DefaultError

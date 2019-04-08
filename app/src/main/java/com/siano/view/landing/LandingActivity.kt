@@ -14,6 +14,7 @@ class LandingActivity : AppCompatActivity() {
 
     companion object {
         fun newInstance(context: Context) = Intent(context, LandingActivity::class.java)
+            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
     }
 
     private val subscription = CompositeDisposable()

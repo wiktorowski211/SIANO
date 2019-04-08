@@ -61,7 +61,7 @@ class TransactionActivity : AuthorizedActivity() {
                         transaction_activity_toolbar.menu.findItem(R.id.transaction_menu_save).isVisible = it
                     },
                 presenter.errorObservable()
-                    .subscribe(ErrorHandler.show(transaction_activity_pager)),
+                    .subscribe(ErrorHandler.show(transaction_activity_pager, this)),
                 transaction_activity_toolbar.menu.findItem(R.id.transaction_menu_save).clicks()
                     .switchMapSingle { presenter.saveTransactionSingle() }
                     .subscribe(),

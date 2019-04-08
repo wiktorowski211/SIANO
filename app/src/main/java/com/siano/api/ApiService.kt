@@ -7,13 +7,10 @@ import retrofit2.http.*
 
 interface ApiService {
 
-   // Trash
+   // Auth
 
-    @GET("api/budgets")
-    fun authorizeUser(): Single<ResponseBody>
-
-    @GET("api/user/repos?affiliation=owner")
-    fun getUserRepositories(): Single<List<Repository>>
+    @POST("api/sessions")
+    fun authorizeUser(@Body request: SessionRequest): Single<AccessToken>
 
     // Budgets
 
