@@ -3,11 +3,8 @@ package com.siano.view.createBudget
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
-import android.view.MotionEvent
 import com.jakewharton.rxbinding3.appcompat.navigationClicks
 import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.widget.textChanges
@@ -27,8 +24,6 @@ class CreateBudgetActivity : BaseActivity() {
         fun newIntent(context: Context) = Intent(context, CreateBudgetActivity::class.java)
     }
 
-    private lateinit var bitmap: Bitmap
-
     @Inject
     lateinit var presenter: CreateBudgetPresenter
 
@@ -40,34 +35,6 @@ class CreateBudgetActivity : BaseActivity() {
 
         create_budget_activity_toolbar.inflateMenu(R.menu.create_budget_menu)
 
-        color_picker.isDrawingCacheEnabled = true
-        color_picker.buildDrawingCache(true)
-
-        color_picker.setOnTouchListener { v, event ->
-            bitmap = color_picker.drawingCache
-            val width = bitmap.width
-            val height = bitmap.height
-
-            try {
-                if (event.action == MotionEvent.ACTION_DOWN || event.action == MotionEvent.ACTION_MOVE) {
-
-                    if (event.x in 0..width && event.y in 0..height) {
-                        val pixel = bitmap.getPixel(event.x.toInt(), event.y.toInt())
-
-                        val hex = "#" + Integer.toHexString(pixel).substring(2)
-
-                        create_budget_color.setText(hex)
-                        under_color_picker_text.setTextColor(Color.parseColor(hex))
-                    }
-
-                    true
-                } else false
-            } catch (e: Exception) {
-                Log.wtf("zxc", e.message)
-                false
-            }
-        }
-
         subscription.addAll(
             create_budget_name.textChanges()
                 .switchMapSingle { presenter.setBudgetNameSingle(it.toString()) }
@@ -75,6 +42,11 @@ class CreateBudgetActivity : BaseActivity() {
             create_budget_color.textChanges()
                 .switchMapSingle { presenter.setBudgetColorSingle(it.toString()) }
                 .subscribe(),
+            color_picker.colorChanges()
+                .subscribe { hex ->
+                    create_budget_color.setText(hex)
+                    under_color_picker_text.setTextColor(Color.parseColor(hex))
+                },
             create_budget_activity_toolbar.menu.findItem(R.id.create_budget_menu_save).clicks()
                 .switchMapSingle { presenter.saveBudgetSingle() }
                 .subscribe(),

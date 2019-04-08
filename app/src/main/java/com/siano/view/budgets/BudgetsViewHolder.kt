@@ -14,11 +14,17 @@ class BudgetsViewHolder(itemView: View) : DefinedViewHolder<BudgetAdapterItem>(i
 
     override fun bindStatic(item: BudgetAdapterItem) {
         itemView.budget_name.text = item.budget.name
-        itemView.budget_color.setBackgroundColor(Color.parseColor(item.budget.color));
+        itemView.budget_color.setBackgroundColor(item.budget.color.orEmpty().toColor())
     }
 
     override fun bindDisposable(item: BudgetAdapterItem) = CompositeDisposable(
         itemClickObservable
             .switchMapSingle { item.itemClickSingle(item.budget) }
             .subscribe())
+}
+
+fun String.toColor(): Int = try {
+    Color.parseColor(this)
+} catch (e: Exception) {
+    Color.WHITE
 }
