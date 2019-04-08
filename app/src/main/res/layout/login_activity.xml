@@ -22,7 +22,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="80dp"
-                android:src="@drawable/github_logo" />
+                android:layout_marginBottom="25dp"
+                android:src="@drawable/splash_logo" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/username_text_input"
@@ -61,7 +62,7 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginBottom="25dp"
                 android:background="@color/colorPrimary"
                 android:foreground="?attr/selectableItemBackground"

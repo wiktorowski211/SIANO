@@ -11,13 +11,13 @@ import com.jakewharton.rxbinding3.widget.textChanges
 import com.siano.R
 import com.siano.dagger.annotations.DaggerAnnotation
 import com.siano.dagger.module.BaseActivityModule
-import com.siano.view.BaseActivity
+import com.siano.base.AuthorizedActivity
 import dagger.Binds
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_create_budget.*
 import javax.inject.Inject
 
-class CreateBudgetActivity : BaseActivity() {
+class CreateBudgetActivity : AuthorizedActivity() {
 
     companion object {
         fun newIntent(context: Context) = Intent(context, CreateBudgetActivity::class.java)

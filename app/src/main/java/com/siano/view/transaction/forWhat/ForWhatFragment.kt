@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.jakewharton.rxbinding3.widget.textChanges
 import com.siano.R
-import com.siano.view.BaseFragment
+import com.siano.base.BaseFragment
 import com.siano.view.transaction.TransactionPresenter
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposables

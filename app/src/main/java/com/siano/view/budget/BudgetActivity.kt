@@ -16,7 +16,7 @@ import com.siano.dagger.annotations.Scope
 import com.siano.dagger.module.BaseActivityModule
 import com.siano.layoutmanager.MyLinearLayoutManager
 import com.siano.utils.ErrorHandler
-import com.siano.view.BaseActivity
+import com.siano.base.AuthorizedActivity
 import com.siano.view.editBudget.EditBudgetActivity
 import com.siano.view.transaction.TransactionActivity
 import dagger.Binds
@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.activity_budget.*
 import javax.inject.Inject
 import javax.inject.Named
 
-class BudgetActivity : BaseActivity() {
+class BudgetActivity : AuthorizedActivity() {
 
     companion object {
         private const val EXTRA_BUDGET_ID = "budget_id"

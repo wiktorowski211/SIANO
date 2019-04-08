@@ -6,21 +6,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import com.siano.R
-import com.siano.TokenPreferences
-import com.siano.dagger.annotations.DaggerAnnotation
-import com.siano.dagger.annotations.Scope
-import com.siano.dagger.module.BaseActivityModule
-import com.siano.utils.ErrorHandler
-import com.siano.view.BaseActivity
-import com.siano.view.main.RepositoriesActivity
 import com.google.android.material.textfield.TextInputLayout
 import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.widget.textChanges
+import com.siano.R
+import com.siano.base.BaseActivity
+import com.siano.dagger.annotations.DaggerAnnotation
+import com.siano.dagger.annotations.Scope
+import com.siano.dagger.module.BaseActivityModule
+import com.siano.view.budgets.BudgetsActivity
 import dagger.Binds
 import dagger.Provides
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
+import kotlinx.android.synthetic.main.activity_landing.*
 import kotlinx.android.synthetic.main.login_activity.*
 import javax.inject.Inject
 import javax.inject.Named
@@ -45,11 +44,13 @@ class LoginActivity : BaseActivity() {
                 .subscribe { username_edit_text.error = null },
             password_edit_text.textChanges()
                 .subscribe { password_edit_text.error = null },
+            landing_activity_login_button.clicks()
+                .switchMapSingle { presenter.loginSingle() }
             presenter.successObservable
-                .subscribe { startActivity(RepositoriesActivity.newIntent(this)) },
-            presenter.errorObservable
-                .doOnNext(ErrorHandler.show(container))
-                .subscribe { tokenPreferences.clear() }
+                .subscribe {
+                    finish()
+                    startActivity(BudgetsActivity.newIntent(this))
+                }
         )
     }
 

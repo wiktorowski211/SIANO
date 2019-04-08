@@ -13,14 +13,14 @@ import com.siano.dagger.annotations.DaggerAnnotation
 import com.siano.dagger.module.BaseActivityModule
 import com.siano.layoutmanager.MyLinearLayoutManager
 import com.siano.utils.ErrorHandler
-import com.siano.view.BaseActivity
+import com.siano.base.AuthorizedActivity
 import com.siano.view.landing.login.LoginActivity
 import dagger.Binds
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class RepositoriesActivity : BaseActivity() {
+class RepositoriesActivity : AuthorizedActivity() {
 
     companion object {
         fun newIntent(context: Context) = Intent(context, RepositoriesActivity::class.java)

@@ -28,24 +28,12 @@ class AuthDao @Inject constructor(
         .replay()
         .refCount()
 
-    fun authorizeSuccessObservable(): Observable<Unit> = authorizedObservable
-        .onlyRight()
-
-    fun authorizeFailedObservable(): Observable<Option<DefaultError>> = authorizedObservable
-        .mapToLeftOption()
-        .filter {
-            when {
-                it.isDefined() -> it.get() is NotLoggedInError
-                else -> false
-            }
-        }
-        .doOnNext { if (it.isDefined()) tokenPreferences.clear() }
-
     fun loginSuccessObservable(): Observable<Unit> = authorizedObservable
         .onlyRight()
 
     fun loginFailedObservable(): Observable<Option<DefaultError>> = authorizedObservable
         .mapToLeftOption()
+        .doOnNext { if (it.isDefined()) tokenPreferences.clear() }
 
     fun loginSingle(token: String): Single<Unit> = authorizeSubject.executeFromSingle(token)
 }

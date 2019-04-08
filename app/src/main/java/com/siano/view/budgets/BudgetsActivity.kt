@@ -14,7 +14,7 @@ import com.siano.dagger.annotations.DaggerAnnotation
 import com.siano.dagger.module.BaseActivityModule
 import com.siano.layoutmanager.MyLinearLayoutManager
 import com.siano.utils.ErrorHandler
-import com.siano.view.BaseActivity
+import com.siano.base.AuthorizedActivity
 import com.siano.view.budget.BudgetActivity
 import com.siano.view.createBudget.CreateBudgetActivity
 import dagger.Binds
@@ -22,7 +22,7 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_budgets.*
 import javax.inject.Inject
 
-class BudgetsActivity : BaseActivity() {
+class BudgetsActivity : AuthorizedActivity() {
 
     companion object {
         fun newIntent(context: Context) = Intent(context, BudgetsActivity::class.java)
