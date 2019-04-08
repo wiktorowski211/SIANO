@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class CreateBudgetPresenter @Inject constructor(
     val budgetsDao: BudgetDao,
-    @UiScheduler uiScheduler: Scheduler
+    @UiScheduler val uiScheduler: Scheduler
 ) {
 
     private val budgetNameSubject = BehaviorSubject.createDefault("")
@@ -26,7 +26,8 @@ class CreateBudgetPresenter @Inject constructor(
 
     fun saveBudgetObservable(): Observable<Unit> = saveBudgetSubject
         .withLatestFrom(budgetNameSubject, budgetColorSubject) { _, name, color -> Budget(6, name, color, 1) }
-        .switchMapSingle { budgetsDao.addBudgetSingle(it) }
+        .switchMap { budgetsDao.createBudgetSingle(it).map { Unit } }
+        .observeOn(uiScheduler)
 
     fun setBudgetNameSingle(name: String): Single<Unit> = budgetNameSubject.executeFromSingle(name)
 

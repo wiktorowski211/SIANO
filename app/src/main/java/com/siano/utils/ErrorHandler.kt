@@ -6,6 +6,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import org.funktionale.either.Either
 import org.funktionale.option.Option
+import retrofit2.HttpException
 import java.io.IOException
 
 object ErrorHandler {
@@ -17,6 +18,7 @@ object ErrorHandler {
             if (error != null) {
                 val message = when (error) {
                     is NoNetworkError -> "No network connection"
+                    is NotFoundError -> "Not found error"
                     else -> "Unknown error"
                 }
                 Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
@@ -39,7 +41,11 @@ fun Throwable.toDefaultError(): DefaultError = when (this) {
     is NoNetworkException -> NoNetworkError
     is BlockedNetworkException -> BlockedNetworkError
     is IOException -> NetworkError(this)
-    else -> UnknownClientError("Fatal error ( " + this.javaClass.name + " )", this)
+    is HttpException -> when(this.code()){
+        404 -> NotFoundError
+        else ->UnknownServerError(this.message())
+    }
+    else -> UnknownClientError("Fatal error ( " + this.javaClass.name + " )")
 }
 
 // Errors
@@ -58,8 +64,8 @@ object NotFoundError : DefaultError
 data class LoggedOutUserError(val userId: String) : DefaultError
 data class NetworkError(val exception: IOException) : DefaultError
 data class NoPermissionError(val missingPermissions: List<String>) : DefaultError
-data class UnknownClientError(val userMessage: String, val info: Any? = null) : DefaultError
-data class UnknownServerError(val userMessage: String, val info: Any? = null) : DefaultError
+data class UnknownClientError(val userMessage: String) : DefaultError
+data class UnknownServerError(val userMessage: String) : DefaultError
 
 
 // Exceptions
