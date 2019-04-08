@@ -18,6 +18,7 @@ import com.siano.dagger.module.BaseActivityModule
 import com.siano.layoutmanager.MyLinearLayoutManager
 import com.siano.utils.ErrorHandler
 import com.siano.view.BaseActivity
+import com.siano.view.editBudget.EditBudgetActivity
 import com.siano.view.login.LoginActivity
 import com.siano.view.transaction.TransactionActivity
 import dagger.Binds
@@ -78,6 +79,8 @@ class BudgetActivity : BaseActivity() {
             budget_activity_toolbar.menu.findItem(R.id.budget_menu_delete).clicks()
                 .switchMapSingle { presenter.deleteBudgetSingle() }
                 .subscribe(),
+            budget_activity_toolbar.menu.findItem(R.id.budget_menu_edit).clicks()
+                .subscribe { startActivity(EditBudgetActivity.newIntent(this, presenter.budgetId)) },
             budget_activity_toolbar.navigationClicks()
                 .subscribe { finish() }
         )

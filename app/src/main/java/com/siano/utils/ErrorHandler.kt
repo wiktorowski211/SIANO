@@ -19,6 +19,7 @@ object ErrorHandler {
                 val message = when (error) {
                     is NoNetworkError -> "No network connection"
                     is NotFoundError -> "Not found error"
+                    is UnknownServerError -> "Server error ${error.message}"
                     else -> "Unknown error"
                 }
                 Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
@@ -64,8 +65,8 @@ object NotFoundError : DefaultError
 data class LoggedOutUserError(val userId: String) : DefaultError
 data class NetworkError(val exception: IOException) : DefaultError
 data class NoPermissionError(val missingPermissions: List<String>) : DefaultError
-data class UnknownClientError(val userMessage: String) : DefaultError
-data class UnknownServerError(val userMessage: String) : DefaultError
+data class UnknownClientError(val message: String) : DefaultError
+data class UnknownServerError(val message: String) : DefaultError
 
 
 // Exceptions

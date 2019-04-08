@@ -1,4 +1,4 @@
-package com.siano.view.createBudget
+package com.siano.view.editBudget
 
 import android.app.Activity
 import android.content.Context
@@ -13,31 +13,37 @@ import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.widget.textChanges
 import com.siano.R
 import com.siano.dagger.annotations.DaggerAnnotation
+import com.siano.dagger.annotations.Scope
 import com.siano.dagger.module.BaseActivityModule
 import com.siano.view.BaseActivity
 import dagger.Binds
+import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.activity_create_budget.*
+import kotlinx.android.synthetic.main.activity_edit_budget.*
 import javax.inject.Inject
+import javax.inject.Named
 
-class CreateBudgetActivity : BaseActivity() {
+class EditBudgetActivity : BaseActivity() {
 
     companion object {
-        fun newIntent(context: Context) = Intent(context, CreateBudgetActivity::class.java)
+        private const val EXTRA_BUDGET_ID = "budget_id"
+
+        fun newIntent(context: Context, budgetId: Long) = Intent(context, EditBudgetActivity::class.java)
+            .putExtra(EXTRA_BUDGET_ID, budgetId)
     }
 
     private lateinit var bitmap: Bitmap
 
     @Inject
-    lateinit var presenter: CreateBudgetPresenter
+    lateinit var presenter: EditBudgetPresenter
 
     private val subscription = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_budget)
+        setContentView(R.layout.activity_edit_budget)
 
-        create_budget_activity_toolbar.inflateMenu(R.menu.create_budget_menu)
+        edit_budget_activity_toolbar.inflateMenu(R.menu.edit_budget_menu)
 
         color_picker.isDrawingCacheEnabled = true
         color_picker.buildDrawingCache(true)
@@ -55,7 +61,7 @@ class CreateBudgetActivity : BaseActivity() {
 
                         val hex = "#" + Integer.toHexString(pixel).substring(2)
 
-                        create_budget_color.setText(hex)
+                        edit_budget_color.setText(hex)
                         under_color_picker_text.setTextColor(Color.parseColor(hex))
                     }
 
@@ -68,21 +74,23 @@ class CreateBudgetActivity : BaseActivity() {
         }
 
         subscription.addAll(
-            create_budget_name.textChanges()
+            presenter.budgetNameObservable
+                .subscribe { edit_budget_name.setText(it) },
+            presenter.budgetColorObservable
+                .subscribe { edit_budget_color.setText(it) },
+            edit_budget_name.textChanges()
                 .switchMapSingle { presenter.setBudgetNameSingle(it.toString()) }
                 .subscribe(),
-            create_budget_color.textChanges()
+            edit_budget_color.textChanges()
                 .switchMapSingle { presenter.setBudgetColorSingle(it.toString()) }
                 .subscribe(),
-            create_budget_activity_toolbar.menu.findItem(R.id.create_budget_menu_save).clicks()
+            edit_budget_activity_toolbar.menu.findItem(R.id.edit_budget_menu_save).clicks()
                 .switchMapSingle { presenter.saveBudgetSingle() }
                 .subscribe(),
             presenter.canSaveObservable()
-                .subscribe {
-                    create_budget_activity_toolbar.menu.findItem(R.id.create_budget_menu_save).isVisible = it
-                },
+                .subscribe { edit_budget_activity_toolbar.menu.findItem(R.id.edit_budget_menu_save).isVisible = it },
             presenter.saveBudgetObservable().subscribe { finish() },
-            create_budget_activity_toolbar.navigationClicks()
+            edit_budget_activity_toolbar.navigationClicks()
                 .subscribe { finish() }
         )
     }
@@ -97,7 +105,17 @@ class CreateBudgetActivity : BaseActivity() {
 
         @Binds
         @DaggerAnnotation.ForActivity
-        abstract fun provideActivity(activity: CreateBudgetActivity): Activity
+        abstract fun provideActivity(activity: EditBudgetActivity): Activity
+
+        @dagger.Module
+        companion object {
+
+            @JvmStatic
+            @Provides
+            @Scope.Activity
+            @Named("budgetId")
+            fun provideBudgetId(activity: EditBudgetActivity): Long =
+                checkNotNull(activity.intent.getLongExtra(EditBudgetActivity.EXTRA_BUDGET_ID, 0))
+        }
     }
 }
-

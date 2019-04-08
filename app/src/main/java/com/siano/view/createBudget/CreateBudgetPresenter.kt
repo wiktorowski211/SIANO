@@ -1,4 +1,4 @@
-package com.siano.view.main
+package com.siano.view.createBudget
 
 import com.appunite.rx.dagger.UiScheduler
 import com.siano.api.model.Budget
@@ -16,7 +16,6 @@ class CreateBudgetPresenter @Inject constructor(
     val budgetsDao: BudgetDao,
     @UiScheduler val uiScheduler: Scheduler
 ) {
-
     private val budgetNameSubject = BehaviorSubject.createDefault("")
     private val budgetColorSubject = BehaviorSubject.createDefault("#333333")
 
@@ -25,7 +24,7 @@ class CreateBudgetPresenter @Inject constructor(
     fun canSaveObservable(): Observable<Boolean> = budgetNameSubject.map { it.isNotBlank() }
 
     fun saveBudgetObservable(): Observable<Unit> = saveBudgetSubject
-        .withLatestFrom(budgetNameSubject, budgetColorSubject) { _, name, color -> Budget(6, name, color, 1) }
+        .withLatestFrom(budgetNameSubject, budgetColorSubject) { _, name, color -> Budget(0, name, color, 0) }
         .switchMap { budgetsDao.createBudgetSingle(it).map { Unit } }
         .observeOn(uiScheduler)
 
