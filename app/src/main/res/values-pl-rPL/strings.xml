@@ -16,8 +16,10 @@
     <string name="budgets_title">Budżety</string>
     <string name="budget_title">Budżet</string>
     <string name="create_budget_title">Dodaj budżet</string>
-    <string name="create_budget_name">Nazwa</string>
-    <string name="create_budget_color">Kolor</string>
+    <string name="edit">Edytuj</string>
+    <string name="name">Nazwa</string>
+    <string name="color">Kolor</string>
     <string name="delete">Usuń</string>
     <string name="touch_to_choose">Dotknij aby zmienić</string>
+    <string name="edit_budget_title">Edytuj budżet</string>
 </resources>

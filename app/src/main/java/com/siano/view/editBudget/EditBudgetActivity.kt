@@ -3,11 +3,8 @@ package com.siano.view.editBudget
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
-import android.view.MotionEvent
 import com.jakewharton.rxbinding3.appcompat.navigationClicks
 import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.widget.textChanges
@@ -32,8 +29,6 @@ class EditBudgetActivity : BaseActivity() {
             .putExtra(EXTRA_BUDGET_ID, budgetId)
     }
 
-    private lateinit var bitmap: Bitmap
-
     @Inject
     lateinit var presenter: EditBudgetPresenter
 
@@ -44,34 +39,6 @@ class EditBudgetActivity : BaseActivity() {
         setContentView(R.layout.activity_edit_budget)
 
         edit_budget_activity_toolbar.inflateMenu(R.menu.edit_budget_menu)
-
-        color_picker.isDrawingCacheEnabled = true
-        color_picker.buildDrawingCache(true)
-
-        color_picker.setOnTouchListener { v, event ->
-            bitmap = color_picker.drawingCache
-            val width = bitmap.width
-            val height = bitmap.height
-
-            try {
-                if (event.action == MotionEvent.ACTION_DOWN || event.action == MotionEvent.ACTION_MOVE) {
-
-                    if (event.x in 0..width && event.y in 0..height) {
-                        val pixel = bitmap.getPixel(event.x.toInt(), event.y.toInt())
-
-                        val hex = "#" + Integer.toHexString(pixel).substring(2)
-
-                        edit_budget_color.setText(hex)
-                        under_color_picker_text.setTextColor(Color.parseColor(hex))
-                    }
-
-                    true
-                } else false
-            } catch (e: Exception) {
-                Log.wtf("zxc", e.message)
-                false
-            }
-        }
 
         subscription.addAll(
             presenter.budgetNameObservable
@@ -84,6 +51,11 @@ class EditBudgetActivity : BaseActivity() {
             edit_budget_color.textChanges()
                 .switchMapSingle { presenter.setBudgetColorSingle(it.toString()) }
                 .subscribe(),
+            color_picker.colorChanges()
+                .subscribe { hex ->
+                    edit_budget_color.setText(hex)
+                    under_color_picker_text.setTextColor(Color.parseColor(hex))
+                },
             edit_budget_activity_toolbar.menu.findItem(R.id.edit_budget_menu_save).clicks()
                 .switchMapSingle { presenter.saveBudgetSingle() }
                 .subscribe(),
