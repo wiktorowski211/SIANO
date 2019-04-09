@@ -34,8 +34,6 @@
     <!-- Edit budget -->
     <string name="edit_budget_title">Edit budget</string>
 
-
-
     <!-- Categories -->
     <string-array name="categories">
         <item>Other</item>
