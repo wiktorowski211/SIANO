@@ -36,9 +36,9 @@ class ForWhatFragment : BaseFragment() {
 
         var categoriesArray = resources.getStringArray(R.array.categories)
 
-        val aa = ArrayAdapter(context, android.R.layout.simple_spinner_item, categoriesArray)
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        transaction_category.adapter = aa
+        val adapterArrayCategories = ArrayAdapter(context, android.R.layout.simple_spinner_item, categoriesArray)
+        adapterArrayCategories.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        transaction_category.adapter = adapterArrayCategories
 
         subscription.set(
             CompositeDisposable(
@@ -46,7 +46,7 @@ class ForWhatFragment : BaseFragment() {
                     .switchMapSingle { presenter.titleChangedSingle(it.toString()) }
                     .subscribe(),
                 transaction_category.itemSelections()
-                    .map { position -> aa.getItem(position).orEmpty() }
+                    .map { position -> position }
                     .switchMapSingle { presenter.categoryChangedSingle(it) }
                     .subscribe()
             )
