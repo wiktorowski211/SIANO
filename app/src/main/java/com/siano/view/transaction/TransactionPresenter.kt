@@ -32,7 +32,7 @@ class TransactionPresenter @Inject constructor(
     @UiScheduler uiScheduler: Scheduler
 ) {
     private val fromWhomSubject = PublishSubject.create<TransactionShare>()
-    private val categorySubject = PublishSubject.create<String>()
+    private val categorySubject = PublishSubject.create<Int>()
     private val toWhomSubject = PublishSubject.create<TransactionShare>()
     private val titleSubject = PublishSubject.create<String>()
 
@@ -75,8 +75,8 @@ class TransactionPresenter @Inject constructor(
 
     private val titleObservable: Observable<String> = titleSubject
 
-    private val categoryObservable: Observable<String> = categorySubject
-        .startWith("")
+    private val categoryObservable: Observable<Int> = categorySubject
+        .startWith(0)
 
 
     private val forWhatObservable: Observable<ForWhat> =
@@ -159,5 +159,5 @@ class TransactionPresenter @Inject constructor(
 
     fun titleChangedSingle(title: String) = titleSubject.executeFromSingle(title)
 
-    fun categoryChangedSingle(category: String) = categorySubject.executeFromSingle(category)
+    fun categoryChangedSingle(position: Int) = categorySubject.executeFromSingle(position)
 }
