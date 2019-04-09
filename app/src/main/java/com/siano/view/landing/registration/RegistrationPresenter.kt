@@ -40,6 +40,7 @@ class RegistrationPresenter @Inject constructor(
     private val passwordObservable: Observable<Either<DefaultError, String>> = passwordSubject.map {
         when {
             it.isBlank() -> Either.left(EmptyInputError)
+            it.length < 8 -> Either.left(PasswordToShortError)
             else -> Either.right(it)
         }
     }

@@ -32,6 +32,7 @@ object ErrorHandler {
 }
 
 fun DefaultError.translate() = when (this) {
+    is PasswordToShortError -> "Password must by at least 8 characters"
     is EmptyInputError -> "This field cannot be empty"
     is NotLoggedInError -> "Wrong username or password"
     is NoNetworkError -> "No network connection"
@@ -71,6 +72,7 @@ object BlockedNetworkError : DefaultError
 object NotYetLoadedError : DefaultError
 object EmptyError : DefaultError
 object EmptyInputError : DefaultError
+object PasswordToShortError : DefaultError
 object NotLoggedInError : DefaultError
 object SearchQueryEmptyError : DefaultError
 object SearchTooShortQueryError : DefaultError
