@@ -22,4 +22,61 @@
     <string name="delete">Usuń</string>
     <string name="touch_to_choose">Dotknij aby zmienić</string>
     <string name="edit_budget_title">Edytuj budżet</string>
+    <string name="add_member_title">Dodaj członka</string>
+    <string name="add_member">Dodaj członka</string>
+
+    <!-- Categories -->
+    <string-array name="categories">
+        <item>Inne</item>
+
+        <item>Firma</item>
+
+        <item>Jedzenie w domu</item>
+        <item>Jedzenie poza domem</item>
+
+        <item>Internet</item>
+        <item>Telefon</item>
+        <item>Telewizja</item>
+
+        <item>Czynsz</item>
+        <item>Energia</item>
+        <item>Gas</item>
+        <item>Woda</item>
+        <item>Utrzymanie mieszkania</item>
+
+        <item>Buty</item>
+        <item>Ubrania</item>
+
+        <item>Podatki</item>
+
+        <item>Atrakcje</item>
+        <item>Transport</item>
+        <item>Zakwaterowanie</item>
+
+        <item>Akcesoria</item>
+        <item>Hobby</item>
+
+        <item>Alkohol</item>
+        <item>Narkotyki</item>
+        <item>Gry</item>
+        <item>Teatr</item>
+        <item>Kino</item>
+        <item>Koncerty</item>
+        <item>Ksiązki</item>
+        <item>Subskrypcje</item>
+
+        <item>Utrzymanie samochodu</item>
+        <item>Paliwo</item>
+        <item>Parking</item>
+        <item>Ubezpieczenie samochodu</item>
+
+        <item>Opieka zdrowotna</item>
+        <item>Higiena</item>
+        <item>Sport</item>
+        <item>Kosmetyki</item>
+        <item>Leki</item>
+
+        <item>Charytatywne</item>
+        <item>Prezenty</item>
+    </string-array>
 </resources>

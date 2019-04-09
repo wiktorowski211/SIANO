@@ -35,4 +35,63 @@
 
     <!-- Edit budget -->
     <string name="edit_budget_title">Edit budget</string>
+
+    <!-- Add member -->
+    <string name="add_member_title">Add member</string>
+    <string name="add_member">Add member</string>
+
+    <!-- Categories -->
+    <string-array name="categories">
+        <item>Other</item>
+
+        <item>Company</item>
+
+        <item>Food at home</item>
+        <item>Food out</item>
+
+        <item>Internet</item>
+        <item>Phone</item>
+        <item>TV</item>
+
+        <item>Rent</item>
+        <item>Energy</item>
+        <item>Gas</item>
+        <item>Water</item>
+        <item>Flat maintenance</item>
+
+        <item>Shoes</item>
+        <item>Clothes</item>
+
+        <item>Fees</item>
+
+        <item>Attractions</item>
+        <item>Public transport</item>
+        <item>Accommodation</item>
+
+        <item>Accessories</item>
+        <item>Hobby</item>
+
+        <item>Alcohol</item>
+        <item>Drugs</item>
+        <item>Games</item>
+        <item>Theater</item>
+        <item>Cinema</item>
+        <item>Concerts</item>
+        <item>Books</item>
+        <item>Subscription</item>
+
+        <item>Car maintenance</item>
+        <item>Fuel</item>
+        <item>Parking</item>
+        <item>Car insurance</item>
+
+        <item>Health care</item>
+        <item>Hygiene</item>
+        <item>Sport</item>
+        <item>Cosmetics</item>
+        <item>Medicine</item>
+
+        <item>Charity</item>
+        <item>Gift</item>
+    </string-array>
 </resources>

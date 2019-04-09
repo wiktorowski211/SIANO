@@ -17,6 +17,7 @@ import com.siano.dagger.module.BaseActivityModule
 import com.siano.layoutmanager.MyLinearLayoutManager
 import com.siano.utils.ErrorHandler
 import com.siano.base.AuthorizedActivity
+import com.siano.view.addMember.AddMemberActivity
 import com.siano.view.editBudget.EditBudgetActivity
 import com.siano.view.transaction.TransactionActivity
 import dagger.Binds
@@ -72,6 +73,8 @@ class BudgetActivity : AuthorizedActivity() {
                 .subscribe(),
             budget_activity_toolbar.menu.findItem(R.id.budget_menu_edit).clicks()
                 .subscribe { startActivity(EditBudgetActivity.newIntent(this, presenter.budgetId)) },
+            budget_activity_toolbar.menu.findItem(R.id.budget_menu_add_member).clicks()
+                .subscribe { startActivity(AddMemberActivity.newIntent(this, presenter.budgetId)) },
             budget_activity_toolbar.navigationClicks()
                 .subscribe { finish() }
         )
