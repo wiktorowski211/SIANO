@@ -34,6 +34,9 @@
     <!-- Edit budget -->
     <string name="edit_budget_title">Edit budget</string>
 
+    <!-- Add member -->
+    <string name="add_member_title">Add member</string>
+  
     <!-- Categories -->
     <string-array name="categories">
         <item>Other</item>
