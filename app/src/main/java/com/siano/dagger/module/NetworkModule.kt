@@ -30,15 +30,16 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(cache: Cache, tokenPreferences: TokenPreferences): OkHttpClient {
-        val loggingInterceptor = HttpLoggingInterceptor().setLevel(if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE)
+        val loggingInterceptor =
+            HttpLoggingInterceptor().setLevel(if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE)
         return OkHttpClient.Builder()
             .cache(cache)
             .addInterceptor { chain ->
-                val builder = chain.request().newBuilder()
-                builder.addHeader("Content-Type", "application/json")
-                builder.addHeader("Authorization", "SFMyNTY.g3QAAAACZAAEZGF0YXQAAAABbQAAAApzZXNzaW9uX2lkYQVkAAZzaWduZWRuBgBnGsT8aQE.zW1OLE1o31l0-bnMjBoQ1FeoIrJxaaQV36pKVcN0H-E")
-                //tokenPreferences.get()?.let { builder.addHeader("Authorization", it) }
-                chain.proceed(builder.build())
+                val request = chain.request().newBuilder()
+                    .addHeader("Content-Type", "application/json")
+                    .addHeader("Authorization", tokenPreferences.get())
+                    .build()
+                chain.proceed(request)
             }
             .addInterceptor(loggingInterceptor)
             .readTimeout(15, TimeUnit.SECONDS)

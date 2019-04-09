@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                     android:id="@+id/container"
+                                                     android:layout_width="match_parent"
+                                                     android:layout_height="match_parent"
+                                                     android:background="@android:color/white">
+
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="80dp"
+                    android:layout_marginBottom="70dp"
+                    android:src="@drawable/splash_logo" />
+
+            <Button
+                    android:id="@+id/landing_activity_login_button"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="25dp"
+                    android:background="@color/colorPrimary"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:text="@string/login"
+                    android:textColor="@android:color/white" />
+
+
+            <Button
+                    android:id="@+id/landing_activity_register_button"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="25dp"
+                    android:background="@color/colorPrimary"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:text="@string/register"
+                    android:textColor="@android:color/white" />
+
+        </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

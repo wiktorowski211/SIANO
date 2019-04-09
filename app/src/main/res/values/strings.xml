@@ -6,6 +6,8 @@
     <string name="edit">Edit</string>
     <string name="name">Name</string>
     <string name="color">Color</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
     <string name="touch_to_choose">Touch to choose</string>
 
     <!-- Login -->
@@ -36,7 +38,8 @@
 
     <!-- Add member -->
     <string name="add_member_title">Add member</string>
-  
+    <string name="add_member">Add member</string>
+
     <!-- Categories -->
     <string-array name="categories">
         <item>Other</item>

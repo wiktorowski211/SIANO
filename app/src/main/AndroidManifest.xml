@@ -33,12 +33,6 @@
                 android:name=".view.transaction.TransactionActivity"
                 android:windowSoftInputMode="stateVisible|adjustResize"/>
 
-        <activity android:name=".view.main.RepositoriesActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-            </intent-filter>
-        </activity>
-
         <activity android:name=".view.budgets.BudgetsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -71,7 +65,11 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".view.login.LoginActivity"
+                android:name="com.siano.view.landing.login.LoginActivity"
+                android:windowSoftInputMode="adjustResize"/>
+
+        <activity
+                android:name="com.siano.view.landing.LandingActivity"
                 android:windowSoftInputMode="adjustResize"/>
     </application>
 

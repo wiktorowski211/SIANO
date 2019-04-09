@@ -1,4 +1,4 @@
-package com.siano.view
+package com.siano.base
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -11,8 +11,11 @@ import javax.inject.Inject
 
 abstract class BaseActivity : AppCompatActivity(), HasFragmentInjector, HasSupportFragmentInjector {
 
-    @Inject lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
-    @Inject lateinit var frameworkFragmentInjector: DispatchingAndroidInjector<android.app.Fragment>
+    @Inject
+    lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
+
+    @Inject
+    lateinit var frameworkFragmentInjector: DispatchingAndroidInjector<android.app.Fragment>
 
     override fun setContentView(layoutResID: Int) {
         super.setContentView(layoutResID)

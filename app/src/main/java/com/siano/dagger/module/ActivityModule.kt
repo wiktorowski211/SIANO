@@ -6,8 +6,7 @@ import com.siano.view.budget.BudgetActivity
 import com.siano.view.budgets.BudgetsActivity
 import com.siano.view.createBudget.CreateBudgetActivity
 import com.siano.view.editBudget.EditBudgetActivity
-import com.siano.view.login.LoginActivity
-import com.siano.view.main.RepositoriesActivity
+import com.siano.view.landing.login.LoginActivity
 import com.siano.view.transaction.TransactionActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -18,10 +17,6 @@ abstract class ActivityModule {
     @Scope.Activity
     @ContributesAndroidInjector(modules = [(LoginActivity.Module::class)])
     abstract fun provideLoginActivity(): LoginActivity
-
-    @Scope.Activity
-    @ContributesAndroidInjector(modules = [(RepositoriesActivity.Module::class)])
-    abstract fun provideMainActivity(): RepositoriesActivity
 
     @Scope.Activity
     @ContributesAndroidInjector(modules = [TransactionActivity.Module::class, TransactionActivity.FragmentModule::class])

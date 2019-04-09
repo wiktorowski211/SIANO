@@ -8,30 +8,26 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.jacekmarchwicki.universaladapter.ViewHolderManager
 import com.jakewharton.rxbinding3.view.clicks
 import com.siano.R
-import com.siano.TokenPreferences
 import com.siano.base.BaseViewHolderManager
 import com.siano.base.Rx2UniversalAdapter
 import com.siano.dagger.annotations.DaggerAnnotation
 import com.siano.dagger.module.BaseActivityModule
 import com.siano.layoutmanager.MyLinearLayoutManager
 import com.siano.utils.ErrorHandler
-import com.siano.view.BaseActivity
+import com.siano.base.AuthorizedActivity
 import com.siano.view.budget.BudgetActivity
 import com.siano.view.createBudget.CreateBudgetActivity
-import com.siano.view.login.LoginActivity
 import dagger.Binds
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_budgets.*
 import javax.inject.Inject
 
-class BudgetsActivity : BaseActivity() {
+class BudgetsActivity : AuthorizedActivity() {
 
     companion object {
         fun newIntent(context: Context) = Intent(context, BudgetsActivity::class.java)
     }
 
-    @Inject
-    lateinit var tokenPreferences: TokenPreferences
     @Inject
     lateinit var presenter: BudgetsPresenter
 
@@ -47,18 +43,13 @@ class BudgetsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_budgets)
 
-//        if (tokenPreferences.getToken().isEmpty()) {
-//            finish()
-//            startActivity(LoginActivity.newInstance(this))
-//        }
-
         setUpRecyclerView()
 
         subscription.addAll(
             presenter.itemsObservable
                 .subscribe(adapter),
             presenter.errorObservable
-                .subscribe(ErrorHandler.show(budgets_main_view)),
+                .subscribe(ErrorHandler.show(budgets_main_view, this)),
             presenter.openBudgetObservable()
                 .subscribe { startActivity(BudgetActivity.newIntent(this, it.id)) },
             budgets_create_budget_button.clicks()

@@ -9,7 +9,6 @@ import com.jacekmarchwicki.universaladapter.ViewHolderManager
 import com.jakewharton.rxbinding3.appcompat.navigationClicks
 import com.jakewharton.rxbinding3.view.clicks
 import com.siano.R
-import com.siano.TokenPreferences
 import com.siano.base.BaseViewHolderManager
 import com.siano.base.Rx2UniversalAdapter
 import com.siano.dagger.annotations.DaggerAnnotation
@@ -17,10 +16,9 @@ import com.siano.dagger.annotations.Scope
 import com.siano.dagger.module.BaseActivityModule
 import com.siano.layoutmanager.MyLinearLayoutManager
 import com.siano.utils.ErrorHandler
-import com.siano.view.BaseActivity
+import com.siano.base.AuthorizedActivity
 import com.siano.view.addMember.AddMemberActivity
 import com.siano.view.editBudget.EditBudgetActivity
-import com.siano.view.login.LoginActivity
 import com.siano.view.transaction.TransactionActivity
 import dagger.Binds
 import dagger.Provides
@@ -29,7 +27,7 @@ import kotlinx.android.synthetic.main.activity_budget.*
 import javax.inject.Inject
 import javax.inject.Named
 
-class BudgetActivity : BaseActivity() {
+class BudgetActivity : AuthorizedActivity() {
 
     companion object {
         private const val EXTRA_BUDGET_ID = "budget_id"
@@ -38,8 +36,6 @@ class BudgetActivity : BaseActivity() {
             .putExtra(EXTRA_BUDGET_ID, budgetId)
     }
 
-    @Inject
-    lateinit var tokenPreferences: TokenPreferences
     @Inject
     lateinit var presenter: BudgetPresenter
 
@@ -55,11 +51,6 @@ class BudgetActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_budget)
 
-//        if (tokenPreferences.getToken().isEmpty()) {
-//            finish()
-//            startActivity(LoginActivity.newInstance(this))
-//        }
-
         setUpRecyclerView()
 
         budget_activity_toolbar.inflateMenu(R.menu.budget_menu)
@@ -72,9 +63,9 @@ class BudgetActivity : BaseActivity() {
             presenter.deleteSuccessObservable()
                 .subscribe { finish() },
             presenter.deleteErrorObservable()
-                .subscribe(ErrorHandler.show(budget_main_view)),
+                .subscribe(ErrorHandler.show(budget_main_view, this)),
             presenter.errorObservable
-                .subscribe(ErrorHandler.show(budget_main_view)),
+                .subscribe(ErrorHandler.show(budget_main_view, this)),
             budget_create_transaction_button.clicks()
                 .subscribe { startActivity(TransactionActivity.newIntent(this, presenter.budgetId)) },
             budget_activity_toolbar.menu.findItem(R.id.budget_menu_delete).clicks()
@@ -86,7 +77,6 @@ class BudgetActivity : BaseActivity() {
                 .subscribe { startActivity(AddMemberActivity.newIntent(this, presenter.budgetId)) },
             budget_activity_toolbar.navigationClicks()
                 .subscribe { finish() }
-
         )
     }
 

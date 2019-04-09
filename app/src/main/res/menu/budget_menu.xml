@@ -11,6 +11,6 @@
             app:showAsAction="never"/>
     <item
             android:id="@+id/budget_menu_add_member"
-            android:title="Dodaj użytkownika"
+            android:title="@string/add_member"
             app:showAsAction="never"/>
 </menu>

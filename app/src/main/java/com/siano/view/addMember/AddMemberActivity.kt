@@ -8,10 +8,10 @@ import com.jakewharton.rxbinding3.appcompat.navigationClicks
 import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.widget.textChanges
 import com.siano.R
+import com.siano.base.AuthorizedActivity
 import com.siano.dagger.annotations.DaggerAnnotation
 import com.siano.dagger.annotations.Scope
 import com.siano.dagger.module.BaseActivityModule
-import com.siano.view.BaseActivity
 import dagger.Binds
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_add_member.*
 import javax.inject.Inject
 import javax.inject.Named
 
-class AddMemberActivity : BaseActivity() {
+class AddMemberActivity : AuthorizedActivity() {
 
     companion object {
         private const val EXTRA_BUDGET_ID = "budget_id"

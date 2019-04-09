@@ -12,7 +12,7 @@ import com.siano.R
 import com.siano.dagger.annotations.DaggerAnnotation
 import com.siano.dagger.annotations.Scope
 import com.siano.dagger.module.BaseActivityModule
-import com.siano.view.BaseActivity
+import com.siano.base.AuthorizedActivity
 import dagger.Binds
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.activity_edit_budget.*
 import javax.inject.Inject
 import javax.inject.Named
 
-class EditBudgetActivity : BaseActivity() {
+class EditBudgetActivity : AuthorizedActivity() {
 
     companion object {
         private const val EXTRA_BUDGET_ID = "budget_id"

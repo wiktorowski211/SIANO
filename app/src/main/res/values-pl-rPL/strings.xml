@@ -22,6 +22,8 @@
     <string name="delete">Usuń</string>
     <string name="touch_to_choose">Dotknij aby zmienić</string>
     <string name="edit_budget_title">Edytuj budżet</string>
+    <string name="add_member_title">Dodaj członka</string>
+    <string name="add_member">Dodaj członka</string>
 
     <!-- Categories -->
     <string-array name="categories">

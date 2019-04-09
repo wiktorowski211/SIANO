@@ -1,4 +1,4 @@
-package com.siano.view
+package com.siano.base
 
 import android.content.Context
 import androidx.fragment.app.Fragment

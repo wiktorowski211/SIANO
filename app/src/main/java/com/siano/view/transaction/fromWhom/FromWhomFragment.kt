@@ -10,7 +10,7 @@ import com.siano.R
 import com.siano.base.BaseViewHolderManager
 import com.siano.base.Rx2UniversalAdapter
 import com.siano.layoutmanager.MyLinearLayoutManager
-import com.siano.view.BaseFragment
+import com.siano.base.BaseFragment
 import com.siano.view.transaction.TransactionAdapterItem
 import com.siano.view.transaction.TransactionPresenter
 import com.siano.view.transaction.TransactionViewHolder

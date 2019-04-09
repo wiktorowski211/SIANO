@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import com.jakewharton.rxbinding3.view.changeEvents
+import com.jakewharton.rxbinding3.widget.itemSelections
 import com.jakewharton.rxbinding3.widget.textChanges
 import com.siano.R
-import com.siano.view.BaseFragment
+import com.siano.base.BaseFragment
 import com.siano.view.transaction.TransactionPresenter
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposables
@@ -36,7 +36,7 @@ class ForWhatFragment : BaseFragment() {
 
         var categoriesArray = resources.getStringArray(R.array.categories)
 
-        val aa = ArrayAdapter( context, android.R.layout.simple_spinner_item, categoriesArray)
+        val aa = ArrayAdapter(context, android.R.layout.simple_spinner_item, categoriesArray)
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         transaction_category.adapter = aa
 
@@ -45,8 +45,9 @@ class ForWhatFragment : BaseFragment() {
                 transaction_title.textChanges()
                     .switchMapSingle { presenter.titleChangedSingle(it.toString()) }
                     .subscribe(),
-                transaction_category.changeEvents()
-                    .switchMapSingle { presenter.categoryChangedSingle(it.toString()) }
+                transaction_category.itemSelections()
+                    .map { position -> aa.getItem(position).orEmpty() }
+                    .switchMapSingle { presenter.categoryChangedSingle(it) }
                     .subscribe()
             )
         )

@@ -15,7 +15,7 @@ import com.siano.dagger.annotations.Scope
 import com.siano.dagger.module.BaseActivityModule
 import com.siano.utils.ErrorHandler
 import com.siano.utils.pageSelectChanges
-import com.siano.view.BaseActivity
+import com.siano.base.AuthorizedActivity
 import com.siano.view.transaction.forWhat.ForWhatFragment
 import com.siano.view.transaction.fromWhom.FromWhomFragment
 import com.siano.view.transaction.toWhom.ToWhomFragment
@@ -30,7 +30,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 
-class TransactionActivity : BaseActivity() {
+class TransactionActivity : AuthorizedActivity() {
 
     @Inject
     lateinit var presenter: TransactionPresenter
@@ -61,7 +61,7 @@ class TransactionActivity : BaseActivity() {
                         transaction_activity_toolbar.menu.findItem(R.id.transaction_menu_save).isVisible = it
                     },
                 presenter.errorObservable()
-                    .subscribe(ErrorHandler.show(transaction_activity_pager)),
+                    .subscribe(ErrorHandler.show(transaction_activity_pager, this)),
                 transaction_activity_toolbar.menu.findItem(R.id.transaction_menu_save).clicks()
                     .switchMapSingle { presenter.saveTransactionSingle() }
                     .subscribe(),

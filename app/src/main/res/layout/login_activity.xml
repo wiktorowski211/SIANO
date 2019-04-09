@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/container"
+    android:id="@+id/login_activity_main_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white">
@@ -22,7 +22,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="80dp"
-                android:src="@drawable/github_logo" />
+                android:layout_marginBottom="25dp"
+                android:src="@drawable/splash_logo" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/username_text_input"
@@ -32,7 +33,7 @@
 
                 <EditText
                     android:id="@+id/username_edit_text"
-                    android:layout_width="200dp"
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/username"
                     android:singleLine="true" />
@@ -47,7 +48,7 @@
 
                 <EditText
                     android:id="@+id/password_edit_text"
-                    android:layout_width="200dp"
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
                     android:inputType="textPassword"
@@ -57,15 +58,15 @@
 
 
             <Button
-                android:id="@+id/login_button"
-                android:layout_width="200dp"
+                android:id="@+id/login_activity_button"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginBottom="25dp"
                 android:background="@color/colorPrimary"
                 android:foreground="?attr/selectableItemBackground"
-                android:text="Login"
+                android:text="@string/login"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>
