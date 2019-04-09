@@ -54,10 +54,10 @@ class BudgetActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_budget)
 
-        if (tokenPreferences.getToken().isEmpty()) {
-            finish()
-            startActivity(LoginActivity.newInstance(this))
-        }
+//        if (tokenPreferences.getToken().isEmpty()) {
+//            finish()
+//            startActivity(LoginActivity.newInstance(this))
+//        }
 
         setUpRecyclerView()
 
