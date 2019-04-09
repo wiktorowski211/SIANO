@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.jakewharton.rxbinding3.view.clicks
 import com.siano.R
 import com.siano.view.landing.login.LoginActivity
+import com.siano.view.landing.registration.RegistrationActivity
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_landing.*
 
@@ -27,7 +28,7 @@ class LandingActivity : AppCompatActivity() {
             landing_activity_login_button.clicks()
                 .subscribe { startActivity(LoginActivity.newInstance(this)) },
             landing_activity_register_button.clicks()
-                .subscribe { }
+                .subscribe { startActivity(RegistrationActivity.newInstance(this)) }
         )
     }
 

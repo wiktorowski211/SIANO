@@ -69,6 +69,14 @@
                 android:windowSoftInputMode="adjustResize"/>
 
         <activity
+                android:name="com.siano.view.landing.registration.RegistrationActivity"
+                android:windowSoftInputMode="adjustResize"/>
+
+        <activity
+                android:name="com.siano.view.landing.registration.ConfirmMailActivity"
+                android:windowSoftInputMode="adjustResize"/>
+
+        <activity
                 android:name="com.siano.view.landing.LandingActivity"
                 android:windowSoftInputMode="adjustResize"/>
     </application>

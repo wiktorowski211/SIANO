@@ -12,6 +12,9 @@ interface ApiService {
     @POST("api/sessions")
     fun authorizeUser(@Body request: SessionRequest): Single<AccessToken>
 
+    @POST("api/users")
+    fun registerUser(@Body request: UserRequest): Single<ResponseBody>
+
     // Budgets
 
     @GET("api/budgets")
