@@ -4,6 +4,7 @@
     <string name="menu_save">Save</string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
+    <string name="share">Share</string>
     <string name="name">Name</string>
     <string name="color">Color</string>
     <string name="login">Login</string>
@@ -29,6 +30,7 @@
 
     <!-- Budget -->
     <string name="budget_title">Budget</string>
+    <string name="budget_share">Share budget</string>
 
     <!-- Create budget -->
     <string name="create_budget_title">Create budget</string>
