@@ -8,6 +8,7 @@ import com.siano.view.createBudget.CreateBudgetActivity
 import com.siano.view.editBudget.EditBudgetActivity
 import com.siano.view.landing.login.LoginActivity
 import com.siano.view.landing.forgotPassword.ForgotPasswordActivity
+import com.siano.view.landing.resetPassword.ResetPasswordActivity
 import com.siano.view.landing.registration.RegistrationActivity
 import com.siano.view.transaction.TransactionActivity
 import dagger.Module
@@ -27,6 +28,10 @@ abstract class ActivityModule {
     @Scope.Activity
     @ContributesAndroidInjector(modules = [(ForgotPasswordActivity.Module::class)])
     abstract fun provideForgotPasswordActivity(): ForgotPasswordActivity
+
+    @Scope.Activity
+    @ContributesAndroidInjector(modules = [(ResetPasswordActivity.Module::class)])
+    abstract fun provideResetPasswordActivity(): ResetPasswordActivity
 
     @Scope.Activity
     @ContributesAndroidInjector(modules = [TransactionActivity.Module::class, TransactionActivity.FragmentModule::class])

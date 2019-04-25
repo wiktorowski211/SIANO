@@ -1,4 +1,4 @@
-package com.siano.view.landing.forgotPassword
+package com.siano.view.landing.resetPassword
 
 import android.app.Activity
 import android.content.Context
@@ -15,29 +15,29 @@ import com.siano.utils.translate
 import com.siano.view.landing.CheckMailActivity
 import dagger.Binds
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.activity_forgot_password.*
+import kotlinx.android.synthetic.main.activity_reset_password.*
 import javax.inject.Inject
 
-class ForgotPasswordActivity : BaseActivity() {
+class ResetPasswordActivity : BaseActivity() {
 
     companion object {
-        fun newInstance(context: Context) = Intent(context, ForgotPasswordActivity::class.java)
+        fun newInstance(context: Context) = Intent(context, ResetPasswordActivity::class.java)
     }
 
     @Inject
-    lateinit var presenter: ForgotPasswordPresenter
+    lateinit var presenter: ResetPasswordPresenter
 
     private val subscription = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_forgot_password)
+        setContentView(R.layout.activity_reset_password)
 
         subscription.addAll(
-            email_edit_text.textChanges()
-                .switchMapSingle { presenter.emailSingle(it.toString()) }
+            password_edit_text.textChanges()
+                .switchMapSingle { presenter.passwordSingle(it.toString()) }
                 .subscribe(),
-            forgot_password_activity_button.clicks()
+            reset_password_activity_button.clicks()
                 .switchMapSingle { presenter.resetSingle() }
                 .subscribe(),
             presenter.resetSuccessObservable()
@@ -46,10 +46,10 @@ class ForgotPasswordActivity : BaseActivity() {
                     startActivity(CheckMailActivity.newInstance(this))
                 },
             presenter.resetFailedObservable()
-                .subscribe(ErrorHandler.show(forgot_password_activity_main_view, this)),
-            presenter.incorrectEmailObservable()
+                .subscribe(ErrorHandler.show(reset_password_activity_main_view, this)),
+            presenter.incorrectPasswordObservable()
                 .subscribe {
-                    email_edit_text.error = it.map { it.translate() }.orNull()
+                    password_edit_text.error = it.map { it.translate() }.orNull()
                 }
         )
     }
@@ -64,6 +64,6 @@ class ForgotPasswordActivity : BaseActivity() {
 
         @Binds
         @DaggerAnnotation.ForActivity
-        abstract fun provideActivity(activity: ForgotPasswordActivity): Activity
+        abstract fun provideActivity(activity: ResetPasswordActivity): Activity
     }
 }

@@ -1,4 +1,4 @@
-package com.siano.view.landing.forgotPassword
+package com.siano.view.landing.resetPassword
 
 import com.appunite.rx.dagger.UiScheduler
 import com.siano.api.model.ResetPassword
@@ -14,33 +14,35 @@ import org.funktionale.either.Either
 import org.funktionale.option.Option
 import javax.inject.Inject
 
-class ForgotPasswordPresenter @Inject constructor(
+class ResetPasswordPresenter @Inject constructor(
+    key: String,
     private val authDao: AuthDao,
     @UiScheduler uiScheduler: Scheduler
 ) {
-    private val emailSubject = BehaviorSubject.createDefault("")
+    private val passwordSubject = BehaviorSubject.createDefault("")
     private val resetSubject = PublishSubject.create<Unit>()
 
-    private val emailObservable: Observable<Either<DefaultError, String>> = emailSubject.map {
+    private val passwordObservable: Observable<Either<DefaultError, String>> = passwordSubject.map {
         when {
             it.isBlank() -> Either.left(EmptyInputError)
+            it.length < 8 -> Either.left(PasswordToShortError)
             else -> Either.right(it)
         }
     }
 
     private val resetObservable: Observable<Either<DefaultError, Unit>> = resetSubject
-        .withLatestFrom(emailObservable) { _, email ->
+        .withLatestFrom(passwordObservable) { _, password ->
             when {
-                email.isLeft() -> Either.left(NotLoggedInError as DefaultError)
-                else -> Either.right(ResetPassword.Email(email.right().get()))
+                password.isLeft() -> Either.left(NotLoggedInError as DefaultError)
+                else -> Either.right(ResetPassword.Password(password.right().get()))
             }
         }
-        .switchMapRightWithEither { authDao.forgotPasswordSingle(it) }
+        .switchMapRightWithEither { authDao.resetPasswordSingle(it, key) }
         .observeOn(uiScheduler)
         .replay()
         .refCount()
 
-    fun incorrectEmailObservable(): Observable<Option<DefaultError>> = emailObservable
+    fun incorrectPasswordObservable(): Observable<Option<DefaultError>> = passwordObservable
         .skip(1)
         .mapToLeftOption()
 
@@ -51,7 +53,7 @@ class ForgotPasswordPresenter @Inject constructor(
     fun resetFailedObservable(): Observable<Option<DefaultError>> = resetObservable
         .mapToLeftOption()
 
-    fun emailSingle(email: String): Single<Unit> = emailSubject.executeFromSingle(email)
+    fun passwordSingle(password: String): Single<Unit> = passwordSubject.executeFromSingle(password)
 
     fun resetSingle(): Single<Unit> = resetSubject.executeFromSingle(Unit)
 }
