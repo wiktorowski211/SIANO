@@ -73,7 +73,11 @@
                 android:windowSoftInputMode="adjustResize"/>
 
         <activity
-                android:name="com.siano.view.landing.registration.ConfirmMailActivity"
+                android:name="com.siano.view.landing.forgotPassword.ForgotPasswordActivity"
+                android:windowSoftInputMode="adjustResize"/>
+
+        <activity
+                android:name="com.siano.view.landing.CheckMailActivity"
                 android:windowSoftInputMode="adjustResize"/>
 
         <activity

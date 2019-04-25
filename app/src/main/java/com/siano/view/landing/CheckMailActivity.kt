@@ -1,4 +1,4 @@
-package com.siano.view.landing.registration
+package com.siano.view.landing
 
 import android.content.Context
 import android.content.Intent
@@ -7,22 +7,22 @@ import androidx.appcompat.app.AppCompatActivity
 import com.jakewharton.rxbinding3.view.clicks
 import com.siano.R
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.activity_confirm_mail.*
+import kotlinx.android.synthetic.main.activity_check_mail.*
 
-class ConfirmMailActivity : AppCompatActivity() {
+class CheckMailActivity : AppCompatActivity() {
 
     companion object {
-        fun newInstance(context: Context) = Intent(context, ConfirmMailActivity::class.java)
+        fun newInstance(context: Context) = Intent(context, CheckMailActivity::class.java)
     }
 
     private val subscription = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_confirm_mail)
+        setContentView(R.layout.activity_check_mail)
 
         subscription.addAll(
-            confirm_email_button.clicks()
+            check_email_button.clicks()
                 .subscribe { finish() }
         )
     }

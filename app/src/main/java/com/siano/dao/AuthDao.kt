@@ -29,4 +29,11 @@ class AuthDao @Inject constructor(
             .handleEitherRestErrors()
             .mapRight { Unit }
             .toObservable()
+
+    fun forgotPasswordSingle(reset: ResetPassword): Observable<Either<DefaultError, Unit>> =
+        apiService.forgotPassword(ResetPasswordRequest(reset))
+            .subscribeOn(networkScheduler)
+            .handleEitherRestErrors()
+            .mapRight { Unit }
+            .toObservable()
 }

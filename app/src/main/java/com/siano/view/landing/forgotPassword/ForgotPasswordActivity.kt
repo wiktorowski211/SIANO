@@ -1,4 +1,4 @@
-package com.siano.view.landing.registration
+package com.siano.view.landing.forgotPassword
 
 import android.app.Activity
 import android.content.Context
@@ -15,50 +15,42 @@ import com.siano.utils.translate
 import com.siano.view.landing.CheckMailActivity
 import dagger.Binds
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.activity_registration.*
+import kotlinx.android.synthetic.main.activity_forgot_password.*
 import javax.inject.Inject
 
-class RegistrationActivity : BaseActivity() {
+class ForgotPasswordActivity : BaseActivity() {
 
     companion object {
-        fun newInstance(context: Context) = Intent(context, RegistrationActivity::class.java)
+        fun newInstance(context: Context) = Intent(context, ForgotPasswordActivity::class.java)
     }
 
     @Inject
-    lateinit var presenter: RegistrationPresenter
+    lateinit var presenter: ForgotPasswordPresenter
 
     private val subscription = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_registration)
+        setContentView(R.layout.activity_forgot_password)
 
         subscription.addAll(
             email_edit_text.textChanges()
                 .switchMapSingle { presenter.emailSingle(it.toString()) }
                 .subscribe(),
-            username_edit_text.textChanges()
-                .switchMapSingle { presenter.usernameSingle(it.toString()) }
-                .subscribe(),
-            password_edit_text.textChanges()
-                .switchMapSingle { presenter.passwordSingle(it.toString()) }
-                .subscribe(),
             registration_activity_button.clicks()
                 .switchMapSingle { presenter.loginSingle() }
                 .subscribe(),
-            presenter.registrationSuccessObservable()
+            presenter.resetSuccessObservable()
                 .subscribe {
                     finish()
                     startActivity(CheckMailActivity.newInstance(this))
                 },
-            presenter.registrationFailedObservable()
+            presenter.resetFailedObservable()
                 .subscribe(ErrorHandler.show(registration_activity_main_view, this)),
             presenter.incorrectEmailObservable()
-                .subscribe { email_edit_text.error = if (it.isDefined()) it.get().translate() else null },
-            presenter.incorrectUsernameObservable()
-                .subscribe { username_edit_text.error = if (it.isDefined()) it.get().translate() else null },
-            presenter.incorrectPasswordObservable()
-                .subscribe { password_edit_text.error = if (it.isDefined()) it.get().translate() else null }
+                .subscribe {
+                    email_edit_text.error = it.map { it.translate() }.orNull()
+                }
         )
     }
 
@@ -72,6 +64,6 @@ class RegistrationActivity : BaseActivity() {
 
         @Binds
         @DaggerAnnotation.ForActivity
-        abstract fun provideActivity(activity: RegistrationActivity): Activity
+        abstract fun provideActivity(activity: ForgotPasswordActivity): Activity
     }
 }

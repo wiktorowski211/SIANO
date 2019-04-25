@@ -11,6 +11,7 @@ import org.funktionale.either.Either
 import org.funktionale.option.Option
 import retrofit2.HttpException
 import java.io.IOException
+import java.net.UnknownHostException
 
 object ErrorHandler {
     fun show(view: View, activity: Activity): (Option<DefaultError>) -> Unit = { throwable ->
@@ -53,6 +54,7 @@ fun <T1> Observable<T1>.handleEitherRestErrors(): Observable<Either<DefaultError
 
 fun Throwable.toDefaultError(): DefaultError = when (this) {
     is NoNetworkException -> NoNetworkError
+    is UnknownHostException -> NoNetworkError
     is BlockedNetworkException -> BlockedNetworkError
     is IOException -> NetworkError(this)
     is HttpException -> when (this.code()) {
