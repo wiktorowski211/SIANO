@@ -7,6 +7,7 @@ import com.siano.api.model.Transaction
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.random.Random
 
 object BudgetReport {
@@ -120,14 +121,19 @@ object BudgetReport {
         }
 
         val fullSum = categories.sumByDouble { it.totalAmount }
+        val transactionCount = categories.count()
 
         canvas.drawText(("Sum: "), 100f, offset2 + 20f, paint)
         canvas.drawText(fullSum.toString(), 150f, offset2 + 20f, paint)
 
+        canvas.drawText("Number of transactions: " + transactionCount, 30f, offset2+40f, paint)
+
         document.finishPage(page)
 
-        val date = SimpleDateFormat.getDateInstance().format("yyyy_MM_dd ")
-        val filename = "report_${date}_${Random.nextInt(1000)}.pdf"
+        val dateFormat = SimpleDateFormat("yyyy_MM_dd")
+        val date = Date()
+        dateFormat.format(date)
+        val filename = "report_${dateFormat.format(date)}_${Random.nextInt(1000)}.pdf"
         val path = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), filename)
         document.writeTo(FileOutputStream(path))
 
