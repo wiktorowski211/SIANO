@@ -9,7 +9,6 @@ import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import kotlin.random.Random
 
-
 object BudgetReport {
 
     data class Category(val id: Int, val name: String, val totalAmount: Double, val color: Int)
@@ -87,9 +86,9 @@ object BudgetReport {
         val canvas = page.canvas
 
         val paint = Paint()
-        paint.color = Color.parseColor("#ffffff")
+        paint.color = Color.WHITE
         canvas.drawPaint(paint)
-        paint.color = Color.parseColor("#000000")
+        paint.color = Color.BLACK
         canvas.drawText("Budget report", 30f, 30f, paint)
 
         val bitmap = drawPieChart(categories)
@@ -126,7 +125,6 @@ object BudgetReport {
         canvas.drawText(fullSum.toString(), 150f, offset2 + 20f, paint)
 
         document.finishPage(page)
-
 
         val date = SimpleDateFormat.getDateInstance().format("yyyy_MM_dd ")
         val filename = "report_${date}_${Random.nextInt(1000)}.pdf"
