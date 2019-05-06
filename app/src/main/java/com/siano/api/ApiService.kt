@@ -18,7 +18,7 @@ interface ApiService {
     @POST("api/password_resets")
     fun forgotPassword(@Body request: ResetPasswordRequest): Single<ResponseBody>
 
-    @POST("api/password_resets/update?")
+    @PUT("api/password_resets/update")
     fun resetPassword(@Body request: ResetPasswordRequest, @Query("key") key: String): Single<ResponseBody>
 
     // Budgets

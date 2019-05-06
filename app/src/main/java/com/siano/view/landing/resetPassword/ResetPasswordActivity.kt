@@ -4,19 +4,25 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.widget.textChanges
 import com.siano.R
 import com.siano.base.BaseActivity
 import com.siano.dagger.annotations.DaggerAnnotation
+import com.siano.dagger.annotations.Scope
 import com.siano.dagger.module.BaseActivityModule
 import com.siano.utils.ErrorHandler
 import com.siano.utils.translate
 import com.siano.view.landing.CheckMailActivity
 import dagger.Binds
+import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_reset_password.*
+import org.funktionale.option.getOrElse
+import org.funktionale.option.toOption
 import javax.inject.Inject
+import javax.inject.Named
 
 class ResetPasswordActivity : BaseActivity() {
 
@@ -65,5 +71,28 @@ class ResetPasswordActivity : BaseActivity() {
         @Binds
         @DaggerAnnotation.ForActivity
         abstract fun provideActivity(activity: ResetPasswordActivity): Activity
+
+        @dagger.Module
+        companion object {
+
+            @JvmStatic
+            @Provides
+            @Scope.Activity
+            @Named("key")
+            fun provideBudgetId(activity: ResetPasswordActivity): String = activity.intent.let {
+                it.data.toOption()
+                    .map { uri ->
+                        uri.getQueryParameters("key")
+                            .firstOrNull()
+                            .orEmpty()
+                    }.getOrElse {
+                        ""
+                    }
+                    .let {
+                        Log.wtf("zxc", it)
+                        it
+                    }
+            }
+        }
     }
 }

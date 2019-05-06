@@ -24,6 +24,8 @@
     <string name="edit_budget_title">Edytuj budżet</string>
     <string name="add_member_title">Dodaj członka</string>
     <string name="add_member">Dodaj członka</string>
+    <string name="share">Udostępnij</string>
+    <string name="budget_share">Udostępnij budżet</string>
     <string name="forgot_your_password">Zapomniałeś hasła?</string>
     <string name="reset_password">Resetuj hasło</string>
     <string name="check_your_email">Sprawdź swoją skrzynkę pocztową.</string>

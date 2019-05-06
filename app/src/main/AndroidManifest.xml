@@ -40,8 +40,15 @@
         </activity>
 
         <activity android:name=".view.budget.BudgetActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Accepts URIs that begin with "http://sianoapp.gigalixirapp.com/budgets” -->
+                <data android:scheme="http"
+                      android:host="sianoapp.gigalixirapp.com"
+                      android:pathPrefix="/budgets" />
             </intent-filter>
         </activity>
 
@@ -78,7 +85,18 @@
 
         <activity
                 android:name="com.siano.view.landing.resetPassword.ResetPasswordActivity"
-                android:windowSoftInputMode="adjustResize"/>
+                android:windowSoftInputMode="adjustResize">
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Accepts URIs that begin with "http://sianoapp.gigalixirapp.com/api/password_resets/update” -->
+                <data android:scheme="http"
+                      android:host="sianoapp.gigalixirapp.com"
+                      android:pathPrefix="/api/password_resets/update" />
+            </intent-filter>
+        </activity>
 
         <activity
                 android:name="com.siano.view.landing.CheckMailActivity"

@@ -9,6 +9,7 @@ import com.jacekmarchwicki.universaladapter.ViewHolderManager
 import com.jakewharton.rxbinding3.appcompat.navigationClicks
 import com.jakewharton.rxbinding3.view.clicks
 import com.siano.R
+import com.siano.base.AuthorizedActivity
 import com.siano.base.BaseViewHolderManager
 import com.siano.base.Rx2UniversalAdapter
 import com.siano.dagger.annotations.DaggerAnnotation
@@ -16,7 +17,6 @@ import com.siano.dagger.annotations.Scope
 import com.siano.dagger.module.BaseActivityModule
 import com.siano.layoutmanager.MyLinearLayoutManager
 import com.siano.utils.ErrorHandler
-import com.siano.base.AuthorizedActivity
 import com.siano.view.addMember.AddMemberActivity
 import com.siano.view.editBudget.EditBudgetActivity
 import com.siano.view.transaction.TransactionActivity
@@ -24,6 +24,8 @@ import dagger.Binds
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_budget.*
+import org.funktionale.option.getOrElse
+import org.funktionale.option.toOption
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -75,9 +77,23 @@ class BudgetActivity : AuthorizedActivity() {
                 .subscribe { startActivity(EditBudgetActivity.newIntent(this, presenter.budgetId)) },
             budget_activity_toolbar.menu.findItem(R.id.budget_menu_add_member).clicks()
                 .subscribe { startActivity(AddMemberActivity.newIntent(this, presenter.budgetId)) },
+            budget_activity_toolbar.menu.findItem(R.id.budget_menu_share).clicks()
+                .subscribe { startActivity(shareBudget(this, presenter.budgetId)) },
             budget_activity_toolbar.navigationClicks()
                 .subscribe { finish() }
         )
+    }
+
+    private fun shareBudget(context: Context, budgetId: Long): Intent {
+        val title = context.getText(R.string.budget_share).toString()
+        val message = "http://sianoapp.gigalixirapp.com/budgets/$budgetId"
+
+        val intent = Intent(Intent.ACTION_SEND)
+            .setType("text/plain")
+            .putExtra(Intent.EXTRA_SUBJECT, title)
+            .putExtra(Intent.EXTRA_TEXT, message)
+
+        return Intent.createChooser(intent, title)
     }
 
     private fun setUpRecyclerView() {
@@ -104,8 +120,17 @@ class BudgetActivity : AuthorizedActivity() {
             @Provides
             @Scope.Activity
             @Named("budgetId")
-            fun provideBudgetId(activity: BudgetActivity): Long =
-                checkNotNull(activity.intent.getLongExtra(EXTRA_BUDGET_ID, 0))
+            fun provideBudgetId(activity: BudgetActivity): Long = activity.intent.let {
+                it.data.toOption()
+                    .flatMap { uri ->
+                        uri.lastPathSegment.toOption()
+                            .flatMap { id ->
+                                id.toLongOrNull().toOption()
+                            }
+                    }.getOrElse {
+                        it.getLongExtra(EXTRA_BUDGET_ID, 0)
+                    }
+            }
         }
     }
 }

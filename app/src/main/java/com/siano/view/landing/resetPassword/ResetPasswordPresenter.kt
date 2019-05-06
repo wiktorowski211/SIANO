@@ -13,9 +13,10 @@ import io.reactivex.subjects.PublishSubject
 import org.funktionale.either.Either
 import org.funktionale.option.Option
 import javax.inject.Inject
+import javax.inject.Named
 
 class ResetPasswordPresenter @Inject constructor(
-    key: String,
+    @Named("key") key: String,
     private val authDao: AuthDao,
     @UiScheduler uiScheduler: Scheduler
 ) {
