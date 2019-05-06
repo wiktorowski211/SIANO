@@ -26,6 +26,7 @@
     <string name="add_member">Dodaj członka</string>
     <string name="share">Udostępnij</string>
     <string name="budget_share">Udostępnij budżet</string>
+    <string name="generate_report">Generuj raport</string>
 
     <!-- Categories -->
     <string-array name="categories">

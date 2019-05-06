@@ -44,6 +44,7 @@
     <string name="email">E-mail</string>
     <string name="ok_i_get_it">Ok, I get it!</string>
     <string name="you_have_to_confirm_your_e_mail">You have to confirm your e-mail</string>
+    <string name="generate_report">Generate raport</string>
 
     <!-- Categories -->
     <string-array name="categories">

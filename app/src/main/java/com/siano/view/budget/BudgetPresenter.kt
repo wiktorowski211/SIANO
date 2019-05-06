@@ -1,21 +1,19 @@
 package com.siano.view.budget
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.appunite.rx.dagger.UiScheduler
 import com.jacekmarchwicki.universaladapter.BaseAdapterItem
-import com.siano.api.model.Budget
-import com.siano.api.model.Member
-import com.siano.api.model.Transaction
+import com.siano.api.model.*
 import com.siano.dao.BudgetDao
 import com.siano.dao.MemberDao
 import com.siano.dao.TransactionDao
-import com.siano.utils.DefaultError
-import com.siano.utils.executeFromSingle
-import com.siano.utils.mapToLeftOption
-import com.siano.utils.onlyRight
+import com.siano.utils.*
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.rxkotlin.Observables
+import io.reactivex.rxkotlin.withLatestFrom
 import io.reactivex.subjects.PublishSubject
 import org.funktionale.either.Either
 import org.funktionale.option.Option
@@ -31,10 +29,22 @@ class BudgetPresenter @Inject constructor(
 ) {
     private val deleteBudgetSubject = PublishSubject.create<Unit>()
 
+    private val createReportSubject = PublishSubject.create<Unit>()
+
     private val findBudgetObservable: Observable<Either<DefaultError, Budget>> = budgetDao.getBudgetObservable(budgetId)
         .observeOn(uiScheduler)
         .replay()
         .refCount()
+
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
+    val getReportTransactionsObservable: Observable<Unit> =
+        createReportSubject
+            .withLatestFrom(transactionDao.getTransactionsObservable(budgetId.toString())) { _, transactions ->
+                val transactions = transactions
+                val budgetReport = BudgetReport(transactions.component2()!!)
+            }
+
+
 
     val budgetObservable = findBudgetObservable
         .onlyRight()
@@ -57,7 +67,7 @@ class BudgetPresenter @Inject constructor(
     ) { members, transactions ->
         members.let {
             val shares =
-                transactions.flatMap { transaction -> transaction.shares.orEmpty()}
+                transactions.flatMap { transaction -> transaction.shares.orEmpty() }
             it.map { member ->
                 val amount =
                     shares.filter { share -> share.member_id == member.id }.sumByDouble { share -> share.amount }
@@ -82,4 +92,7 @@ class BudgetPresenter @Inject constructor(
         .mapToLeftOption()
 
     fun deleteBudgetSingle(): Single<Unit> = deleteBudgetSubject.executeFromSingle(Unit)
+
+    fun getReportSingle(): Single<Unit> = createReportSubject.executeFromSingle(Unit)
 }
+

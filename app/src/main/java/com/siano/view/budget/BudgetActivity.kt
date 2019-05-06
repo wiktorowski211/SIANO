@@ -1,14 +1,22 @@
 package com.siano.view.budget
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.pdf.PdfDocument
+import android.os.Build
 import android.os.Bundle
+import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jacekmarchwicki.universaladapter.ViewHolderManager
 import com.jakewharton.rxbinding3.appcompat.navigationClicks
 import com.jakewharton.rxbinding3.view.clicks
 import com.siano.R
+import com.siano.api.model.Transaction
 import com.siano.base.AuthorizedActivity
 import com.siano.base.BaseViewHolderManager
 import com.siano.base.Rx2UniversalAdapter
@@ -33,6 +41,7 @@ class BudgetActivity : AuthorizedActivity() {
 
     companion object {
         private const val EXTRA_BUDGET_ID = "budget_id"
+        private const val MY_PERMISSIONS_REQUEST_WRITE_FILE = 1
 
         fun newIntent(context: Context, budgetId: Long) = Intent(context, BudgetActivity::class.java)
             .putExtra(EXTRA_BUDGET_ID, budgetId)
@@ -79,9 +88,50 @@ class BudgetActivity : AuthorizedActivity() {
                 .subscribe { startActivity(AddMemberActivity.newIntent(this, presenter.budgetId)) },
             budget_activity_toolbar.menu.findItem(R.id.budget_menu_share).clicks()
                 .subscribe { startActivity(shareBudget(this, presenter.budgetId)) },
+            budget_activity_toolbar.menu.findItem(R.id.budget_generate_report).clicks()
+                .switchMapSingle {
+                    checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    presenter.getReportSingle()
+                }
+                .subscribe(),
+            presenter.getReportTransactionsObservable.subscribe(),
             budget_activity_toolbar.navigationClicks()
                 .subscribe { finish() }
         )
+    }
+
+    private fun checkPermission(permission: String){
+        if (ContextCompat.checkSelfPermission(this, permission) //Manifest.permission.WRITE_EXTERNAL_STORAGE
+            != PackageManager.PERMISSION_GRANTED) {
+            requestPermission(permission)
+        }
+    }
+
+    private fun requestPermission(permission: String){
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(this, permission)
+            != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    permission)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(this,
+                    arrayOf(permission),
+                    MY_PERMISSIONS_REQUEST_WRITE_FILE)
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        } else {
+            // Permission has already been granted
+        }
     }
 
     private fun shareBudget(context: Context, budgetId: Long): Intent {
@@ -94,6 +144,17 @@ class BudgetActivity : AuthorizedActivity() {
             .putExtra(Intent.EXTRA_TEXT, message)
 
         return Intent.createChooser(intent, title)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
+    private fun createReport(context: Context, budgetId: Long): String {
+        var document = PdfDocument()
+        var data = presenter.getReportSingle().doOnSuccess { }
+
+
+
+
+        return "Return"
     }
 
     private fun setUpRecyclerView() {
