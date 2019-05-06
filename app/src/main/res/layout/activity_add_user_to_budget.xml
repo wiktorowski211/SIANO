@@ -15,7 +15,7 @@
             android:id="@+id/code_enter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dołącz"/>
+            android:text="Join"/>
 
 
 </LinearLayout>
