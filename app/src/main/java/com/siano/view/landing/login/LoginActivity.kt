@@ -13,6 +13,7 @@ import com.siano.dagger.module.BaseActivityModule
 import com.siano.utils.ErrorHandler
 import com.siano.utils.translate
 import com.siano.view.budgets.BudgetsActivity
+import com.siano.view.landing.forgotPassword.ForgotPasswordActivity
 import dagger.Binds
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_login.*
@@ -43,6 +44,10 @@ class LoginActivity : BaseActivity() {
             login_activity_button.clicks()
                 .switchMapSingle { presenter.loginSingle() }
                 .subscribe(),
+            login_activity_forgot_password.clicks()
+                .subscribe {
+                    startActivity(ForgotPasswordActivity.newInstance(this))
+                },
             presenter.loginSuccessObservable()
                 .subscribe {
                     startActivity(BudgetsActivity.newIntent(this).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
