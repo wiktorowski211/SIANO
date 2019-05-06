@@ -12,6 +12,7 @@ import com.siano.dagger.annotations.DaggerAnnotation
 import com.siano.dagger.module.BaseActivityModule
 import com.siano.utils.ErrorHandler
 import com.siano.utils.translate
+import com.siano.view.landing.CheckMailActivity
 import dagger.Binds
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_registration.*
@@ -48,7 +49,7 @@ class RegistrationActivity : BaseActivity() {
             presenter.registrationSuccessObservable()
                 .subscribe {
                     finish()
-                    startActivity(ConfirmMailActivity.newInstance(this))
+                    startActivity(CheckMailActivity.newInstance(this))
                 },
             presenter.registrationFailedObservable()
                 .subscribe(ErrorHandler.show(registration_activity_main_view, this)),
