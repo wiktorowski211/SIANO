@@ -7,13 +7,19 @@ import retrofit2.http.*
 
 interface ApiService {
 
-   // Auth
+    // Auth
 
     @POST("api/sessions")
     fun authorizeUser(@Body request: SessionRequest): Single<AccessToken>
 
     @POST("api/users")
     fun registerUser(@Body request: UserRequest): Single<ResponseBody>
+
+    @POST("api/password_resets")
+    fun forgotPassword(@Body request: ResetPasswordRequest): Single<ResponseBody>
+
+    @PUT("api/password_resets/update")
+    fun resetPassword(@Body request: ResetPasswordRequest, @Query("key") key: String): Single<ResponseBody>
 
     // Budgets
 

@@ -26,6 +26,14 @@
     <string name="add_member">Dodaj członka</string>
     <string name="share">Udostępnij</string>
     <string name="budget_share">Udostępnij budżet</string>
+    <string name="forgot_your_password">Zapomniałeś hasła?</string>
+    <string name="reset_password">Resetuj hasło</string>
+    <string name="check_your_email">Sprawdź swoją skrzynkę pocztową.</string>
+    <string name="login">Zaloguj się</string>
+    <string name="register">Zarejestruj się</string>
+    <string name="email">E-mail</string>
+    <string name="ok_i_get_it">Ok, rozumiem!</string>
+
 
     <!-- Categories -->
     <string-array name="categories">
