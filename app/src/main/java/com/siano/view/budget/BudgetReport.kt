@@ -16,7 +16,7 @@ object BudgetReport {
 
     fun createReport(transactions: List<Transaction>) {
         val categories = getCategories(transactions)
-        createFile(categories)
+        createFile(categories, transactions)
     }
 
     private fun getCategories(transactions: List<Transaction>): List<Category> {
@@ -62,6 +62,8 @@ object BudgetReport {
             "Gift"
         )
 
+
+
         return transactions.groupBy { it.category_id }.map {
             Category(
                 it.key,
@@ -70,15 +72,18 @@ object BudgetReport {
                     transaction.shares.filter { share -> share.amount > 0 }.sumByDouble { share -> share.amount }
                 },
                 Color.rgb(
-                    Random.nextInt(0, 255).toFloat(),
-                    Random.nextInt(0, 255).toFloat(),
-                    Random.nextInt(0, 255).toFloat()
+                    Random.nextInt(50, 200).toFloat(),
+                    Random.nextInt(50, 200).toFloat(),
+                    Random.nextInt(50, 200).toFloat()
+//                    Random.nextInt(0, 255).toFloat(),
+//                    Random.nextInt(0, 255).toFloat(),
+//                    Random.nextInt(0, 255).toFloat()
                 )
             )
         }
     }
 
-    private fun createFile(categories: List<Category>) {
+    private fun createFile(categories: List<Category>, transactions: List<Transaction>) {
 
         val document = PdfDocument()
         val pageInfo = PdfDocument.PageInfo.Builder(595, 852, 1).create()
@@ -98,8 +103,12 @@ object BudgetReport {
         canvas.drawBitmap(bitmap, 30f, 60f, null)
 
         //create legend under the pie chart
-        val offset = 250f
+        var offset = 250f
         var offset2 = 0f
+
+        paint.color = Color.BLACK
+        canvas.drawText("Legend: ", 30f, offset, paint)
+        offset += 15f
 
         categories.forEachIndexed { i, category ->
             paint.color = category.color
@@ -123,10 +132,32 @@ object BudgetReport {
         val fullSum = categories.sumByDouble { it.totalAmount }
         val transactionCount = categories.count()
 
-        canvas.drawText(("Sum: "), 100f, offset2 + 20f, paint)
-        canvas.drawText(fullSum.toString(), 150f, offset2 + 20f, paint)
+        offset2 += 30f
 
-        canvas.drawText("Number of transactions: " + transactionCount, 30f, offset2+40f, paint)
+        paint.color = Color.BLACK
+        canvas.drawText("Transactions: ", 30f, offset2, paint)
+        offset2 += 15f
+
+        var offset3 = 0f;
+        transactions.forEachIndexed { i, transaction ->
+            val sum = transaction.shares.filter{share -> share.amount > 0 }.sumByDouble { it.amount }
+
+            paint.color = Color.parseColor("#000000")
+            canvas.drawText((i+1).toString() + ". " + transaction.title, 30f, offset2 + i * 12.toFloat() + 0f, paint)
+            canvas.drawText( "  ", 60f, offset2 + i * 12.toFloat() + 0f, paint)
+            canvas.drawText( "" + sum, 150f, offset2 + i * 12.toFloat() + 0f, paint)
+
+            offset3 = offset2 + i * 12.toFloat() + 0f
+        }
+
+
+
+        canvas.drawText(("Sum: "), 100f, offset3 + 20f, paint)
+        canvas.drawText(fullSum.toString(), 150f, offset3 + 20f, paint)
+
+        canvas.drawText("Number of transactions: " + transactionCount, 30f, offset3+40f, paint)
+        canvas.drawText("Average transaction value: " + fullSum/transactionCount, 30f, offset3+60f, paint)
+
 
         document.finishPage(page)
 
