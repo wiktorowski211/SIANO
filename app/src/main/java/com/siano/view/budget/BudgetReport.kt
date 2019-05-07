@@ -71,13 +71,13 @@ object BudgetReport {
                 it.value.sumByDouble { transaction ->
                     transaction.shares.filter { share -> share.amount > 0 }.sumByDouble { share -> share.amount }
                 },
-                Color.rgb(
-                    Random.nextInt(50, 200).toFloat(),
-                    Random.nextInt(50, 200).toFloat(),
-                    Random.nextInt(50, 200).toFloat()
-//                    Random.nextInt(0, 255).toFloat(),
-//                    Random.nextInt(0, 255).toFloat(),
-//                    Random.nextInt(0, 255).toFloat()
+                Color.argb(255,
+//                    Random.nextInt(50, 200).toFloat(),
+//                    Random.nextInt(50, 200).toFloat(),
+//                    Random.nextInt(50, 200).toFloat()
+                    Random.nextInt(0, 255),
+                    Random.nextInt(0, 255),
+                    Random.nextInt(0, 255)
                 )
             )
         }
