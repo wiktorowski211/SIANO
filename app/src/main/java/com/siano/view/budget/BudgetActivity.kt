@@ -23,6 +23,7 @@ import com.siano.view.transaction.TransactionActivity
 import dagger.Binds
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.withLatestFrom
 import kotlinx.android.synthetic.main.activity_budget.*
 import org.funktionale.option.getOrElse
 import org.funktionale.option.toOption
@@ -79,6 +80,9 @@ class BudgetActivity : AuthorizedActivity() {
                 .subscribe { startActivity(AddMemberActivity.newIntent(this, presenter.budgetId)) },
             budget_activity_toolbar.menu.findItem(R.id.budget_menu_share).clicks()
                 .subscribe { startActivity(shareBudget(this, presenter.budgetId)) },
+            budget_activity_toolbar.menu.findItem(R.id.budget_menu_invite).clicks()
+                .withLatestFrom(presenter.budgetObservable) { _, budget -> budget.invite_code }
+                .subscribe { startActivity(shareBudgetCode(this, it)) },
             budget_activity_toolbar.navigationClicks()
                 .subscribe { finish() }
         )
@@ -88,6 +92,16 @@ class BudgetActivity : AuthorizedActivity() {
         val title = context.getText(R.string.budget_share).toString()
         val message = "http://sianoapp.gigalixirapp.com/budgets/$budgetId"
 
+        return share(message, title)
+    }
+
+    private fun shareBudgetCode(context: Context, code: String): Intent {
+        val title = context.getText(R.string.invite_code).toString()
+
+        return share(code, title)
+    }
+
+    private fun share(message: String, title: String): Intent {
         val intent = Intent(Intent.ACTION_SEND)
             .setType("text/plain")
             .putExtra(Intent.EXTRA_SUBJECT, title)

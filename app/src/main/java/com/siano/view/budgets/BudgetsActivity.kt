@@ -8,15 +8,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.jacekmarchwicki.universaladapter.ViewHolderManager
 import com.jakewharton.rxbinding3.view.clicks
 import com.siano.R
+import com.siano.base.AuthorizedActivity
 import com.siano.base.BaseViewHolderManager
 import com.siano.base.Rx2UniversalAdapter
 import com.siano.dagger.annotations.DaggerAnnotation
 import com.siano.dagger.module.BaseActivityModule
 import com.siano.layoutmanager.MyLinearLayoutManager
 import com.siano.utils.ErrorHandler
-import com.siano.base.AuthorizedActivity
 import com.siano.view.budget.BudgetActivity
 import com.siano.view.createBudget.CreateBudgetActivity
+import com.siano.view.joinBudget.JoinBudgetActivity
 import dagger.Binds
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_budgets.*
@@ -43,6 +44,8 @@ class BudgetsActivity : AuthorizedActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_budgets)
 
+        budgets_activity_toolbar.inflateMenu(R.menu.budgets_menu)
+
         setUpRecyclerView()
 
         subscription.addAll(
@@ -53,7 +56,9 @@ class BudgetsActivity : AuthorizedActivity() {
             presenter.openBudgetObservable()
                 .subscribe { startActivity(BudgetActivity.newIntent(this, it.id)) },
             budgets_create_budget_button.clicks()
-                .subscribe { startActivity(CreateBudgetActivity.newIntent(this)) }
+                .subscribe { startActivity(CreateBudgetActivity.newIntent(this)) },
+            budgets_activity_toolbar.menu.findItem(R.id.budgets_menu_join).clicks()
+                .subscribe { startActivity(JoinBudgetActivity.newIntent(this)) }
         )
     }
 

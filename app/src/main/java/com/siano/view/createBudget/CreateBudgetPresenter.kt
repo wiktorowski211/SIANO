@@ -24,7 +24,7 @@ class CreateBudgetPresenter @Inject constructor(
     fun canSaveObservable(): Observable<Boolean> = budgetNameSubject.map { it.isNotBlank() }
 
     fun saveBudgetObservable(): Observable<Unit> = saveBudgetSubject
-        .withLatestFrom(budgetNameSubject, budgetColorSubject) { _, name, color -> Budget(0, name, color, 0) }
+        .withLatestFrom(budgetNameSubject, budgetColorSubject) { _, name, color -> Budget(0, name, "", color, 0) }
         .switchMap { budgetsDao.createBudgetSingle(it).map { Unit } }
         .observeOn(uiScheduler)
 
