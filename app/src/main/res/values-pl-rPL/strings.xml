@@ -34,6 +34,7 @@
     <string name="email">E-mail</string>
     <string name="ok_i_get_it">Ok, rozumiem!</string>
 
+    <string name="generate_report">Generuj raport</string>
 
     <!-- Categories -->
     <string-array name="categories">
