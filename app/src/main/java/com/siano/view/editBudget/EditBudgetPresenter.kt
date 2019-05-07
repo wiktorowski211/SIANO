@@ -48,7 +48,7 @@ class EditBudgetPresenter @Inject constructor(
             budgetColorSubject,
             budgetObservable
         ) { _, name, color, budget ->
-            Budget(budget.id, name, color, budget.owner_id)
+            Budget(budget.id, name, "", color, budget.owner_id)
         }
         .switchMap { budgetDao.editBudgetSingle(it).map { Unit } }
         .observeOn(uiScheduler)

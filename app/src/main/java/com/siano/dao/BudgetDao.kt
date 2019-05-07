@@ -5,6 +5,8 @@ import com.siano.api.ApiService
 import com.siano.api.extractResponse
 import com.siano.api.model.Budget
 import com.siano.api.model.BudgetRequest
+import com.siano.api.model.Member
+import com.siano.api.model.MemberRequest
 import com.siano.utils.*
 import io.reactivex.Observable
 import io.reactivex.Scheduler
@@ -54,6 +56,21 @@ class BudgetDao @Inject constructor(
 
     fun deleteBudgetSingle(budgetId: Long): Observable<Either<DefaultError, Unit>> =
         apiService.deleteBudget(budgetId.toString())
+            .subscribeOn(networkScheduler)
+            .handleEitherRestErrors()
+            .toObservable()
+            .switchMapRight { refreshBudgetsSubject.executeFromSingle(Unit).toObservable() }
+
+    fun getJoinBudgetMembers(code: String): Observable<Either<DefaultError, List<Member>>> =
+        apiService.getJoinBudgetMembers(code).subscribeOn(networkScheduler)
+            .toObservable()
+            .handleEitherRestErrors()
+            .extractResponse()
+            .replay()
+            .refCount()
+
+    fun joinBudget(code: String, member: Member): Observable<Either<DefaultError, Unit>> =
+        apiService.joinBudget(code, member.id.toString(), MemberRequest(member))
             .subscribeOn(networkScheduler)
             .handleEitherRestErrors()
             .toObservable()

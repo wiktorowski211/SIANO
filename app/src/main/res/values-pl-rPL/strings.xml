@@ -33,6 +33,9 @@
     <string name="register">Zarejestruj się</string>
     <string name="email">E-mail</string>
     <string name="ok_i_get_it">Ok, rozumiem!</string>
+    <string name="join_budget">Dołącz do budżetu</string>
+    <string name="choose_member">Wybierz członka:</string>
+    <string name="invite_code">Kod zaproszenia</string>
 
     <string name="generate_report">Generuj raport</string>
 
