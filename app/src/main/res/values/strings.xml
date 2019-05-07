@@ -46,10 +46,12 @@
     <string name="check_your_email">Check your e-mail inbox</string>
     <string name="forgot_your_password">Forgot your password?</string>
     <string name="reset_password">Reset password</string>
+    <string name="you_have_to_confirm_your_e_mail">You have to confirm your e-mail</string>
+    <string name="generate_report">Generate raport</string>
     <string name="join_budget">Join budget</string>
     <string name="choose_member">Choose your budget member:</string>
     <string name="invite_code">Invite code</string>
-
+  
     <!-- Categories -->
     <string-array name="categories">
         <item>Other</item>
