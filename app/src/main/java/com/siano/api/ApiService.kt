@@ -51,5 +51,11 @@ interface ApiService {
     @POST("api/budgets/{budget_id}/members")
     fun createBudgetMember(@Path("budget_id") budgetId: String, @Body request: MemberRequest): Single<Unit>
 
-    // Users
+    // JoinBudget
+
+    @GET("api/budgets/code/{code}/members")
+    fun getJoinBudgetMembers(@Path("code") code: String): Single<Response<List<Member>>>
+
+    @PUT("api/budgets/code/{code}/members/{id}")
+    fun joinBudget(@Path("code") code: String, @Path("id") id: String, @Body request: MemberRequest): Single<ResponseBody>
 }

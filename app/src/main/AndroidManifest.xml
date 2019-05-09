@@ -35,6 +35,10 @@
                 android:name=".view.transaction.TransactionActivity"
                 android:windowSoftInputMode="stateVisible|adjustResize"/>
 
+        <activity
+                android:name=".view.joinBudget.JoinBudgetActivity"
+                android:windowSoftInputMode="stateVisible|adjustResize"/>
+
         <activity android:name=".view.budgets.BudgetsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>

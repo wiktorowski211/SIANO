@@ -11,6 +11,10 @@
             android:title="@string/generate_report"
             app:showAsAction="never"/>
     <item
+            android:id="@+id/budget_menu_invite"
+            android:title="@string/invite_code"
+            app:showAsAction="never"/>
+    <item
             android:id="@+id/budget_menu_edit"
             android:title="@string/edit"
             app:showAsAction="never"/>

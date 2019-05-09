@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                     android:id="@+id/join_budget_activity_content"
+                                                     android:layout_width="match_parent"
+                                                     android:layout_height="match_parent">
+
+    <LinearLayout
+            android:id="@+id/join_budget_main_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_gravity="center_horizontal"
+                android:hint="@string/invite_code">
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/join_budget_code_input"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:singleLine="true"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+                android:id="@+id/join_budget_code_button"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="25dp"
+                android:background="@color/colorPrimary"
+                android:foreground="?attr/selectableItemBackground"
+                android:text="@string/join_budget"
+                android:textColor="@android:color/white"/>
+
+        <TextView
+                android:id="@+id/join_budget_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:textSize="18sp"
+                android:text="@string/choose_member"
+                android:visibility="gone"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/join_budget_members_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

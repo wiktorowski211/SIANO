@@ -6,6 +6,7 @@ import com.siano.view.budget.BudgetActivity
 import com.siano.view.budgets.BudgetsActivity
 import com.siano.view.createBudget.CreateBudgetActivity
 import com.siano.view.editBudget.EditBudgetActivity
+import com.siano.view.joinBudget.JoinBudgetActivity
 import com.siano.view.landing.login.LoginActivity
 import com.siano.view.landing.forgotPassword.ForgotPasswordActivity
 import com.siano.view.landing.resetPassword.ResetPasswordActivity
@@ -40,6 +41,10 @@ abstract class ActivityModule {
     @Scope.Activity
     @ContributesAndroidInjector(modules = [(BudgetsActivity.Module::class)])
     abstract fun provideBudgetsActivity(): BudgetsActivity
+
+    @Scope.Activity
+    @ContributesAndroidInjector(modules = [(JoinBudgetActivity.Module::class)])
+    abstract fun provideJoinBudgetActivity(): JoinBudgetActivity
 
     @Scope.Activity
     @ContributesAndroidInjector(modules = [(BudgetActivity.Module::class)])
