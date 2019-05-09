@@ -3,12 +3,12 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-            android:id="@+id/budget_menu_add_member"
-            android:title="@string/add_member"
-            app:showAsAction="never"/>
-    <item
             android:id="@+id/budget_menu_share"
             android:title="@string/share"
+            app:showAsAction="never"/>
+    <item
+            android:id="@+id/budget_generate_report"
+            android:title="@string/generate_report"
             app:showAsAction="never"/>
     <item
             android:id="@+id/budget_menu_invite"
@@ -21,5 +21,9 @@
     <item
             android:id="@+id/budget_menu_delete"
             android:title="@string/delete"
+            app:showAsAction="never"/>
+    <item
+            android:id="@+id/budget_menu_add_member"
+            android:title="@string/add_member"
             app:showAsAction="never"/>
 </menu>

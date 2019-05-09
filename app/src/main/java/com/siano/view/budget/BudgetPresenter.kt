@@ -16,6 +16,7 @@ import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.rxkotlin.Observables
+import io.reactivex.rxkotlin.withLatestFrom
 import io.reactivex.subjects.PublishSubject
 import org.funktionale.either.Either
 import org.funktionale.option.Option
@@ -31,10 +32,19 @@ class BudgetPresenter @Inject constructor(
 ) {
     private val deleteBudgetSubject = PublishSubject.create<Unit>()
 
+    private val createReportSubject = PublishSubject.create<Unit>()
+
     private val findBudgetObservable: Observable<Either<DefaultError, Budget>> = budgetDao.getBudgetObservable(budgetId)
         .observeOn(uiScheduler)
         .replay()
         .refCount()
+
+    val getReportTransactionsObservable: Observable<Unit> =
+        createReportSubject
+            .withLatestFrom(transactionDao.getTransactionsObservable(budgetId.toString()).onlyRight()) { _, transactions ->
+                BudgetReport.createReport(transactions)
+                Unit
+            }
 
     val budgetObservable = findBudgetObservable
         .onlyRight()
@@ -57,7 +67,7 @@ class BudgetPresenter @Inject constructor(
     ) { members, transactions ->
         members.let {
             val shares =
-                transactions.flatMap { transaction -> transaction.shares.orEmpty()}
+                transactions.flatMap { transaction -> transaction.shares }
             it.map { member ->
                 val amount =
                     shares.filter { share -> share.member_id == member.id }.sumByDouble { share -> share.amount }
@@ -82,4 +92,7 @@ class BudgetPresenter @Inject constructor(
         .mapToLeftOption()
 
     fun deleteBudgetSingle(): Single<Unit> = deleteBudgetSubject.executeFromSingle(Unit)
+
+    fun getReportSingle(): Single<Unit> = createReportSubject.executeFromSingle(Unit)
 }
+

@@ -37,6 +37,7 @@
     <string name="choose_member">Wybierz członka:</string>
     <string name="invite_code">Kod zaproszenia</string>
 
+    <string name="generate_report">Generuj raport</string>
 
     <!-- Categories -->
     <string-array name="categories">

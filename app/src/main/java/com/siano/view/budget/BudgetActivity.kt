@@ -1,9 +1,13 @@
 package com.siano.view.budget
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jacekmarchwicki.universaladapter.ViewHolderManager
 import com.jakewharton.rxbinding3.appcompat.navigationClicks
@@ -34,6 +38,7 @@ class BudgetActivity : AuthorizedActivity() {
 
     companion object {
         private const val EXTRA_BUDGET_ID = "budget_id"
+        private const val MY_PERMISSIONS_REQUEST_WRITE_FILE = 1
 
         fun newIntent(context: Context, budgetId: Long) = Intent(context, BudgetActivity::class.java)
             .putExtra(EXTRA_BUDGET_ID, budgetId)
@@ -80,12 +85,33 @@ class BudgetActivity : AuthorizedActivity() {
                 .subscribe { startActivity(AddMemberActivity.newIntent(this, presenter.budgetId)) },
             budget_activity_toolbar.menu.findItem(R.id.budget_menu_share).clicks()
                 .subscribe { startActivity(shareBudget(this, presenter.budgetId)) },
+            budget_activity_toolbar.menu.findItem(R.id.budget_generate_report).clicks()
+                .switchMapSingle {
+                    requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    presenter.getReportSingle()
+                }
+                .subscribe(),
+            presenter.getReportTransactionsObservable.subscribe(),
             budget_activity_toolbar.menu.findItem(R.id.budget_menu_invite).clicks()
                 .withLatestFrom(presenter.budgetObservable) { _, budget -> budget.invite_code }
                 .subscribe { startActivity(shareBudgetCode(this, it)) },
             budget_activity_toolbar.navigationClicks()
                 .subscribe { finish() }
         )
+    }
+
+    private fun requestPermission(permission: String) {
+        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                ActivityCompat.requestPermissions(this, arrayOf(permission), MY_PERMISSIONS_REQUEST_WRITE_FILE)
+            }
+        } else {
+            // Permission has already been granted
+        }
     }
 
     private fun shareBudget(context: Context, budgetId: Long): Intent {
