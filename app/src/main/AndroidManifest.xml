@@ -51,8 +51,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <!-- Accepts URIs that begin with "http://sianoapp.gigalixirapp.com/budgets” -->
-                <data android:scheme="http"
+                <!-- Accepts URIs that begin with "https://sianoapp.gigalixirapp.com/budgets” -->
+                <data android:scheme="https"
                       android:host="sianoapp.gigalixirapp.com"
                       android:pathPrefix="/budgets" />
             </intent-filter>
@@ -97,8 +97,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <!-- Accepts URIs that begin with "http://sianoapp.gigalixirapp.com/api/password_resets/update” -->
-                <data android:scheme="http"
+                <!-- Accepts URIs that begin with "https://sianoapp.gigalixirapp.com/api/password_resets/update” -->
+                <data android:scheme="https"
                       android:host="sianoapp.gigalixirapp.com"
                       android:pathPrefix="/api/password_resets/update" />
             </intent-filter>
