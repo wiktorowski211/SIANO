@@ -47,4 +47,20 @@
             android:layout_margin="16dp"
             android:src="@drawable/ic_add"/>
 
+    <com.google.android.gms.ads.AdView
+            android:id="@+id/adViewBudget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            app:adSize="BANNER"
+            app:adUnitId="ca-app-pub-3940256099942544/6300978111"
+            app:layout_anchorGravity="bottom|center"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            app:layout_anchor="@+id/budget_main_view">
+    </com.google.android.gms.ads.AdView>
+    <!--         ca-app-pub-7074782982800621/9879635231     <-this is our ad id, for now we use google's testing id    -->
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

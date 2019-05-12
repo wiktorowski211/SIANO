@@ -111,6 +111,10 @@
         <activity
                 android:name="com.siano.view.landing.LandingActivity"
                 android:windowSoftInputMode="adjustResize"/>
+
+        <meta-data
+                android:name="com.google.android.gms.ads.APPLICATION_ID"
+                android:value="ca-app-pub-7074782982800621~3636826364"/>
     </application>
 
 </manifest>

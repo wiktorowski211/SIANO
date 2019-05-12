@@ -9,6 +9,9 @@ import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.jacekmarchwicki.universaladapter.ViewHolderManager
 import com.jakewharton.rxbinding3.appcompat.navigationClicks
 import com.jakewharton.rxbinding3.view.clicks
@@ -55,6 +58,8 @@ class BudgetActivity : AuthorizedActivity() {
         )
     )
 
+    lateinit var mAdView : AdView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_budget)
@@ -98,6 +103,12 @@ class BudgetActivity : AuthorizedActivity() {
             budget_activity_toolbar.navigationClicks()
                 .subscribe { finish() }
         )
+
+        MobileAds.initialize(this, "ca-app-pub-7074782982800621~3636826364")
+
+        mAdView = findViewById(R.id.adViewBudget)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
     }
 
     private fun requestPermission(permission: String) {
