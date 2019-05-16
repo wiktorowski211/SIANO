@@ -1,5 +1,5 @@
 package com.siano.api
 
 object Constants {
-    const val HOST_URL = "http://sianoapp.gigalixirapp.com/"
+    const val HOST_URL = "https://sianoapp.gigalixirapp.com/"
 }

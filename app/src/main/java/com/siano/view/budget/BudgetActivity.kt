@@ -116,7 +116,7 @@ class BudgetActivity : AuthorizedActivity() {
 
     private fun shareBudget(context: Context, budgetId: Long): Intent {
         val title = context.getText(R.string.budget_share).toString()
-        val message = "http://sianoapp.gigalixirapp.com/budgets/$budgetId"
+        val message = "https://sianoapp.gigalixirapp.com/budgets/$budgetId"
 
         return share(message, title)
     }
