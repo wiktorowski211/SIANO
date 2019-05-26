@@ -51,6 +51,7 @@
     <string name="join_budget">Join budget</string>
     <string name="choose_member">Choose your budget member:</string>
     <string name="invite_code">Invite code</string>
+    <string name="log_out">Log out</string>
 
     <!-- Categories -->
     <string-array name="categories">

@@ -5,5 +5,9 @@
     <item
             android:id="@+id/budgets_menu_join"
             android:title="@string/join_budget"
-            app:showAsAction="always"/>
+            app:showAsAction="ifRoom"/>
+    <item
+            android:id="@+id/budgets_menu_log_out"
+            android:title="@string/log_out"
+            app:showAsAction="never"/>
 </menu>

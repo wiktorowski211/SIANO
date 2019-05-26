@@ -18,6 +18,7 @@ import com.siano.utils.ErrorHandler
 import com.siano.view.budget.BudgetActivity
 import com.siano.view.createBudget.CreateBudgetActivity
 import com.siano.view.joinBudget.JoinBudgetActivity
+import com.siano.view.landing.LandingActivity
 import dagger.Binds
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_budgets.*
@@ -58,7 +59,12 @@ class BudgetsActivity : AuthorizedActivity() {
             budgets_create_budget_button.clicks()
                 .subscribe { startActivity(CreateBudgetActivity.newIntent(this)) },
             budgets_activity_toolbar.menu.findItem(R.id.budgets_menu_join).clicks()
-                .subscribe { startActivity(JoinBudgetActivity.newIntent(this)) }
+                .subscribe { startActivity(JoinBudgetActivity.newIntent(this)) },
+            budgets_activity_toolbar.menu.findItem(R.id.budgets_menu_log_out).clicks()
+                .subscribe {
+                    tokenPreferences.clear()
+                    startActivity(LandingActivity.newInstance(this).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
+                }
         )
     }
 
