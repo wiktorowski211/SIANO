@@ -25,9 +25,9 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class BudgetPresenter @Inject constructor(
-    budgetDao: BudgetDao,
-    transactionDao: TransactionDao,
-    memberDao: MemberDao,
+    private val budgetDao: BudgetDao,
+    private val transactionDao: TransactionDao,
+    private val memberDao: MemberDao,
     authDao: AuthDao,
     @Named("budgetId") val budgetId: Long,
     @UiScheduler uiScheduler: Scheduler
@@ -84,10 +84,12 @@ class BudgetPresenter @Inject constructor(
             it.map { member ->
                 val amount =
                     shares.filter { share -> share.member_id == member.id }.sumByDouble { share -> share.amount }
-                BudgetAdapterItem(member.nickname, amount)
+                BudgetAdapterItem(member.nickname, amount) as BaseAdapterItem
             }
         }
     }
+        .replay()
+        .refCount()
 
     val errorObservable: Observable<Option<DefaultError>> = transactionsObservable
         .mapToLeftOption()
@@ -97,6 +99,12 @@ class BudgetPresenter @Inject constructor(
         .observeOn(uiScheduler)
         .replay()
         .refCount()
+
+    fun refreshBudgetObservable(): Observable<Unit> = Single.merge(
+        budgetDao.refreshBudgetsSingle(),
+        transactionDao.refreshTransactionsSingle(),
+        memberDao.refreshBudgetMembersSingle()
+    ).toObservable()
 
     fun deleteSuccessObservable() = deleteBudgetObservable
         .onlyRight()

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jacekmarchwicki.universaladapter.ViewHolderManager
+import com.jakewharton.rxbinding3.swiperefreshlayout.refreshes
 import com.jakewharton.rxbinding3.view.clicks
 import com.siano.R
 import com.siano.base.AuthorizedActivity
@@ -48,10 +49,12 @@ class BudgetsActivity : AuthorizedActivity() {
         budgets_activity_toolbar.inflateMenu(R.menu.budgets_menu)
 
         setUpRecyclerView()
-
+        budgets_list_refresh_layout
         subscription.addAll(
             presenter.itemsObservable
                 .subscribe(adapter),
+            presenter.itemsObservable
+                .subscribe { budgets_list_refresh_layout.isRefreshing = false },
             presenter.errorObservable
                 .subscribe(ErrorHandler.show(budgets_main_view, this)),
             presenter.openBudgetObservable()
@@ -64,7 +67,10 @@ class BudgetsActivity : AuthorizedActivity() {
                 .subscribe {
                     tokenPreferences.clear()
                     startActivity(LandingActivity.newInstance(this).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
-                }
+                },
+            budgets_list_refresh_layout.refreshes()
+                .switchMapSingle { presenter.refreshBudgetsObservable() }
+                .subscribe()
         )
     }
 

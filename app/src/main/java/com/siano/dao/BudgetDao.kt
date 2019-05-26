@@ -10,6 +10,7 @@ import com.siano.api.model.MemberRequest
 import com.siano.utils.*
 import io.reactivex.Observable
 import io.reactivex.Scheduler
+import io.reactivex.Single
 import io.reactivex.subjects.BehaviorSubject
 import org.funktionale.either.Either
 import org.funktionale.option.toOption
@@ -75,4 +76,6 @@ class BudgetDao @Inject constructor(
             .handleEitherRestErrors()
             .toObservable()
             .switchMapRight { refreshBudgetsSubject.executeFromSingle(Unit).toObservable() }
+
+    fun refreshBudgetsSingle(): Single<Unit> = refreshBudgetsSubject.executeFromSingle(Unit)
 }
