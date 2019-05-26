@@ -49,7 +49,7 @@ class RegistrationPresenter @Inject constructor(
         .withLatestFrom(emailObservable, usernameObservable, passwordObservable) { _, email, username, password ->
             when {
                 email.isLeft() || username.isLeft() || password.isLeft() -> Either.left(NotLoggedInError as DefaultError)
-                else -> Either.right(User(username.right().get(), password.right().get(), email.right().get()))
+                else -> Either.right(User(0, username.right().get(), password.right().get(), email.right().get()))
             }
         }
         .switchMapRightWithEither { authDao.registerUserSingle(it) }

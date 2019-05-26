@@ -96,7 +96,15 @@ class BudgetActivity : AuthorizedActivity() {
                 .withLatestFrom(presenter.budgetObservable) { _, budget -> budget.invite_code }
                 .subscribe { startActivity(shareBudgetCode(this, it)) },
             budget_activity_toolbar.navigationClicks()
-                .subscribe { finish() }
+                .subscribe { finish() },
+            presenter.isUserBudgetOwnerObservable
+                .subscribe { visible ->
+                    budget_activity_toolbar.menu.apply {
+                        findItem(R.id.budget_menu_delete).isVisible = visible
+                        findItem(R.id.budget_menu_add_member).isVisible = visible
+                        findItem(R.id.budget_menu_edit).isVisible = visible
+                    }
+                }
         )
     }
 

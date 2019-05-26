@@ -2,6 +2,7 @@ package com.siano.dao
 
 import com.appunite.rx.dagger.NetworkScheduler
 import com.siano.api.ApiService
+import com.siano.api.extractResponse
 import com.siano.api.model.*
 import com.siano.utils.DefaultError
 import com.siano.utils.handleEitherRestErrors
@@ -42,5 +43,12 @@ class AuthDao @Inject constructor(
             .subscribeOn(networkScheduler)
             .handleEitherRestErrors()
             .mapRight { Unit }
+            .toObservable()
+
+    fun getUser(): Observable<Either<DefaultError, User>> =
+        apiService.getUser()
+            .subscribeOn(networkScheduler)
+            .handleEitherRestErrors()
+            .extractResponse()
             .toObservable()
 }

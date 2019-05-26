@@ -5,6 +5,7 @@ import com.jacekmarchwicki.universaladapter.BaseAdapterItem
 import com.siano.api.model.Budget
 import com.siano.api.model.Member
 import com.siano.api.model.Transaction
+import com.siano.dao.AuthDao
 import com.siano.dao.BudgetDao
 import com.siano.dao.MemberDao
 import com.siano.dao.TransactionDao
@@ -27,6 +28,7 @@ class BudgetPresenter @Inject constructor(
     budgetDao: BudgetDao,
     transactionDao: TransactionDao,
     memberDao: MemberDao,
+    authDao: AuthDao,
     @Named("budgetId") val budgetId: Long,
     @UiScheduler uiScheduler: Scheduler
 ) {
@@ -50,6 +52,17 @@ class BudgetPresenter @Inject constructor(
         .onlyRight()
         .replay()
         .refCount()
+
+    val userObservable = authDao.getUser()
+        .observeOn(uiScheduler)
+        .onlyRight()
+        .replay()
+        .refCount()
+
+    val isUserBudgetOwnerObservable: Observable<Boolean> =
+        Observables.combineLatest(userObservable, budgetObservable) { user, budget ->
+            budget.owner_id == user.id
+        }
 
     private val transactionsObservable: Observable<Either<DefaultError, List<Transaction>>> =
         transactionDao.getTransactionsObservable(budgetId.toString())
