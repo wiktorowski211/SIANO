@@ -47,7 +47,7 @@ class ForWhatFragment : BaseFragment() {
                     .subscribe(),
                 transaction_category.itemSelections()
                     .map { position -> position }
-                    .switchMapSingle { presenter.categoryChangedSingle(it) }
+                    .switchMapSingle { presenter.categoryChangedSingle(it + 1) }
                     .subscribe()
             )
         )

@@ -11,6 +11,7 @@ import com.siano.utils.handleEitherRestErrors
 import com.siano.utils.switchMapRight
 import io.reactivex.Observable
 import io.reactivex.Scheduler
+import io.reactivex.Single
 import io.reactivex.subjects.BehaviorSubject
 import org.funktionale.either.Either
 import javax.inject.Inject
@@ -40,4 +41,6 @@ class MemberDao @Inject constructor(
             .handleEitherRestErrors()
             .toObservable()
             .switchMapRight { refreshBudgetMembersSubject.executeFromSingle(Unit).toObservable() }
+
+    fun refreshBudgetMembersSingle(): Single<Unit> = refreshBudgetMembersSubject.executeFromSingle(Unit)
 }

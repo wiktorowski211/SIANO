@@ -21,6 +21,9 @@ interface ApiService {
     @PUT("api/password_resets/update")
     fun resetPassword(@Body request: ResetPasswordRequest, @Query("key") key: String): Single<ResponseBody>
 
+    @GET("/api/me")
+    fun getUser(): Single<Response<User>>
+
     // Budgets
 
     @GET("api/budgets")

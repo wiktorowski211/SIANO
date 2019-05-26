@@ -67,11 +67,12 @@ object BudgetReport {
         return transactions.groupBy { it.category_id }.map {
             Category(
                 it.key,
-                categories[it.key],
+                categories[it.key - 1],
                 it.value.sumByDouble { transaction ->
                     transaction.shares.filter { share -> share.amount > 0 }.sumByDouble { share -> share.amount }
                 },
-                Color.argb(255,
+                Color.argb(
+                    255,
 //                    Random.nextInt(50, 200).toFloat(),
 //                    Random.nextInt(50, 200).toFloat(),
 //                    Random.nextInt(50, 200).toFloat()
@@ -140,12 +141,12 @@ object BudgetReport {
 
         var offset3 = 0f;
         transactions.forEachIndexed { i, transaction ->
-            val sum = transaction.shares.filter{share -> share.amount > 0 }.sumByDouble { it.amount }
+            val sum = transaction.shares.filter { share -> share.amount > 0 }.sumByDouble { it.amount }
 
             paint.color = Color.parseColor("#000000")
-            canvas.drawText((i+1).toString() + ". " + transaction.title, 30f, offset2 + i * 12.toFloat() + 0f, paint)
-            canvas.drawText( "  ", 60f, offset2 + i * 12.toFloat() + 0f, paint)
-            canvas.drawText( "" + sum, 150f, offset2 + i * 12.toFloat() + 0f, paint)
+            canvas.drawText((i + 1).toString() + ". " + transaction.title, 30f, offset2 + i * 12.toFloat() + 0f, paint)
+            canvas.drawText("  ", 60f, offset2 + i * 12.toFloat() + 0f, paint)
+            canvas.drawText("" + sum, 150f, offset2 + i * 12.toFloat() + 0f, paint)
 
             offset3 = offset2 + i * 12.toFloat() + 0f
         }
@@ -155,8 +156,8 @@ object BudgetReport {
         canvas.drawText(("Sum: "), 100f, offset3 + 20f, paint)
         canvas.drawText(fullSum.toString(), 150f, offset3 + 20f, paint)
 
-        canvas.drawText("Number of transactions: " + transactionCount, 30f, offset3+40f, paint)
-        canvas.drawText("Average transaction value: " + fullSum/transactionCount, 30f, offset3+60f, paint)
+        canvas.drawText("Number of transactions: " + transactionCount, 30f, offset3 + 40f, paint)
+        canvas.drawText("Average transaction value: " + fullSum / transactionCount, 30f, offset3 + 60f, paint)
 
 
         document.finishPage(page)

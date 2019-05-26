@@ -9,12 +9,13 @@ import com.siano.utils.mapToLeftOption
 import com.siano.utils.onlyRight
 import io.reactivex.Observable
 import io.reactivex.Scheduler
+import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
 import org.funktionale.option.Option
 import javax.inject.Inject
 
 class BudgetsPresenter @Inject constructor(
-    budgetDao: BudgetDao,
+    private val budgetDao: BudgetDao,
     @UiScheduler uiScheduler: Scheduler
 ) {
     private val openBudgetSubject = PublishSubject.create<Budget>()
@@ -30,4 +31,6 @@ class BudgetsPresenter @Inject constructor(
         .mapToLeftOption()
 
     fun openBudgetObservable(): Observable<Budget> = openBudgetSubject
+
+    fun refreshBudgetsObservable(): Single<Unit> = budgetDao.refreshBudgetsSingle()
 }
