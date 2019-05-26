@@ -38,6 +38,7 @@
     <string name="invite_code">Kod zaproszenia</string>
 
     <string name="generate_report">Generuj raport</string>
+    <string name="log_out">Wyloguj się</string>
 
     <!-- Categories -->
     <string-array name="categories">
