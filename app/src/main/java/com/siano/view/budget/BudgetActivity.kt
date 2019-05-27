@@ -34,6 +34,9 @@ import org.funktionale.option.getOrElse
 import org.funktionale.option.toOption
 import javax.inject.Inject
 import javax.inject.Named
+import android.widget.Toast
+import io.reactivex.Single
+
 
 class BudgetActivity : AuthorizedActivity() {
 
@@ -91,7 +94,7 @@ class BudgetActivity : AuthorizedActivity() {
             budget_activity_toolbar.menu.findItem(R.id.budget_generate_report).clicks()
                 .switchMapSingle {
                     requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    presenter.getReportSingle()
+                    Single.just(Unit)
                 }
                 .subscribe(),
             presenter.getReportTransactionsObservable.subscribe(),
@@ -125,6 +128,19 @@ class BudgetActivity : AuthorizedActivity() {
             }
         } else {
             // Permission has already been granted
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            MY_PERMISSIONS_REQUEST_WRITE_FILE -> {
+                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    presenter.getReportSingle().subscribe()
+                } else {
+                    Toast.makeText(this, getString(com.siano.R.string.permission_denied), Toast.LENGTH_LONG).show()
+                }
+            }
         }
     }
 

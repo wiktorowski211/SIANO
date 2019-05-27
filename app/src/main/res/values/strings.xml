@@ -52,6 +52,7 @@
     <string name="choose_member">Choose your budget member:</string>
     <string name="invite_code">Invite code</string>
     <string name="log_out">Log out</string>
+    <string name="permission_denied">You have to check the permission to read files</string>
 
     <!-- Categories -->
     <string-array name="categories">
