@@ -4,6 +4,10 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
+import com.google.android.gms.ads.MobileAds
 import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.widget.textChanges
 import com.siano.R
@@ -33,17 +37,30 @@ class ForgotPasswordActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_forgot_password)
 
+        MobileAds.initialize(this,
+            "ca-app-pub-3940256099942544~3347511713")
+
+        val bannerAd = InterstitialAd(this)
+        bannerAd.adUnitId = "ca-app-pub-3940256099942544/1033173712"
+        bannerAd.loadAd(AdRequest.Builder().build())
+
         subscription.addAll(
             email_edit_text.textChanges()
                 .switchMapSingle { presenter.emailSingle(it.toString()) }
                 .subscribe(),
             forgot_password_activity_button.clicks()
-                .switchMapSingle { presenter.resetSingle() }
+                .switchMapSingle {
+                    if (bannerAd.isLoaded) {
+                        bannerAd.show()
+                    } else {
+                        Log.d("TAG", "The interstitial wasn't loaded yet.")
+                    }
+                    presenter.resetSingle() }
                 .subscribe(),
             presenter.resetSuccessObservable()
                 .subscribe {
-                    finish()
-                    startActivity(CheckMailActivity.newInstance(this))
+                    //finish()
+                    //startActivity(CheckMailActivity.newInstance(this))
                 },
             presenter.resetFailedObservable()
                 .subscribe(ErrorHandler.show(forgot_password_activity_main_view, this)),
