@@ -94,4 +94,6 @@
         <item>Charytatywne</item>
         <item>Prezenty</item>
     </string-array>
+    <string name="you_have_to_confirm_your_e_mail">Potwierdź adres email</string>
+    <string name="permission_denied">Musisz zaakceptować zgodę na zapis danych na dysku</string>
 </resources>
