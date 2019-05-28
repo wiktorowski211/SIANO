@@ -151,8 +151,6 @@ object BudgetReport {
             offset3 = offset2 + i * 12.toFloat() + 0f
         }
 
-
-
         canvas.drawText(("Sum: "), 100f, offset3 + 20f, paint)
         canvas.drawText(fullSum.toString(), 150f, offset3 + 20f, paint)
 
@@ -191,7 +189,6 @@ object BudgetReport {
             strokeWidth = 1f
             style = Paint.Style.FILL_AND_STROKE
         }
-
         var offset = 0f
 
         // draw slices

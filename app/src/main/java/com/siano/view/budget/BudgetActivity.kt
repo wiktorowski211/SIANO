@@ -128,6 +128,7 @@ class BudgetActivity : AuthorizedActivity() {
             }
         } else {
             // Permission has already been granted
+            generateReportAndToast()
         }
     }
 
@@ -136,12 +137,17 @@ class BudgetActivity : AuthorizedActivity() {
         when (requestCode) {
             MY_PERMISSIONS_REQUEST_WRITE_FILE -> {
                 if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    presenter.getReportSingle().subscribe()
+                    generateReportAndToast()
                 } else {
                     Toast.makeText(this, getString(com.siano.R.string.permission_denied), Toast.LENGTH_LONG).show()
                 }
             }
         }
+    }
+
+    private fun generateReportAndToast(){
+        presenter.getReportSingle().subscribe()
+        Toast.makeText(this, getString(R.string.toast_report), Toast.LENGTH_SHORT).show()
     }
 
     private fun shareBudget(context: Context, budgetId: Long): Intent {

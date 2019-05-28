@@ -53,6 +53,7 @@
     <string name="invite_code">Invite code</string>
     <string name="log_out">Log out</string>
     <string name="permission_denied">You have to check the permission to read files</string>
+    <string name="toast_report">Report generated and saved to Downloads</string>
 
     <!-- Categories -->
     <string-array name="categories">
